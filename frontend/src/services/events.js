@@ -6,4 +6,9 @@ const getAll = () => {
     return req.then(res => res.data)
 }
 
-export default { getAll }
+const createEvent = (newEvent) => {
+    const req = axios.post(Url, newEvent)
+    return req.then(res => res.data)
+}
+
+export default { getAll, createEvent }

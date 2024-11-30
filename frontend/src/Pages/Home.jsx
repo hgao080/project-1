@@ -1,6 +1,6 @@
-import Header from "../Components/Header";
-import Welcome from "../Components/Welcome";
-import Events from "../Components/Events";
+import Header from "../components/Header";
+import Welcome from "../components/Welcome";
+import Events from "../components/Events";
 
 const Home = () => {
     return (

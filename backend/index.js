@@ -1,41 +1,26 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const mongoose = require('mongoose')
+
+const Event = require('./models/event')
+
 const app = express()
+const url = process.env.MONGODB_URI;
+
 app.use(cors())
 app.use(express.json())
 
-let events = [
-    {
-        id: 1,
-        name: "Henry's Birthday",
-        date: "26/10/2005",
-        description: "Meet at my house",
-    },
-    {
-        id: 3,
-        name: "Test Event 2",
-        date: "15/08/2010",
-        description: "This is a test",
-    },
-    {
-        id: 2,
-        name: "Test Event 3",
-        date: "01/01/2024",
-        description: "This is also a test",
-    }
-]
-
+mongoose.set('strictQuery', false)
+mongoose.connect(url)
+    
 app.get('/api/events', (req, res) => {
-    res.json(events)
-})
+    Event.find({}).then(events => {
+        res.json(events)
+    })
+}) 
 
-app.post('/api/events', (req, res) => {
-    const event = req.body
-    events = events.concat(event)
-    res.json(event)
-})
-
-const PORT = 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 })

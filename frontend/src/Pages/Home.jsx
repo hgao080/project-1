@@ -3,6 +3,8 @@ import Welcome from "../components/Welcome";
 import Events from "../components/Events";
 
 const Home = () => {
+    
+
     return (
         <div className="">
             <Header/>

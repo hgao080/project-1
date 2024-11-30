@@ -6,7 +6,7 @@ const Home = () => {
     
 
     return (
-        <div className="">
+        <div className="m-auto max-w-[50rem]">
             <Header/>
             <Welcome/>
             <Events/>

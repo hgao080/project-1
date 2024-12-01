@@ -7,14 +7,22 @@ const app = express()
 const url = process.env.MONGODB_URI;
 
 const eventRoutes = require('./routes/events')
+const userRoutes = require('./routes/user')
 
 app.use(cors())
 app.use(express.json())
 
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
+    .then(result => {
+        console.log('connected to MongoDB')
+    })
+    .catch(error => {
+        console.log('error connecting to MongoDB:', error.message)
+    })
 
 app.use('/api/events', eventRoutes)
+app.use('/api/user', userRoutes)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {

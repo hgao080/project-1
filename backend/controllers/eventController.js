@@ -1,4 +1,4 @@
-const Event = require('../models/event')
+const Event = require('../models/eventModel')
 
 // Get all events
 const getEvents = async (req, res) => {
@@ -13,7 +13,7 @@ const createEvent = async (req, res) => {
 
     try {
         const event = await Event.create({name, description, date})
-        res.status(200).json(workout)
+        res.status(200).json(event)
     } catch (err) {
         res.status(400).json({error: err.message})
     }

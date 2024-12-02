@@ -11,8 +11,8 @@ const createEvent = (newEvent) => {
     return req.then(res => res.data)
 }
 
-const joinEvent = (eventId, user) => {
-    const req = axios.put(`${Url}/${eventId}`, user)
+const joinEvent = (eventId, joiningUser) => {
+    const req = axios.put(`${Url}/${eventId}`, joiningUser)
     return req.then(res => res.data)
 }
 

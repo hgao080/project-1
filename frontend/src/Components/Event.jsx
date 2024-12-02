@@ -5,8 +5,12 @@ const Event = ({ data, user }) => {
   const handleJoin = (e) => {
     e.preventDefault()
 
+    const joiningUser = {
+        username: user.username
+    }
+
     eventServices
-        .joinEvent(data.id, user)
+        .joinEvent(data.id, joiningUser)
         .then((event) => {
             console.log(event)
         })

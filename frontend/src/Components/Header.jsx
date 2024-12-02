@@ -1,7 +1,9 @@
+import { NavLink } from 'react-router-dom'
+
 const Header = () => {
     return (
         <header className="flex justify-end p-4">
-            <button className="border border-black px-4 rounded">Login</button>
+            <NavLink to="login" className="border border-black px-4 rounded">Log In</NavLink>
         </header>
     );
 }

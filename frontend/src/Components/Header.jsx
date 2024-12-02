@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useLogout } from '../hooks/useLogout'
 
-const Header = () => {
+const Header = ({ user }) => {
     const { logout } = useLogout()
 
     const handleClick = () => {
@@ -10,10 +10,16 @@ const Header = () => {
 
     return (
         <header className="flex justify-end p-4">
-            <div>
-                <button onClick={handleClick}>Log out</button>
+            {user ? (
+                <div>
+                <button onClick={handleClick} className='border border-black px-4 rounded'>Log out</button>
             </div>
-            <NavLink to="login" className="border border-black px-4 rounded">Log In</NavLink>
+            ) : ''}
+            
+            {!user ? (
+                <NavLink to="login" className="border border-black px-4 rounded">Log In</NavLink>
+            ) : ''}
+            
         </header>
     );
 }

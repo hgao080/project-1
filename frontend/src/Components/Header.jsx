@@ -1,27 +1,26 @@
-import { NavLink } from 'react-router-dom'
-import { useLogout } from '../hooks/useLogout'
+import { NavLink } from "react-router-dom";
+import Logout from "./Logout";
 
 const Header = ({ user }) => {
-    const { logout } = useLogout()
+  return (
+    <header className="flex justify-end p-4">
+      {user ? (
+        <div>
+          <Logout />
+        </div>
+      ) : (
+        ""
+      )}
 
-    const handleClick = () => {
-        logout()
-    }
+      {!user ? (
+        <NavLink to="login" className="border border-black px-4 rounded">
+          Log In
+        </NavLink>
+      ) : (
+        ""
+      )}
+    </header>
+  );
+};
 
-    return (
-        <header className="flex justify-end p-4">
-            {user ? (
-                <div>
-                <button onClick={handleClick} className='border border-black px-4 rounded'>Log out</button>
-            </div>
-            ) : ''}
-            
-            {!user ? (
-                <NavLink to="login" className="border border-black px-4 rounded">Log In</NavLink>
-            ) : ''}
-            
-        </header>
-    );
-}
- 
 export default Header;

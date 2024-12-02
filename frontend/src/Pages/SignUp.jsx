@@ -7,6 +7,10 @@ const SignUp = () => {
     const { user } = useAuthContext()
 
     if (user) {
+        if (user.isAdmin) {
+            return <Navigate to="/admin" />
+        }
+
         return <Navigate to="/" />
     }
 

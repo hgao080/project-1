@@ -7,6 +7,10 @@ const Login = () => {
     const { user } = useAuthContext()
 
     if (user) {
+        if (user.isAdmin) {
+            return <Navigate to="/admin" />
+        }
+
         return <Navigate to="/" />
     }
 
@@ -17,6 +21,12 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(email) && email !== 'admin') {
+            alert('Please enter a valid email address')
+            return
+        }
+
         await login(email, password)
     }
 
@@ -25,7 +35,7 @@ const Login = () => {
             <h3>Login</h3>
 
             <label htmlFor="">Email:</label>
-            <input type="email" onChange={(e) => setEmail(e.target.value)}/>
+            <input type="text" onChange={(e) => setEmail(e.target.value)}/>
 
             <label htmlFor="">Password:</label>
             <input type="password" onChange={(e) => setPassword(e.target.value)}/>

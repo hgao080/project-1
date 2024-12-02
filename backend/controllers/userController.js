@@ -18,6 +18,7 @@ const loginUser = async (req, res) => {
         res.status(200).json({
             username: user.username,
             email: user.email,
+            isAdmin: user.isAdmin,
             token
         })
     } catch (err) {

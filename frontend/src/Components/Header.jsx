@@ -14,7 +14,7 @@ const Header = ({ user }) => {
 
       {!user ? (
         <NavLink to="login" className="border border-black px-4 rounded">
-          Log In
+          Login
         </NavLink>
       ) : (
         ""

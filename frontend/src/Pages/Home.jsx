@@ -20,9 +20,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="m-auto max-w-[50rem]">
+    <div className="m-auto max-w-[50rem] h-screen">
       <Header user={user} />
       <Welcome user={user} />
+      {!user ? (
+        <div className="border border-black rounded-xl text-center py-2 mt-4">You are not logged in. Click Login to register for events</div>
+      ) : ''}
+
       {!user ? (
         <Events events={events} user={user}/>
       ) : (
@@ -33,7 +37,7 @@ const Home = () => {
       )}
       
       {!user ? (
-        <div className="flex justify-center mt-[3rem]">
+        <div className="flex justify-center mt-4">
           <NavLink className="border border-black px-4 rounded" to="/signup">
             Create account
           </NavLink>

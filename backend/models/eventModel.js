@@ -5,6 +5,7 @@ const eventSchema = new mongoose.Schema({
     name: String,
     description: String,
     date: String,
+    users: [String],
 })
 
 eventSchema.set('toJSON', {

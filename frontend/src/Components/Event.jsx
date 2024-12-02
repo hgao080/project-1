@@ -1,4 +1,17 @@
+import eventServices from '../services/events'
+
 const Event = ({ data, user }) => {
+    
+  const handleJoin = (e) => {
+    e.preventDefault()
+
+    eventServices
+        .joinEvent(data.id, user)
+        .then((event) => {
+            console.log(event)
+        })
+  };
+
   return (
     <div className="flex border border-black w-[30rem] px-2 py-1 justify-between items-center">
       <div className="flex flex-col">
@@ -7,8 +20,15 @@ const Event = ({ data, user }) => {
         <p>{data.description}</p>
       </div>
       {user ? (
-        <button className="border border-black px-2 rounded">Join</button>
-      ) : ''}
+        <button
+          onClick={handleJoin}
+          className="border border-black px-2 rounded"
+        >
+          Join
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

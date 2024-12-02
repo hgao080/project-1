@@ -11,4 +11,9 @@ const createEvent = (newEvent) => {
     return req.then(res => res.data)
 }
 
-export default { getAll, createEvent }
+const joinEvent = (eventId, user) => {
+    const req = axios.put(`${Url}/${eventId}`, user)
+    return req.then(res => res.data)
+}
+
+export default { getAll, createEvent, joinEvent }

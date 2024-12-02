@@ -1,17 +1,24 @@
 import { useState } from "react";
+import userServices from '../services/user'
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const UserDetails = ({ user }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [oldName, setOldName] = useState(user.username);
     const [newName, setNewName] = useState(user.username);
+    const { dispatch } = useAuthContext()
 
     const toggleEdit = () => {
         setIsEdit(!isEdit)
     }
 
-    const handleSave = (e) => {
-        setOldName(newName)
-        toggleEdit()
+    const handleSave = () => {
+        userServices.updateUser(user.username, {username: newName})
+            .then(returnedUser => {
+                dispatch({type: 'LOGIN', payload: {...user, username: returnedUser.username}})
+                setOldName(returnedUser.username)
+                toggleEdit()
+            })
     }
 
     return (

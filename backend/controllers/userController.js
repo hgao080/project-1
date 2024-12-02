@@ -43,13 +43,14 @@ const signUpUser = async (req, res) => {
 const updateUser = async (req, res, next) => {
     const { username } = req.body
 
-    await User.findById(req.params.id).then(user => {
+    await User.find({username: req.params.name}).then(user => {
+
         const updated = {
             ...user._doc,
             username: username
         }
 
-        User.findByIdAndUpdate(req.params.id, updated, {new: true})
+        User.findOneAndUpdate({username: req.params.name}, updated, {new: true})
             .then(updatedUser => {
                 res.json(updatedUser)
             })

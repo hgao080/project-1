@@ -1,7 +1,15 @@
 import { useState } from 'react'
 import { useSignup } from "../hooks/useSignup"
+import { useAuthContext } from '../hooks/useAuthContext';
+import { Navigate } from 'react-router-dom';
 
 const SignUp = () => {
+    const { user } = useAuthContext()
+
+    if (user) {
+        return <Navigate to="/" />
+    }
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');

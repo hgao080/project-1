@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
     },
     isAdmin: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     }
 })
 
@@ -43,10 +44,16 @@ userSchema.statics.signUp = async function(email, password, username) {
         throw Error('Password not strong enough')
     }
 
-    const exists = await this.findOne({ email })
+    const emailExists = await this.findOne({ email })
 
-    if (exists) {
+    if (emailExists) {
         throw Error('Email already in use')
+    }
+
+    const userExists = await this.findOne({username})
+
+    if (userExists) {
+        throw Error('Username already in use')
     }
 
     const salt = await bcrypt.genSalt(10)

@@ -27,7 +27,7 @@ const SignUp = () => {
 
   return (
     <div className="flex h-screen w-screen">
-      <div className="flex items-center m-auto border border-black rounded-lg h-[20rem]">
+      <div className="flex items-center m-auto border border-black rounded-lg">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col m-auto px-4 rounded-xl py-2 items-center w-[40rem]"
@@ -65,13 +65,23 @@ const SignUp = () => {
             </div>
           </div>
 
+          <div className="border border-yellow-400 px-4 py-2 mt-4 text-yellow-600 rounded">
+            <p className="">Password must contain at least:</p>
+            <ul className="grid grid-cols-2 gap-x-4 list-disc ml-4">
+                <li>One capital letter</li>
+                <li>One lowercase letter</li>
+                <li>A number</li>
+                <li>A symbol</li>
+            </ul>
+          </div>
+
           <button
             disabled={isLoading}
             className="border border-green-600 mt-4 px-4 rounded text-green-600"
           >
             Sign up
           </button>
-          {error && <div className="">{error}</div>}
+          {error && <div className="border border-red-500 text-red-500 px-4 mt-4 rounded">{error}</div>}
         </form>
       </div>
     </div>

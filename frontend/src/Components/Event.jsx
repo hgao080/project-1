@@ -6,7 +6,7 @@ const Event = ({ event, user }) => {
   const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
-    if (event.users.includes(user.username)) {
+    if (user && event.users.includes(user.username)) {
         setIsJoined(true)
     }
   }, []);
@@ -24,7 +24,7 @@ const Event = ({ event, user }) => {
   };
 
   return (
-    <div className="flex border border-black w-[30rem] px-2 py-1 justify-between items-center">
+    <div className="flex border border-black w-[30rem] px-2 py-1 justify-between items-center rounded-xl">
       <div className="flex flex-col">
         <h3 className="font-bold">{event.name}</h3>
         <p className="italic mt-[-4px]">{event.date}</p>

@@ -17,6 +17,7 @@ const loginUser = async (req, res) => {
 
         res.status(200).json({
             username: user.username,
+            email: user.email,
             token
         })
     } catch (err) {
@@ -39,4 +40,21 @@ const signUpUser = async (req, res) => {
     }
 }
 
-module.exports = {loginUser, signUpUser}
+const updateUser = async (req, res, next) => {
+    const { username } = req.body
+
+    await User.findById(req.params.id).then(user => {
+        const updated = {
+            ...user._doc,
+            username: username
+        }
+
+        User.findByIdAndUpdate(req.params.id, updated, {new: true})
+            .then(updatedUser => {
+                res.json(updatedUser)
+            })
+            .catch(error => next(error))
+    })
+}
+
+module.exports = {loginUser, signUpUser, updateUser}

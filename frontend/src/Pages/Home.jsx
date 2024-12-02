@@ -30,7 +30,7 @@ const Home = () => {
       {!user ? (
         <Events events={events} user={user}/>
       ) : (
-        <div className="flex gap-12 mt-12">
+        <div className="flex items-start gap-12">
             <Events events={events} user={user}/>
             <UserDetails user={user}/>
         </div>

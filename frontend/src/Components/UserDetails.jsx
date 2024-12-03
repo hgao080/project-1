@@ -20,13 +20,18 @@ const UserDetails = ({ user }) => {
           type: "LOGIN",
           payload: { ...user, username: returnedUser.username },
         });
+
+        const storedUser = JSON.parse(localStorage.getItem('user'))
+        storedUser.username = returnedUser.username
+        localStorage.setItem('user', JSON.stringify(storedUser))
+
         setOldName(returnedUser.username);
         toggleEdit();
       });
   };
 
   return (
-    <div className="border border-black p-2 rounded-xl w-[14rem]">
+    <div className="border border-black p-2 rounded-xl w-[14rem] mt-[3.9rem]">
       <h3 className="text-[1.1rem] underline font-semibold">User details</h3>
       {isEdit ? (
         <div>

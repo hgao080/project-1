@@ -9,19 +9,32 @@ import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const Admin = () => {
-    const { user } = useAuthContext();
-
-    if (!user) {
-        return <Navigate to="/" />
-    }
-
+  const { user } = useAuthContext();
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     eventsService.getAll().then((initialEvents) => {
       setEvents(initialEvents);
-    });
-  }, []);
+    })
+  }, [])
+
+  useEffect(() => {
+    if (user) {
+      setLoading(false);
+    }
+  }, [user]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user || !user.isAdmin) {
+    return <Navigate to="/" />;
+  }
+
+  console.log("User:", user);
+  console.log("Is Admin:", user?.isAdmin);
 
   return (
     <div className="">

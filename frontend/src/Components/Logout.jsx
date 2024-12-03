@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout'
 
 const Logout = () => {
@@ -8,9 +9,9 @@ const Logout = () => {
   };
 
   return (
-    <button onClick={handleClick} className="border border-black px-4 rounded">
+    <NavLink onClick={handleClick} to="/" className="border border-black px-4 rounded">
       Log out
-    </button>
+    </NavLink>
   );
 };
 

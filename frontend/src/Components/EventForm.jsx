@@ -40,7 +40,7 @@ const EventForm = ({ events, setEvents }) => {
       <h3 className="text-3xl underline text-center text-nowrap">Create an event</h3>
       <form
         onSubmit={createEvent}
-        className="border border-black rounded-xl p-2 px-4 w-[15rem]"
+        className="border border-black rounded-xl p-2 px-4 w-[15rem] shadow-2xl"
       >
         <div className="">
           <p className="underline">Name</p>

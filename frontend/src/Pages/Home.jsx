@@ -20,7 +20,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="m-auto max-w-[50rem] h-screen">
+    <div className="m-auto max-w-[60rem] h-screen">
       <Header user={user} />
       <Welcome user={user} />
       {!user ? (

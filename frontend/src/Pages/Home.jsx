@@ -20,11 +20,12 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="m-auto max-w-[60rem] h-screen">
+    <div className="w-screen h-screen bg-homeBg bg-no-repeat bg-center bg-cover">
+      <div className="m-auto max-w-[60rem]">
       <Header user={user} />
       <Welcome user={user} />
       {!user ? (
-        <div className="border border-yellow-400  text-yellow-600 rounded-xl text-center py-2 mt-4">You are not logged in. Click Login to register for events</div>
+        <div className="flex items-center justify-center border border-black bg-golden-yellow rounded-xl text-center py-2 mt-4 h-[4rem] shadow-xl font-main text-2xl font-bold tracking-wide">You are not logged in. Click Login to register for events</div>
       ) : ''}
 
       {!user ? (
@@ -35,16 +36,7 @@ const Home = () => {
             <UserDetails user={user}/>
         </div>
       )}
-      
-      {!user ? (
-        <div className="flex justify-center mt-4">
-          <NavLink className="border border-black px-4 rounded " to="/signup">
-            Create account
-          </NavLink>
-        </div>
-      ) : (
-        ""
-      )}
+      </div>
     </div>
   );
 };

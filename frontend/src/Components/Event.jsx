@@ -24,11 +24,11 @@ const Event = ({ event, user }) => {
   };
 
   return (
-    <div className="flex border border-black w-full px-2 py-1 justify-between items-center rounded-xl">
+    <div className="flex border border-black w-full px-4 py-2 justify-between items-center rounded-xl bg-pastel-orange font-main shadow-lg">
       <div className="flex flex-col">
-        <h3 className="font-bold">{event.name}</h3>
-        <p className="italic mt-[-4px]">{event.date}</p>
-        <p>{event.description}</p>
+        <h3 className="font-bold text-3xl">{event.name}</h3>
+        <p className="italic mt-[-6px] text-2xl">{event.date}</p>
+        <p className="text-xl tracking-wide font-bold">{event.description}</p>
       </div>
       {user ? (
         <button

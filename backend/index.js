@@ -13,6 +13,9 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static('dist'))
 
+app.use('/api/events', eventRoutes)
+app.use('/api/user', userRoutes)
+
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
     .then(result => {
@@ -21,9 +24,6 @@ mongoose.connect(url)
     .catch(error => {
         console.log('error connecting to MongoDB:', error.message)
     })
-
-app.use('/api/events', eventRoutes)
-app.use('/api/user', userRoutes)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {

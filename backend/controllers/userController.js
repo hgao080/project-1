@@ -59,4 +59,13 @@ const updateUser = async (req, res, next) => {
     })
 }
 
-module.exports = {loginUser, signUpUser, updateUser}
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find({}).lean();
+        res.status(200).json(users);
+      } catch (error) {
+        next(error);
+      }
+}
+
+module.exports = {loginUser, signUpUser, updateUser, getUsers}

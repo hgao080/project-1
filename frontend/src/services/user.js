@@ -6,4 +6,9 @@ const updateUser = (oldUsername, updatedName) => {
     return req.then(res => res.data)
 }
 
-export default { updateUser }
+const getUsers = () => {
+    const req = axios.get(Url)
+    return req.then(res => res.data)
+}
+
+export default { updateUser, getUsers }

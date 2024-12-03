@@ -4,19 +4,26 @@ import EventForm from "../components/EventForm";
 import Events from "../components/Events";
 
 import eventsService from "../services/events";
+import usersService from '../services/user'
 import Logout from "../components/Logout";
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
+import Users from "../components/Users";
 
 const Admin = () => {
   const { user } = useAuthContext();
   const [events, setEvents] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [timeout, setTimeoutReached] = useState(false);
 
   useEffect(() => {
     eventsService.getAll().then((initialEvents) => {
       setEvents(initialEvents);
     });
+    usersService.getUsers().then(users => {
+      setUsers(users);
+    })
   }, []);
 
   useEffect(() => {
@@ -25,7 +32,18 @@ const Admin = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeoutReached(true);
+    }, 1000); // 10 seconds timeout
+
+    return () => clearTimeout(timer);
+  }, []);
+
   if (loading) {
+    if (timeout) {
+      return <Navigate to="/" />;
+    }
     return <div>Loading...</div>;
   }
 
@@ -33,15 +51,12 @@ const Admin = () => {
     return <Navigate to="/" />;
   }
 
-  console.log("User:", user);
-  console.log("Is Admin:", user?.isAdmin);
-
   return (
     <div className="w-screen h-screen">
       <div className="max-w-[60rem] m-auto">
         <div className="flex justify-between items-center px-4 py-4">
           <h1 className="text-2xl italic">Admin Page</h1>
-          <Logout className="" />
+          <Logout/>
         </div>
 
         <div className="flex gap-4 items-start">
@@ -52,7 +67,7 @@ const Admin = () => {
         </div>
 
         <div className="">
-          
+          <Users users={users}/>
         </div>
       </div>
     </div>

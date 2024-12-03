@@ -9,7 +9,7 @@ const Logout = () => {
   };
 
   return (
-    <NavLink onClick={handleClick} to="/" className="border border-black px-4 rounded shadow-xl">
+    <NavLink onClick={handleClick} to="/" className="border border-black px-4 rounded shadow-xl py-[0.1rem]">
       Log out
     </NavLink>
   );

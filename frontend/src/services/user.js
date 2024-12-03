@@ -1,5 +1,5 @@
 import axios from 'axios'
-const Url = 'http://localhost:3001/api/user'
+const Url = '/api/user'
 
 const updateUser = (oldUsername, updatedName) => {
     const req = axios.put(`${Url}/${oldUsername}`, updatedName)

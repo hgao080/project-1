@@ -38,7 +38,7 @@ const Home = () => {
       
       {!user ? (
         <div className="flex justify-center mt-4">
-          <NavLink className="border border-black px-4 rounded" to="/signup">
+          <NavLink className="border border-black px-4 rounded " to="/signup">
             Create account
           </NavLink>
         </div>

@@ -48,6 +48,7 @@ const EventForm = ({ events, setEvents }) => {
             type="text"
             onChange={handleNameChange}
             className="w-full border border-black rounded pl-1"
+            value={name}
           />
         </div>
         <div className="mt-2">
@@ -55,11 +56,12 @@ const EventForm = ({ events, setEvents }) => {
           <textarea
             onChange={handleDescriptionChange}
             className="border rounded border-black pl-1 w-full h-[10rem] resize-none"
+            value={description}
           />
         </div>
         <div className="mt-2">
             <p className="underline">Date</p>
-            <input type="date" onChange={handleDateChange} className="border border-black rounded pl-1 w-full"/>
+            <input type="date" onChange={handleDateChange} className="border border-black rounded pl-1 w-full" value={date}/>
         </div>
         <div>
           <button type="submit" className="border border-green-600 text-green-600 px-4 mt-4 rounded">Create</button>

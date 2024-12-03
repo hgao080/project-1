@@ -24,7 +24,7 @@ const Home = () => {
       <Header user={user} />
       <Welcome user={user} />
       {!user ? (
-        <div className="border border-black rounded-xl text-center py-2 mt-4">You are not logged in. Click Login to register for events</div>
+        <div className="border border-yellow-400  text-yellow-600 rounded-xl text-center py-2 mt-4">You are not logged in. Click Login to register for events</div>
       ) : ''}
 
       {!user ? (

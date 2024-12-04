@@ -32,7 +32,6 @@ const EventForm = ({ events, setEvents }) => {
   };
   const handleDateChange = (e) => {
     setDate(e.target.value);
-    console.log(date);
   };
 
   return (

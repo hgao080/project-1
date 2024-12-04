@@ -52,15 +52,15 @@ const Admin = () => {
   }
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main">
       <div className="max-w-[60rem] m-auto">
         <div className="flex justify-between items-center px-4 py-4">
-          <h1 className="text-2xl italic">Admin Page</h1>
+          <h1 className="text-5xl italic">Admin Page</h1>
           <Logout/>
         </div>
 
-        <div className="flex gap-4 items-start">
-          <div className="flex justify-between w-[50rem] m-auto shadow-2xl">
+        <div className="flex gap-4 items-start mt-[-1rem]">
+          <div className="flex justify-between w-[50rem] h-[25rem] m-auto">
             <Events events={events} />
           </div>
           <EventForm events={events} setEvents={setEvents} />

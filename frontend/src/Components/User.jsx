@@ -14,7 +14,7 @@ const User = ({ user, events }) => {
 
   return (
     <div className="">
-      <div className="flex justify-between items-center border border-black px-4 py-1 rounded-lg">
+      <div className="flex justify-between items-center border border-black px-4 py-1 rounded-lg bg-pastel-orange text-2xl font-bold">
         <div className="flex flex-col">
           <p className="">Username: {user.username}</p>
           <p className="">Email: {user.email}</p>
@@ -33,8 +33,8 @@ const User = ({ user, events }) => {
       {!showEvents ? (
         ""
       ) : (
-        <div className="border border-black border-t-0 mt-[-6px] py-2 px-4 rounded-b">
-          <h3 className="underline">Events Attending</h3>
+        <div className="border border-black border-t-0 mt-[-6px] py-2 px-4 rounded-b-lg text-2xl font-bold bg-pastel-orange">
+          <h3 className="underline decoration-1">Events Attending</h3>
 
           <div className="grid grid-cols-4">
             {attendingEvents.length > 0 ? (

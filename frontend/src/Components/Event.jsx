@@ -33,7 +33,7 @@ const Event = ({ event, user }) => {
       {user ? (
         <button
           onClick={handleJoin}
-          className="border border-black px-2 rounded"
+          className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${isJoined ? '' : ' hover:translate-y-[-2px] hover:cursor-pointer'}`}
           disabled={isJoined}
         >
           {isJoined ? 'Joined' : 'Join'}

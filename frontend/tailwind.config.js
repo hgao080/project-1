@@ -19,7 +19,8 @@ export default {
         'blush-pink': '#F2AFAF',
         'pastel-orange': '#E7C7A2',
         'pastel-green': '#A8C3A3',
-        'golden-yellow': '#F7D488'
+        'golden-yellow': '#F7D488',
+        'warm-gray': '#A8A19E'
       }
     },
   },

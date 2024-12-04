@@ -31,11 +31,11 @@ const UserDetails = ({ user }) => {
   };
 
   return (
-    <div className="border border-black p-2 rounded-xl w-[14rem] mt-[3.9rem]">
-      <h3 className="text-[1.1rem] underline font-semibold">User details</h3>
+    <div className="border border-black p-4 rounded-xl w-[14rem] mt-[5.8rem] bg-beige font-main py-2">
+      <h3 className="text-3xl underline font-bold decoration-2">User details</h3>
       {isEdit ? (
         <div>
-          <p className="underline">
+          <p className="underline text-2xl decoration-1">
             Username
             <input
               type="text"
@@ -47,24 +47,24 @@ const UserDetails = ({ user }) => {
         </div>
       ) : (
         <div>
-          <p className="underline">Username</p>
-          <p className="">{oldName}</p>
+          <p className="underline decoration-1 text-2xl">Username</p>
+          <p className="text-2xl">{oldName}</p>
         </div>
       )}
 
-      <p className="underline">Email</p>
-      <p className="">{user.email}</p>
+      <p className="underline decoration-1 text-2xl">Email</p>
+      <p className="text-xl">{user.email}</p>
 
       <div className="flex justify-end mt-4">
         {isEdit ? (
           <div className="flex gap-2">
-            <button onClick={handleSave} className="border border-green-600 px-2 rounded">Save</button>
-            <button onClick={toggleEdit} className="border border-gray-400 px-2 rounded">Cancel</button>
+            <button onClick={handleSave} className="border border-black bg-pastel-green px-4 rounded font-bold text-lg transition-all hover:translate-y-[-2px] active:translate-y-[2px] hover:cursor-pointer">Save</button>
+            <button onClick={toggleEdit} className="border border-black px-4 rounded font-bold text-lg bg-warm-gray transition-all hover:translate-y-[-2px] active:translate-y-[2px] hover:cursor-pointer">Cancel</button>
           </div>
         ) : (
             <button
               onClick={toggleEdit}
-              className="border border-black px-2 rounded"
+              className="border border-black px-4 rounded bg-pastel-blue font-bold text-lg transition-all hover:translate-y-[-2px] active:translate-y-[2px] hover:cursor-pointer shadow-md"
             >
               Edit Username
             </button>

@@ -8,7 +8,7 @@ const Users = ({ users, events }) => {
         {users
           .filter((user) => !user.isAdmin)
           .map((user) => (
-            <User user={user} events={events}/>
+            <User key={user.username} user={user} events={events}/>
           ))}
       </div>
     </div>

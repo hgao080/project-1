@@ -3,7 +3,8 @@ const Url = '/api/user'
 
 const updateUser = (oldUsername, updatedName) => {
     const req = axios.put(`${Url}/${oldUsername}`, updatedName)
-    return req.then(res => res.data)
+    console.log(req)
+    return req.then(res => res.data).catch(err => err.response.data)
 }
 
 const getUsers = () => {

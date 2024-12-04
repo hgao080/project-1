@@ -44,19 +44,28 @@ const signUpUser = async (req, res) => {
 const updateUser = async (req, res, next) => {
     const { username } = req.body
 
-    await User.find({username: req.params.name}).then(user => {
-
-        const updated = {
-            ...user._doc,
-            username: username
+    try {
+        const existingUser = await User.findOne({ username })
+        if (existingUser) {
+            return res.status(400).json({error: 'Username already in use'})
         }
 
-        User.findOneAndUpdate({username: req.params.name}, updated, {new: true})
-            .then(updatedUser => {
-                res.json(updatedUser)
-            })
-            .catch(error => next(error))
-    })
+        await User.find({username: req.params.name}).then(user => {
+
+            const updated = {
+                ...user._doc,
+                username: username
+            }
+    
+            User.findOneAndUpdate({username: req.params.name}, updated, {new: true})
+                .then(updatedUser => {
+                    res.json(updatedUser)
+                })
+                .catch(error => next(error))
+        })
+    } catch (error) {
+        next(error)
+    }    
 }
 
 const getUsers = async (req, res) => {

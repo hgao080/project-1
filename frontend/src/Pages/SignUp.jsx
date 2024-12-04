@@ -71,7 +71,6 @@ const SignUp = () => {
                 <li>One capital letter</li>
                 <li>One lowercase letter</li>
                 <li>A number</li>
-                <li>A symbol</li>
             </ul>
           </div>
 

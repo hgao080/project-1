@@ -40,7 +40,16 @@ userSchema.statics.signUp = async function(email, password, username) {
     if (!validator.isEmail(email)) {
         throw Error('Email is not valid')
     }
-    if (!validator.isStrongPassword(password)) {
+
+    const passwordOptions = {
+        minLength: 0,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 0
+    };
+
+    if (!validator.isStrongPassword(password, passwordOptions)) {
         throw Error('Password not strong enough')
     }
 

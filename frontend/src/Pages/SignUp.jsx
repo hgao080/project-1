@@ -32,16 +32,24 @@ const SignUp = () => {
           onSubmit={handleSubmit}
           className="flex flex-col m-auto px-4 rounded-xl py-20 items-center w-[40rem]"
         >
-          <h3 className="m-auto text-6xl underline font-bold decoration-2 underline-offset-2">Sign up</h3>
+          <h3 className="m-auto text-6xl underline font-bold decoration-2 underline-offset-2">
+            Sign up
+          </h3>
 
-          <div className="flex mt-4 w-[60%] m-auto gap-4 translate-x-[-2.5rem] font-bold tracking-wide text-2xl">
+          <div className="flex mt-4 w-[60%] m-auto gap-4 translate-x-[-2.8rem] font-bold tracking-wide text-2xl">
             <div className="flex flex-col gap-2 items-end">
+              <label htmlFor="username">Username</label>
               <label htmlFor="email">Email</label>
               <label htmlFor="password">Password</label>
-              <label htmlFor="username">Username</label>
             </div>
 
             <div className="flex flex-col w-full gap-2">
+              <input
+                type="text"
+                id="username"
+                onChange={(e) => setUsername(e.target.value)}
+                className="border border-black rounded pl-2"
+              />
               <input
                 type="email"
                 id="email"
@@ -55,32 +63,29 @@ const SignUp = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="border border-black rounded pl-2"
               />
-
-              <input
-                type="text"
-                id="username"
-                onChange={(e) => setUsername(e.target.value)}
-                className="border border-black rounded pl-2"
-              />
             </div>
           </div>
 
           <div className="border border-black px-4 py-2 mt-4 rounded text-xl bg-golden-yellow shadow-xl">
             <p className="font-bold">Password must contain at least:</p>
             <ul className="grid grid-cols-2 gap-x-4 list-disc ml-4">
-                <li>One capital letter</li>
-                <li>One lowercase letter</li>
-                <li>One number</li>
+              <li>One capital letter</li>
+              <li>One lowercase letter</li>
+              <li>One number</li>
             </ul>
           </div>
 
           <button
             disabled={isLoading}
-            className="block border border-black bg-pastel-green mt-4 px-4 rounded transition-all shadow-lg text-xl hover:translate-y-[-2px] active:translate-y-[2px]"
+            className="block border border-black bg-pastel-green mt-4 px-4 rounded transition-all shadow-lg text-xl hover:translate-y-[-2px] active:translate-y-[2px] font-bold"
           >
             Sign up
           </button>
-          {error && <div className="border border-red-500 text-red-500 px-4 mt-4 rounded text-xl font-bold">{error}</div>}
+          {error && (
+            <div className="border border-red-500 text-red-500 px-4 mt-4 rounded text-xl font-bold">
+              {error}
+            </div>
+          )}
         </form>
       </div>
     </div>

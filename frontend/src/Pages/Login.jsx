@@ -25,12 +25,12 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-screen h-screen">
-      <div className="flex border border-black m-auto h-[20rem] w-[40rem] justify-center items-center rounded-lg">
+    <div className="flex w-screen h-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main">
+      <div className="flex border border-black m-auto py-20 w-[40rem] justify-center items-center rounded-lg bg-beige">
         <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
-          <h3 className="m-auto text-3xl underline">Login</h3>
+          <h3 className="m-auto text-6xl underline decoration-2 underline-offset-2">Login</h3>
 
-          <div className="flex gap-2 translate-x-[-2.4rem] mt-4 w-[60%]">
+          <div className="flex gap-2 translate-x-[-2.4rem] mt-4 w-[60%] text-2xl tracking-wide">
             <div className="flex flex-col items-end gap-2">
               <label htmlFor="email">Email</label>
               <label htmlFor="password">Password</label>
@@ -51,12 +51,12 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="flex gap-1 border border-yellow-400 px-4 mt-4 rounded text-yellow-600">
+          <div className="flex gap-1 border border-black px-4 mt-4 rounded bg-golden-yellow shadow-xl text-xl">
             <p className="">Don't have an account?</p>
-            <NavLink to="/signup" className={`underline`}>Create one here!</NavLink>
+            <NavLink to="/signup" className={`underline decoration-1 font-bold`}>Create one here!</NavLink>
           </div>
-          <button disabled={isLoading} className="mt-4 border px-4 border-green-600 text-green-600 rounded">Log in</button>
-          {error && <div className="border border-red-500 text-red-500 px-4 mt-4 rounded">{error}</div>}
+          <button disabled={isLoading} className="mt-4 border border-black px-4 rounded bg-pastel-green text-xl hover:translate-y-[-2px] active:translate-y-[2px] transition-all font-bold">Log in</button>
+          {error && <div className="border border-red-500 text-red-500 px-4 mt-4 rounded text-xl font-bold">{error}</div>}
         </form>
       </div>
     </div>

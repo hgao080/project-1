@@ -7,7 +7,6 @@ import Events from "../components/Events";
 
 import eventsService from "../services/events";
 import UserDetails from "../components/UserDetails";
-import { NavLink } from "react-router-dom";
 
 const Home = () => {
   const [events, setEvents] = useState([]);

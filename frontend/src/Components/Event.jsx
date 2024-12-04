@@ -3,7 +3,7 @@ import { FaTrash } from "react-icons/fa";
 
 import eventServices from "../services/events";
 
-const Event = ({ event, user }) => {
+const Event = ({ event, events, setEvents, user }) => {
   const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,9 @@ const Event = ({ event, user }) => {
   };
 
   const handleDelete = () => {
-    console.log("Delete")
+    eventServices.deleteEvent(event.id).then(() => {
+      setEvents(events.filter(existingEvent => existingEvent.id !== event.id));
+    })
   }
 
   return (

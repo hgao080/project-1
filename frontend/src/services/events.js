@@ -16,4 +16,9 @@ const joinEvent = (eventId, joiningUser) => {
     return req.then(res => res.data)
 }
 
-export default { getAll, createEvent, joinEvent }
+const deleteEvent = (eventId) => {
+    const req = axios.delete(`${Url}/${eventId}`)
+    return req.then(res => res)
+}
+
+export default { getAll, createEvent, joinEvent, deleteEvent }

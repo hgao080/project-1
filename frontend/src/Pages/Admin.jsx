@@ -61,7 +61,7 @@ const Admin = () => {
 
         <div className="flex gap-4 items-start mt-[-1rem]">
           <div className="flex justify-between w-[50rem] h-[25rem] m-auto">
-            <Events events={events} user={user} />
+            <Events events={events} setEvents={setEvents} user={user} />
           </div>
           <EventForm events={events} setEvents={setEvents} />
         </div>

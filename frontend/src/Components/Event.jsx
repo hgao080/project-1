@@ -37,7 +37,7 @@ const Event = ({ event, events, setEvents, user }) => {
         <p className="italic mt-[-6px] text-2xl">{event.date}</p>
         <p className="text-xl tracking-wide font-bold">{event.description}</p>
       </div>
-      {!user.isAdmin ? (
+      {(user && !user.isAdmin) ? (
         <button
           onClick={handleJoin}
           className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${isJoined ? '' : ' hover:translate-y-[-2px] hover:cursor-pointer'}`}

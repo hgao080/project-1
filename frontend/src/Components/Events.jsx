@@ -9,6 +9,9 @@ const Events = ({ events, setEvents, user }) => {
     const eventDate = new Date(event.date);
     const now = new Date();
 
+    eventDate.setHours(0, 0, 0, 0);
+    now.setHours(0, 0, 0, 0);
+
     return eventDate >= now;
   })
 

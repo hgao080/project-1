@@ -11,6 +11,9 @@ const Events = ({ events, setEvents, user }) => {
     const eventDate = new Date(event.date);
     const now = new Date();
 
+    eventDate.setHours(0, 0, 0, 0);
+    now.setHours(0, 0, 0, 0);
+
     if (eventFilter === "old") {
       return eventDate < now;
     } else if (eventFilter === "upcoming") {
@@ -72,8 +75,15 @@ const Events = ({ events, setEvents, user }) => {
           </select>
         </div>
         <div className="text-2xl">
-          <label htmlFor="eventFilter" className="font-bold">Show:</label>
-          <select id="eventFilter" value={eventFilter} onChange={handleEventFilterChange} className="w-[8rem]">
+          <label htmlFor="eventFilter" className="font-bold">
+            Show:
+          </label>
+          <select
+            id="eventFilter"
+            value={eventFilter}
+            onChange={handleEventFilterChange}
+            className="w-[8rem]"
+          >
             <option value="all">All</option>
             <option value="old">Old Events</option>
             <option value="upcoming">Upcoming Events</option>

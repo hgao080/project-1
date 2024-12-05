@@ -71,12 +71,11 @@ const updateUser = async (req, res, next) => {
   } else {
     const { eventName } = req.body
 
-    await User.find({username: req.params.name}).then((user) => {
-        console.log(user)
+    await User.findOne({username: req.params.name}).then((user) => {
         try {
             const updated = {
                 ...user._doc,
-                joinedEvents: (user.joinedEvents || []).concat(eventName),
+                joinedEvents: user.joinedEvents.concat(eventName),
             }
 
             User.findOneAndUpdate({ username: req.params.name }, updated, {

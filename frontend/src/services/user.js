@@ -3,7 +3,11 @@ const Url = "/api/user";
 
 const updateUser = (oldUsername, updatedName) => {
   const req = axios.put(`${Url}/${oldUsername}`, updatedName);
-  console.log(req);
+  return req.then((res) => res.data).catch((err) => err.response.data);
+};
+
+const updateJoinedEvents = (username, eventName) => {
+  const req = axios.put(`${Url}/${username}`, eventName);
   return req.then((res) => res.data).catch((err) => err.response.data);
 };
 
@@ -18,4 +22,4 @@ const signupUser = (user) => {
   return req.then((res) => res.data).catch((err) => err.response.data);
 };
 
-export default { updateUser, getUsers, signupUser };
+export default { updateUser, getUsers, signupUser, updateJoinedEvents };

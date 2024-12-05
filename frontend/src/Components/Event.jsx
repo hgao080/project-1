@@ -51,11 +51,11 @@ const Event = ({ event, events, setEvents, user }) => {
         >
           {isJoined ? 'Joined' : 'Join'}
         </button>
-      ) : (
+      ) : user && user.isAdmin ? (
         <button onClick={handleDelete} className="text-red-400 border rounded-full p-2 border-red-400 transition-all hover:translate-y-[-2px] active:translate-y-[2px] hover:cursor-pointer">
           <FaTrash />
         </button>
-      )}
+      ) : null}
     </div>
   );
 };

@@ -20,6 +20,7 @@ const loginUser = async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       token,
+      joinedEvents: user.joinedEvents
     });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -31,12 +32,9 @@ const signUpUser = async (req, res) => {
   const { email, password, username } = req.body;
 
   try {
-    console.log("Hi");
     const user = await User.signUp(email, password, username);
-    console.log("Hi1");
     const token = createToken(user.id);
-    console.log("Hi2");
-    res.status(200).json({ username, email, isAdmin: user.isAdmin, token });
+    res.status(200).json({ username, email, isAdmin: user.isAdmin, token, joinedEvents: user.joinedEvents });
   } catch (err) {
     console.log(err.message);
     res.status(400).json({ error: err.message });

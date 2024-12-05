@@ -7,7 +7,7 @@ const Event = ({ event, events, setEvents, user }) => {
   const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
-    if (user && event.users.includes(user.username)) {
+    if (user && user.joinedEvents.includes(event.name)) {
         setIsJoined(true)
     }
   }, []);

@@ -9,11 +9,9 @@ const Logout = () => {
   };
 
   return (
-    <div className="bg-pastel-blue px-4 py-[0.2rem] rounded font-main text-lg tracking-wider font-bold border border-black transition-all hover:translate-y-[-2px] active:translate-y-[2px] hover:cursor-pointer shadow-xl">
-      <NavLink onClick={handleClick} to="/">
+      <NavLink onClick={handleClick} to="/" className={`block bg-pastel-blue px-4 py-[0.2rem] rounded font-main text-lg tracking-wider font-bold border border-black transition-all hover:translate-y-[-2px] active:translate-y-[2px] hover:cursor-pointer shadow-xl`}>
         Log out
       </NavLink>
-    </div>
   );
 };
 

@@ -14,8 +14,6 @@ router.get('/', getEvents)
 // POST a new event
 router.post('/', createEvent)
 
-router.put('/:id', joinEvent)
-
 router.delete('/:id', deleteEvent)
 
 module.exports = router

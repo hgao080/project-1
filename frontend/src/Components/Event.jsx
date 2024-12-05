@@ -30,11 +30,17 @@ const Event = ({ event, events, setEvents, user }) => {
     })
   }
 
+  const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <div className="flex border border-black w-full px-4 py-2 justify-between items-center rounded-xl bg-pastel-orange font-main shadow-lg">
       <div className="flex flex-col">
         <h3 className="font-bold text-3xl">{event.name}</h3>
-        <p className="italic mt-[-6px] text-2xl">{event.date}</p>
+        <p className="italic mt-[-6px] text-2xl">{formattedDate}</p>
         <p className="text-xl tracking-wide font-bold">{event.description}</p>
       </div>
       {(user && !user.isAdmin) ? (

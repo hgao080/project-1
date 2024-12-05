@@ -25,7 +25,7 @@ const Home = () => {
         <Welcome user={user} />
         {!user ? (
           <div className="flex items-center justify-center border border-black bg-golden-yellow rounded-xl text-center py-2 mt-4 h-[4rem] shadow-xl font-main text-2xl font-bold tracking-wide">
-            You are not logged in. Click Login to register for events
+            Let’s get cozy! Create your account to join events today.
           </div>
         ) : (
           ""

@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
 import userServices from "../services/user";
+import eventServices from "../services/events";
+import SureCheck from "./SureCheck";
 
 const Event = ({ event, events, setEvents, user }) => {
   const [isJoined, setIsJoined] = useState(false);
+  const [isSure, setIsSure] = useState(false);
 
   useEffect(() => {
     if (user && user.joinedEvents.includes(event.name)) {
@@ -21,6 +24,7 @@ const Event = ({ event, events, setEvents, user }) => {
         storedUser.joinedEvents = returnedUser.joinedEvents;
         localStorage.setItem("user", JSON.stringify(storedUser));
 
+        setIsSure(false)
         setIsJoined(true);
       });
   };
@@ -47,22 +51,31 @@ const Event = ({ event, events, setEvents, user }) => {
         <p className="text-xl tracking-wide font-bold">{event.description}</p>
       </div>
       {user && !user.isAdmin ? (
+        !isSure ? (
+          <button
+            onClick={() => {
+              setIsSure(true);
+            }}
+            className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${
+              isJoined ? "" : " hover:translate-y-[-2px] hover:cursor-pointer"
+            }`}
+            disabled={isJoined}
+          >
+            {isJoined ? "Joined" : "Join"}
+          </button>
+        ) : (
+          <SureCheck confirm={handleJoin} cancel={() => {setIsSure(false)}}/>
+        )
+      ) : user && user.isAdmin ? ( !isSure ? (
         <button
-          onClick={handleJoin}
-          className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${
-            isJoined ? "" : " hover:translate-y-[-2px] hover:cursor-pointer"
-          }`}
-          disabled={isJoined}
-        >
-          {isJoined ? "Joined" : "Join"}
-        </button>
-      ) : user && user.isAdmin ? (
-        <button
-          onClick={handleDelete}
+          onClick={() => {setIsSure(true)}}
           className="text-red-400 border rounded-full p-2 border-red-400 transition-all hover:translate-y-[-2px] active:translate-y-[2px] hover:cursor-pointer"
         >
           <FaTrash />
         </button>
+      ) : (
+        <SureCheck confirm={handleDelete} cancel={() => {setIsSure(false)}}/>
+      )
       ) : null}
     </div>
   );

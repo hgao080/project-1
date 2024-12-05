@@ -34,13 +34,14 @@ userSchema.set('toJSON', {
 
 // static sign up method
 userSchema.statics.signUp = async function(email, password, username) {
+    
     if (!email || !password || !username) {
         throw Error('All fields must be filled')
     }
     if (!validator.isEmail(email)) {
         throw Error('Email is not valid')
     }
-
+    console.log("Hi4")
     const passwordOptions = {
         minLength: 0,
         minLowercase: 1,
@@ -69,7 +70,7 @@ userSchema.statics.signUp = async function(email, password, username) {
     const hash = await bcrypt.hash(password, salt)
 
     const user = await this.create({ email, password: hash, username, isAdmin: false })
-
+    
     return user
 }
 

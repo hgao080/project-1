@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useSignup } from "../hooks/useSignup";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Navigate } from "react-router-dom";
+import userServices from '../services/user'
 
 const SignUp = () => {
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
 
   if (user) {
     if (user.isAdmin) {
@@ -17,12 +17,26 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const { signup, isLoading, error } = useSignup();
+  const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await signup(email, password, username);
+    const newUser = {
+      email,
+      password,
+      username,
+    }
+
+    userServices.signupUser(newUser).then(createdUser => {
+      if ("error" in createdUser) {
+        setError(createdUser.error);
+      } else {
+        localStorage.setItem('user', JSON.stringify(createdUser))
+
+        dispatch({type: 'LOGIN', payload: createdUser})
+      }
+    })
   };
 
   return (
@@ -76,7 +90,6 @@ const SignUp = () => {
           </div>
 
           <button
-            disabled={isLoading}
             className="block border border-black bg-pastel-green mt-4 px-4 rounded transition-all shadow-lg text-xl hover:translate-y-[-2px] active:translate-y-[2px] font-bold"
           >
             Sign up

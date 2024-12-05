@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import EventForm from "../components/EventForm";
-import Events from "../components/Events";
+import EventsAdmin from "../components/EventsAdmin";
 
 import eventsService from "../services/events";
 import usersService from '../services/user'
@@ -61,7 +61,7 @@ const Admin = () => {
 
         <div className="flex gap-4 items-start mt-[-1rem]">
           <div className="flex justify-between w-[50rem] h-[25rem] m-auto">
-            <Events events={events} setEvents={setEvents} user={user} />
+            <EventsAdmin events={events} setEvents={setEvents} user={user} />
           </div>
           <EventForm events={events} setEvents={setEvents} />
         </div>

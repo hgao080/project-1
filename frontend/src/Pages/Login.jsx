@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useLogin } from "../hooks/useLogin";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Navigate, NavLink } from "react-router-dom";
+import userServices from '../services/user'
 
 const Login = () => {
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
 
   if (user) {
     if (user.isAdmin) {
@@ -16,12 +16,25 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, error, isLoading } = useLogin();
+  const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await login(email, password);
+    const user = {
+      email,
+      password,
+    }
+
+    userServices.loginUser(user).then(loggedUser => {
+      if ("error" in loggedUser) {
+        setError(loggedUser.error);
+      } else {
+        localStorage.setItem('user', JSON.stringify(loggedUser))
+
+        dispatch({type: 'LOGIN', payload: loggedUser})
+      }
+    }) 
   };
 
   return (
@@ -55,7 +68,7 @@ const Login = () => {
             <p className="">Don't have an account?</p>
             <NavLink to="/signup" className={`underline decoration-1 font-bold`}>Create one here!</NavLink>
           </div>
-          <button disabled={isLoading} className="mt-4 border border-black px-4 rounded bg-pastel-green text-xl hover:translate-y-[-2px] active:translate-y-[2px] transition-all font-bold">Log in</button>
+          <button className="mt-4 border border-black px-4 rounded bg-pastel-green text-xl hover:translate-y-[-2px] active:translate-y-[2px] transition-all font-bold">Log in</button>
           {error && <div className="border border-red-500 text-red-500 px-4 mt-4 rounded text-xl font-bold">{error}</div>}
         </form>
       </div>

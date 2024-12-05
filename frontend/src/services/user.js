@@ -17,9 +17,14 @@ const getUsers = () => {
 };
 
 const signupUser = (user) => {
-  console.log(user);
   const req = axios.post(`${Url}/signup`, user);
   return req.then((res) => res.data).catch((err) => err.response.data);
 };
 
-export default { updateUser, getUsers, signupUser, updateJoinedEvents };
+const loginUser = (user) => {
+  console.log(user)
+  const req = axios.post(`${Url}/login`, user);
+  return req.then((res) => res.data).catch((err) => err.response.data);
+}
+
+export default { updateUser, getUsers, signupUser, updateJoinedEvents, loginUser };

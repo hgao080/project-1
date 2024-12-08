@@ -18,6 +18,8 @@ Only upcoming events are shown to users. Joining events is done by storing a lis
 
 Admins are able to login by entering 'admin' in both email and password. The API route for getting all users has been protected so that only admins are able to access it (use of JWT). Admins are able to filter through events with more advanced filters.
 
+![Uploading Untitled-2024-11-30-1648.png…]()
+
 ## Additional Features / Design Choices
 
 1. Tailwind CSS

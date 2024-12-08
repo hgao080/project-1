@@ -50,39 +50,39 @@ const SignUp = () => {
             Sign up
           </h3>
 
-          <div className="flex mt-4 w-[60%] m-auto gap-4 translate-x-[-2.8rem] font-bold tracking-wide text-2xl">
-            <div className="flex flex-col gap-2 items-end">
+          <div className="flex mt-4 w-[60%] m-auto gap-4 translate-x-[-2.8rem]  tracking-wide text-2xl">
+            <div className="flex flex-col gap-2 items-end font-bold">
               <label htmlFor="username">Username</label>
               <label htmlFor="email">Email</label>
               <label htmlFor="password">Password</label>
             </div>
 
-            <div className="flex flex-col w-full gap-2">
+            <div className="flex flex-col w-full gap-2 font-normal">
               <input
                 type="text"
                 id="username"
                 onChange={(e) => setUsername(e.target.value)}
-                className="border border-black rounded pl-2"
+                className="border border-black rounded pl-2 font-body"
               />
               <input
                 type="email"
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
-                className="border border-black rounded pl-2"
+                className="border border-black rounded pl-2 font-body"
               />
 
               <input
                 type="password"
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
-                className="border border-black rounded pl-2"
+                className="border border-black rounded pl-2 font-body"
               />
             </div>
           </div>
 
           <div className="border border-black px-4 py-2 mt-4 rounded text-xl bg-golden-yellow shadow-xl">
-            <p className="font-bold">Password must contain at least:</p>
-            <ul className="grid grid-cols-2 gap-x-4 list-disc ml-4">
+            <p className="font-bold text-2xl">Password must contain at least:</p>
+            <ul className="grid grid-cols-2 gap-x-4 list-disc ml-4 text-2xl decoration-3">
               <li>One capital letter</li>
               <li>One lowercase letter</li>
               <li>One number</li>

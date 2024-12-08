@@ -38,7 +38,7 @@ const UserDetails = ({ user }) => {
 
   return (
     <div className="font-main">
-      <div className="border border-black p-4 rounded-xl w-[14rem] mt-[5.8rem] bg-beige py-2">
+      <div className="border border-black p-4 rounded-xl w-[14rem] mt-[5.8rem] bg-beige py-2 font-body">
         <h3 className="text-3xl underline font-bold decoration-2">
           User details
         </h3>

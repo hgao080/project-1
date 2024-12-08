@@ -53,20 +53,20 @@ const Login = () => {
                 type="text"
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
-                className="border border-black rounded w-full pl-1"
+                className="border border-black rounded w-full pl-1 font-body"
               />
               <input
                 type="password"
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
-                className="border border-black rounded w-full pl-1"
+                className="border border-black rounded w-full pl-1 font-body"
               />
             </div>
           </div>
 
-          <div className="flex gap-1 border border-black px-4 mt-4 rounded bg-golden-yellow shadow-xl text-xl">
+          <div className="flex gap-1 border border-black px-4 mt-4 rounded bg-golden-yellow shadow-xl text-2xl">
             <p className="">Don't have an account?</p>
-            <NavLink to="/signup" className={`underline decoration-1 font-bold`}>Create one here!</NavLink>
+            <NavLink to="/signup" className={`underline decoration-1 font-bold  transition-all hover:translate-y-[-1px] active:translate-y-[1px]`}>Create one here!</NavLink>
           </div>
           <button className="mt-4 border border-black px-4 rounded bg-pastel-green text-xl hover:translate-y-[-2px] active:translate-y-[2px] transition-all font-bold">Log in</button>
           {error && <div className="border border-red-500 text-red-500 px-4 mt-4 rounded text-xl font-bold">{error}</div>}

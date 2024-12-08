@@ -44,11 +44,10 @@ const Event = ({ event, events, setEvents, user }) => {
   });
 
   return (
-    <div className="flex border border-black w-full px-4 py-2 justify-between items-center rounded-xl bg-pastel-orange font-main shadow-lg">
+    <div className="flex border border-black w-full px-4 py-2 justify-between items-center rounded-xl bg-pastel-orange shadow-lg font-body">
       <div className="flex flex-col">
-        <h3 className="font-bold text-3xl">{event.name}</h3>
-        <p className="italic mt-[-6px] text-2xl">{formattedDate}</p>
-        <p className="text-xl tracking-wide font-bold">{event.description}</p>
+        <h3 className="flex font-bold text-2xl items-end gap-4">{event.name} <span className="text-xl italic font-normal underline decoration-1 mb-[2px]">{formattedDate}</span></h3>
+        <p className="text-xl">{event.description}</p>
       </div>
       {user && !user.isAdmin ? (
         !isSure ? (

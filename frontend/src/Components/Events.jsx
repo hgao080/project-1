@@ -46,7 +46,7 @@ const Events = ({ events, setEvents, user }) => {
           ></Filter>
         </div>
       ) : null}
-      <div className="flex flex-col gap-3 mt-[0.75rem] border border-black rounded-xl overflow-auto w-full p-4 scrollbar-none h-[30rem] bg-beige shadow-2xl">
+      <div className="flex flex-col gap-3 mt-[0.75rem] border border-black rounded-xl overflow-auto w-full p-4 scrollbar-none h-[30rem] bg-beige shadow-2xl font-body">
         {eventsToShow.map((event) => (
           <Event
             key={event.id}

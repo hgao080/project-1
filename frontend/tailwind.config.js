@@ -9,7 +9,8 @@ export default {
         'homeBg': "url('/images/homeBg.png')"
       },
       fontFamily: {
-        'main': ['"Amatic SC"']
+        'main': ['"Amatic SC"'],
+        'body': ['"Patrick Hand"']
       },
       colors: {
         'beige': '#F8F4E3',

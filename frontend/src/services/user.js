@@ -11,8 +11,9 @@ const updateJoinedEvents = (username, eventName) => {
   return req.then((res) => res.data).catch((err) => err.response.data);
 };
 
-const getUsers = () => {
-  const req = axios.get(Url);
+const getUsers = (headers = {}) => {
+  console.log(headers)
+  const req = axios.get(Url, {headers});
   return req.then((res) => res.data);
 };
 
@@ -22,7 +23,6 @@ const signupUser = (user) => {
 };
 
 const loginUser = (user) => {
-  console.log(user)
   const req = axios.post(`${Url}/login`, user);
   return req.then((res) => res.data).catch((err) => err.response.data);
 }

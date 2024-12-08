@@ -4,7 +4,7 @@ import EventForm from "../components/EventForm";
 import EventsAdmin from "../components/EventsAdmin";
 
 import eventsService from "../services/events";
-import usersService from '../services/user'
+import usersService from "../services/user";
 import Logout from "../components/Logout";
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -18,13 +18,18 @@ const Admin = () => {
   const [timeout, setTimeoutReached] = useState(false);
 
   useEffect(() => {
-    eventsService.getAll().then((initialEvents) => {
-      setEvents(initialEvents);
-    });
-    usersService.getUsers().then(users => {
-      setUsers(users);
-    })
-  }, []);
+    if (user) {
+      eventsService.getAll().then((initialEvents) => {
+        setEvents(initialEvents);
+      });
+
+      usersService
+        .getUsers({ 'Authorization': `Bearer ${user.token}`, })
+        .then((users) => {
+          setUsers(users);
+        });
+    }
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -35,7 +40,7 @@ const Admin = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setTimeoutReached(true);
-    }, 1000); // 10 seconds timeout
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -56,7 +61,7 @@ const Admin = () => {
       <div className="max-w-[60rem] m-auto">
         <div className="flex justify-between items-center px-4 py-4">
           <h1 className="text-5xl italic">Admin Page</h1>
-          <Logout/>
+          <Logout />
         </div>
 
         <div className="flex gap-4 items-start mt-[-1rem]">
@@ -67,7 +72,7 @@ const Admin = () => {
         </div>
 
         <div className="">
-          <Users users={users} events={events}/>
+          <Users users={users} events={events} />
         </div>
       </div>
     </div>

@@ -6,6 +6,8 @@ const {
   updateUser,
   getUsers,
 } = require("../controllers/userController");
+const requireAuth = require('../middleware/requireAuth')
+const isAdmin = require('../middleware/isAdmin')
 
 const router = express.Router();
 
@@ -17,6 +19,6 @@ router.post("/signup", signUpUser);
 
 router.put("/:name", updateUser);
 
-router.get("/", getUsers);
+router.get("/", requireAuth, isAdmin, getUsers);
 
 module.exports = router;

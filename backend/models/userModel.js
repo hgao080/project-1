@@ -46,7 +46,7 @@ userSchema.statics.signUp = async function(email, password, username) {
     if (!validator.isEmail(email)) {
         throw Error('Email is not valid')
     }
-    console.log("Hi4")
+    
     const passwordOptions = {
         minLength: 0,
         minLowercase: 1,

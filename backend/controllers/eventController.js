@@ -19,25 +19,6 @@ const createEvent = async (req, res) => {
   }
 };
 
-// const joinEvent = async (req, res, next) => {
-//   const { username } = req.body;
-
-//   await Event.findById(req.params.id).then((event) => {
-//     const updated = {
-//       name: event.name,
-//       description: event.description,
-//       date: event.date,
-//       users: event.users.concat(username),
-//     };
-
-//     Event.findByIdAndUpdate(req.params.id, updated, { new: true })
-//       .then((updatedEvent) => {
-//         res.json(updatedEvent);
-//       })
-//       .catch((err) => next(err));
-//   });
-// };
-
 const deleteEvent = async (req, res) => {
   Event.findByIdAndDelete(req.params.id)
     .then((result) => {

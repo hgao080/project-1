@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -93,7 +94,15 @@ public class UserController {
         }
 
         if (passwordEncoder.matches(userDetails.get("password"), user.getPassword())) {
-            return ResponseEntity.ok(user);
+            String token = jwtUtil.generateToken(user.getUsername());
+            Map<String, Object> response = new HashMap<>();
+            response.put("username", user.getUsername());
+            response.put("email", user.getEmail());
+            response.put("isAdmin", user.getIsAdmin());
+            response.put("joinedEvents", user.getJoinedEvents());
+            response.put("token", token);
+
+            return ResponseEntity.ok(response);
         }
 
         Map<String, String> error = new HashMap<>();
@@ -102,12 +111,24 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Object> getUsers() {
-        return ResponseEntity.ok(userRepository.findAll());
+    public ResponseEntity<Object> getUsers(@RequestHeader("Authorization") String auth) {
+        String token = auth.substring(7);
+        String username = jwtUtil.getUsernameFromToken(token);
+
+        User user = userRepository.findByUsername(username);
+
+        if (user != null && user.getIsAdmin()) {
+            return ResponseEntity.ok(userRepository.findAll());
+        }
+
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Admin Access Required");
+        return ResponseEntity.badRequest().body(error);
     }
 
-    @PutMapping("/{username}") 
-    public ResponseEntity<Object> updateUser(@PathVariable("username") String username, @RequestBody Map<String, String> data) {
+    @PutMapping("/{username}")
+    public ResponseEntity<Object> updateUser(@PathVariable("username") String username,
+            @RequestBody Map<String, String> data) {
         User user = userRepository.findByUsername(username);
 
         if (data.containsKey("username")) {

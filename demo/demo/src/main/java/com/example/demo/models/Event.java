@@ -17,6 +17,7 @@ public class Event {
     private String name;
     private String description;
     private Date date;
+    private String competitionId;
     
     public Event() {
     }
@@ -51,5 +52,19 @@ public class Event {
         this.date = date;
     }
 
-    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCompetitionId() {
+        return competitionId;
+    }
+
+    public void setCompetitionId(String competitionId) {
+        this.competitionId = competitionId;
+    }
 }

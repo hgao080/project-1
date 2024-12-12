@@ -33,6 +33,12 @@ public class UserController {
             return ResponseEntity.badRequest().body(error);
         }
 
+        if (!userDetails.isPasswordStrong()) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Password not strong enough");
+            return ResponseEntity.badRequest().body(error);
+        }
+
 
         User user = userRepository.save(userDetails);
         return ResponseEntity.ok(user);

@@ -36,6 +36,23 @@ public class User {
         return true;
     }
 
+    public boolean isPasswordStrong() {
+        
+        boolean hasUppercase = false;
+        boolean hasLowercase = false;
+        boolean hasDigit = false;
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUppercase = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowercase = true;
+            } else if (Character.isDigit(c)) {
+                hasDigit = true;
+            }
+        }
+        return hasUppercase && hasLowercase && hasDigit;
+    }
+
     public String getUsername() {
         return username;
     }

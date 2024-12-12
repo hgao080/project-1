@@ -39,6 +39,19 @@ public class UserController {
             return ResponseEntity.badRequest().body(error);
         }
 
+        User emailTaken = userRepository.findByEmail(userDetails.getEmail());
+        if (emailTaken != null) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Email already taken");
+            return ResponseEntity.badRequest().body(error);
+        }
+
+        User usernameTaken = userRepository.findByUsername(userDetails.getUsername());
+        if (usernameTaken != null) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Username already taken");
+            return ResponseEntity.badRequest().body(error);
+        }
 
         User user = userRepository.save(userDetails);
         return ResponseEntity.ok(user);

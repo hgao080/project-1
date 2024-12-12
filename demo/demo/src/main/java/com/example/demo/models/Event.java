@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,12 +16,12 @@ public class Event {
 
     private String name;
     private String description;
-    private String date;
+    private Date date;
     
     public Event() {
     }
 
-    public Event(String name, String description, String date) {
+    public Event(String name, String description, Date date) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -41,11 +43,11 @@ public class Event {
         this.description = description;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

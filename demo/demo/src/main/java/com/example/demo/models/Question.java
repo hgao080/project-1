@@ -2,7 +2,12 @@ package com.example.demo.models;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("question")
 public class Question {
+    @Id
     private String title;
     private List<String> options;
     private int correctChoiceIndex;

@@ -3,9 +3,11 @@ package com.example.demo.models;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Document("user")
 public class User {
 
     @Id

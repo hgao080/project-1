@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,9 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/signup")
     public ResponseEntity<Object> signupUser(@RequestBody User userDetails) {
@@ -52,6 +56,9 @@ public class UserController {
             error.put("error", "Username already taken");
             return ResponseEntity.badRequest().body(error);
         }
+
+        String hashedPassword = passwordEncoder.encode(userDetails.getPassword());
+        userDetails.setPassword(hashedPassword);
 
         User user = userRepository.save(userDetails);
         return ResponseEntity.ok(user);

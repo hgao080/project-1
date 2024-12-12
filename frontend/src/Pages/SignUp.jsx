@@ -26,6 +26,8 @@ const SignUp = () => {
       email,
       password,
       username,
+      isAdmin: false,
+      joinedEvents: []
     }
 
     userServices.signupUser(newUser).then(createdUser => {

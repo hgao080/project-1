@@ -1,9 +1,17 @@
 package com.example.demo.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document("event")
 public class Event {
+
+    @Id
+    @JsonProperty("id")
+    private String id;
+
     private String name;
     private String description;
     private String date;

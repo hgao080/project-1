@@ -2,7 +2,7 @@ import { useState } from "react";
 import Event from "./Event";
 import Filter from "./Filter";
 
-const Events = ({ events, setEvents, user }) => {
+const EventsAdmin = ({ events, setEvents, user }) => {
   const [searchFilter, setFilter] = useState("");
   const [sortCriteria, setSortCriteria] = useState("name");
   const [eventFilter, setEventFilter] = useState("all");
@@ -106,4 +106,4 @@ const Events = ({ events, setEvents, user }) => {
   );
 };
 
-export default Events;
+export default EventsAdmin;

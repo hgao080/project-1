@@ -79,12 +79,26 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> loginUser(@RequestBody Map<String, String> userDetails) {
-        User user = userRepository.findByEmail(userDetails.get("email"));
+        if (userDetails.get("email").isEmpty() || userDetails.get("password").isEmpty()) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "All fields must be filled");
+            return ResponseEntity.badRequest().body(error);
+        }
 
-        if (user != null && user.getPassword().equals(userDetails.get("password"))) {
+        User user = userRepository.findByEmail(userDetails.get("email"));
+        if (user == null) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Incorrect email");
+            return ResponseEntity.badRequest().body(error);
+        }
+
+        if (passwordEncoder.matches(userDetails.get("password"), user.getPassword())) {
             return ResponseEntity.ok(user);
         }
-        return ResponseEntity.badRequest().build();
+
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Incorrect password");
+        return ResponseEntity.badRequest().body(error);
     }
 
     @GetMapping("")

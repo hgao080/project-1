@@ -2,7 +2,16 @@ package com.example.demo.models;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
+
+    @Id
+    @JsonProperty("id")
+    private String id;
+
     private String username;
     private String email;
     private String password;
@@ -58,6 +67,10 @@ public class User {
 
     public void setJoinedEvents(List<String> joinedEvents) {
         this.joinedEvents = joinedEvents;
+    }
+
+    public void addJoinedEvents(String eventName) {
+        this.joinedEvents.add(eventName);
     }
 
     

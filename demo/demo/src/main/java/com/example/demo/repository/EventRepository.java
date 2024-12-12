@@ -7,5 +7,4 @@ import com.example.demo.models.Event;
 
 @Repository
 public interface EventRepository extends MongoRepository<Event, String> {
-
 }

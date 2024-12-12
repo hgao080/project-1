@@ -7,5 +7,5 @@ import com.example.demo.models.Competition;
 
 @Repository
 public interface CompetitionRepository extends MongoRepository<Competition, String> {
-
+    public Competition findByTitle(String compTitle);
 }

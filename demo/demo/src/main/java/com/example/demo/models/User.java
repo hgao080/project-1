@@ -29,6 +29,13 @@ public class User {
         this.joinedEvents = joinedEvents;
     }
 
+    public boolean isSignupFilled() {
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
     public String getUsername() {
         return username;
     }

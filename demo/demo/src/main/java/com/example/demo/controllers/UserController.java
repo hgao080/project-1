@@ -1,8 +1,8 @@
 package com.example.demo.controllers;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,8 +26,15 @@ public class UserController {
     UserRepository userRepository;
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> signupUser(@RequestBody User userData) {
-        User user = userRepository.save(userData);
+    public ResponseEntity<Object> signupUser(@RequestBody User userDetails) {
+        if (!userDetails.isSignupFilled()) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "All fields must be filled");
+            return ResponseEntity.badRequest().body(error);
+        }
+
+
+        User user = userRepository.save(userDetails);
         return ResponseEntity.ok(user);
     }
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.util.JwtUtil;
 
 @CrossOrigin
 @RestController
@@ -24,10 +25,13 @@ import com.example.demo.repository.UserRepository;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/signup")
     public ResponseEntity<Object> signupUser(@RequestBody User userDetails) {
@@ -61,7 +65,16 @@ public class UserController {
         userDetails.setPassword(hashedPassword);
 
         User user = userRepository.save(userDetails);
-        return ResponseEntity.ok(user);
+
+        String token = jwtUtil.generateToken(user.getUsername());
+        Map<String, Object> response = new HashMap<>();
+        response.put("username", user.getUsername());
+        response.put("email", user.getEmail());
+        response.put("isAdmin", user.getIsAdmin());
+        response.put("joinedEvents", user.getJoinedEvents());
+        response.put("token", token);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")

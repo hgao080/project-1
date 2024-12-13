@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 
 import EventForm from "../components/EventForm";
 import EventsAdmin from "../components/EventsAdmin";
@@ -11,6 +11,8 @@ import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Users from "../components/Users";
 import Competitions from "../components/Competitions";
+
+export const DataContext = createContext();
 
 const Admin = () => {
   const { user } = useAuthContext();
@@ -27,7 +29,7 @@ const Admin = () => {
       });
     }
   }, [user]);
-  
+
   useEffect(() => {
     if (user) {
       usersService
@@ -37,7 +39,7 @@ const Admin = () => {
         });
     }
   }, [user]);
-  
+
   useEffect(() => {
     if (user) {
       competitionsService.getAll().then((initialCompetitions) => {
@@ -80,27 +82,29 @@ const Admin = () => {
         </div>
 
         <div className="flex justify-center mt-[-1rem] gap-8 ">
-          <div className="flex flex-col">
-            <div className="flex gap-4">
-              <div className="flex w-[50rem] h-[28rem] m-auto">
-                <EventsAdmin
-                  events={events}
-                  setEvents={setEvents}
-                  user={user}
-                />
+          <DataContext.Provider value={{competitions, setEvents}}>
+            <div className="flex flex-col">
+              <div className="flex gap-4">
+                <div className="flex w-[50rem] h-[28rem] m-auto">
+                  <EventsAdmin
+                    events={events}
+                    setEvents={setEvents}
+                    user={user}
+                  />
+                </div>
+                <EventForm events={events} setEvents={setEvents} />
               </div>
-              <EventForm events={events} setEvents={setEvents} />
-            </div>
 
-            <div className="">
               <div className="">
-                <Competitions
-                  competitions={competitions}
-                  setCompetitions={setCompetitions}
-                />
+                <div className="">
+                  <Competitions
+                    competitions={competitions}
+                    setCompetitions={setCompetitions}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </DataContext.Provider>
 
           <div className="">
             <Users users={users} events={events} />

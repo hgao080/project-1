@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -19,7 +20,16 @@ public class Competition {
         this.questionIds = questionIds;
     }
 
+    @Override
+    public String toString() {
+        return "Competition [title=" + title + ", questionIds=" + questionIds + "]";
+    }
+
     public void addQuestion(String questionId) {
+        if (questionIds == null) {
+            questionIds = new ArrayList<>();
+        }
+
         this.questionIds.add(questionId);
     }
 

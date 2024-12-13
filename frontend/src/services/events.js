@@ -21,4 +21,10 @@ const deleteEvent = (eventId) => {
   return req.then((res) => res);
 };
 
-export default { getAll, createEvent, joinEvent, deleteEvent };
+const addCompetition = (eventId, data) => {
+  console.log(data)
+  const req = axios.put(`${Url}/${eventId}`, data)
+  return req.then((res) => res.data)
+}
+
+export default { getAll, createEvent, joinEvent, deleteEvent, addCompetition };

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Event from "./Event";
+import EventAdmin from "./EventAdmin";
 import Filter from "./Filter";
 
 const EventsAdmin = ({ events, setEvents, user }) => {
@@ -93,7 +93,7 @@ const EventsAdmin = ({ events, setEvents, user }) => {
 
       <div className="flex flex-col gap-3 mt-[0.75rem] border border-black rounded-xl overflow-auto w-full p-4 scrollbar-none h-[30rem] bg-beige shadow-2xl">
         {sortedEvents.map((event) => (
-          <Event
+          <EventAdmin
             key={event.id}
             event={event}
             events={events}

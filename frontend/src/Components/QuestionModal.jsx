@@ -9,7 +9,7 @@ const QuestionModal = ({ handleToggle, competitions, competition, setCompetition
   const [choiceTwo, setChoiceTwo] = useState("");
   const [choiceThree, setChoiceThree] = useState("");
   const [choiceFour, setChoiceFour] = useState("");
-  const [correctChoice, setCorrectChoice] = useState();
+  const [correctChoice, setCorrectChoice] = useState(0);
 
   const clearModal = () => {
     setTitle('')
@@ -117,7 +117,7 @@ const QuestionModal = ({ handleToggle, competitions, competition, setCompetition
           </div>
           <div className="mt-2">
             <label htmlFor="">Correct Choice: </label>
-            <select onChange={(e) => {
+            <select value={correctChoice} onChange={(e) => {
                   setCorrectChoice(e.target.value);
                 }} id="correctOption" className="pl-1 mt-2 w-[5rem]">
               <option value={0}>Option 1</option>

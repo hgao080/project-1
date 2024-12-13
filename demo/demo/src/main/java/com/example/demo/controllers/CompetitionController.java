@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Competition;
+import com.example.demo.models.Question;
 import com.example.demo.repository.CompetitionRepository;
 
 @CrossOrigin
@@ -32,10 +33,9 @@ public class CompetitionController {
     }
 
     @PutMapping("/{compTitle}")
-    public ResponseEntity<Object> addQuestionToCompetition(@PathVariable("compTitle") String compTitle, @RequestBody Map<String, Object> data) {
+    public ResponseEntity<Object> addQuestionToCompetition(@PathVariable("compTitle") String compTitle, @RequestBody Question question) {
         Competition comp = competitionRepository.findByTitle(compTitle);
-        List<String> questionIds = (List<String>) data.get("questionIds");
-        comp.addQuestions(questionIds);
+        comp.addQuestion(question.getTitle());
         competitionRepository.save(comp);
         return ResponseEntity.ok(comp);
     }

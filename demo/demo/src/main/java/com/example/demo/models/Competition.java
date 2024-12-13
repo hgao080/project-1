@@ -19,8 +19,8 @@ public class Competition {
         this.questionIds = questionIds;
     }
 
-    public void addQuestions(List<String> questionIds) {
-        this.questionIds.addAll(questionIds);
+    public void addQuestion(String questionId) {
+        this.questionIds.add(questionId);
     }
 
     public String getTitle() {

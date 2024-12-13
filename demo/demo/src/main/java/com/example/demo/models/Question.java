@@ -21,6 +21,11 @@ public class Question {
         this.correctChoiceIndex = correctChoiceIndex;
     }
 
+    @Override
+    public String toString() {
+        return "Question [title=" + title + ", options=" + options + ", correctChoiceIndex=" + correctChoiceIndex + "]";
+    }
+
     public String getTitle() {
         return title;
     }

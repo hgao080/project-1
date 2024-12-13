@@ -32,7 +32,7 @@ const Competitions = ({competitions, setCompetitions}) => {
             </div>
             <div className="flex flex-col gap-3 mt-[0.75rem] border border-black rounded-xl overflow-auto w-full p-4 scrollbar-none h-[20rem] bg-beige shadow-2xl">
                 {competitions.map((competition) => (
-                    <Competition key={competition.title} competition={competition}/>
+                    <Competition key={competition.title} competitions={competitions} competition={competition} setCompetitions={setCompetitions}/>
                 ))}
             </div>
         </div>

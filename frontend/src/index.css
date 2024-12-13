@@ -13,3 +13,8 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}

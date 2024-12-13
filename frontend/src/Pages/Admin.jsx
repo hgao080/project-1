@@ -5,14 +5,17 @@ import EventsAdmin from "../components/EventsAdmin";
 
 import eventsService from "../services/events";
 import usersService from "../services/user";
+import competitionsService from "../services/competitions";
 import Logout from "../components/Logout";
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Users from "../components/Users";
+import Competitions from "../components/Competitions";
 
 const Admin = () => {
   const { user } = useAuthContext();
   const [events, setEvents] = useState([]);
+  const [competitions, setCompetitions] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [timeout, setTimeoutReached] = useState(false);
@@ -22,12 +25,24 @@ const Admin = () => {
       eventsService.getAll().then((initialEvents) => {
         setEvents(initialEvents);
       });
-
+    }
+  }, [user]);
+  
+  useEffect(() => {
+    if (user) {
       usersService
-        .getUsers({ 'Authorization': `Bearer ${user.token}`, })
+        .getUsers({ Authorization: `Bearer ${user.token}` })
         .then((users) => {
           setUsers(users);
         });
+    }
+  }, [user]);
+  
+  useEffect(() => {
+    if (user) {
+      competitionsService.getAll().then((initialCompetitions) => {
+        setCompetitions(initialCompetitions);
+      });
     }
   }, [user]);
 
@@ -57,22 +72,39 @@ const Admin = () => {
   }
 
   return (
-    <div className="w-screen h-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main">
+    <div className="w-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main pb-8">
       <div className="max-w-[60rem] m-auto">
         <div className="flex justify-between items-center px-4 py-4">
           <h1 className="text-5xl italic">Admin Page</h1>
           <Logout />
         </div>
 
-        <div className="flex gap-4 items-start mt-[-1rem]">
-          <div className="flex justify-between w-[50rem] h-[25rem] m-auto">
-            <EventsAdmin events={events} setEvents={setEvents} user={user} />
-          </div>
-          <EventForm events={events} setEvents={setEvents} />
-        </div>
+        <div className="flex justify-center mt-[-1rem] gap-8 ">
+          <div className="flex flex-col">
+            <div className="flex gap-4">
+              <div className="flex w-[50rem] h-[28rem] m-auto">
+                <EventsAdmin
+                  events={events}
+                  setEvents={setEvents}
+                  user={user}
+                />
+              </div>
+              <EventForm events={events} setEvents={setEvents} />
+            </div>
 
-        <div className="">
-          <Users users={users} events={events} />
+            <div className="">
+              <div className="">
+                <Competitions
+                  competitions={competitions}
+                  setCompetitions={setCompetitions}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="">
+            <Users users={users} events={events} />
+          </div>
         </div>
       </div>
     </div>

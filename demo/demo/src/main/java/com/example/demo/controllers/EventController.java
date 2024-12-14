@@ -31,6 +31,7 @@ public class EventController {
         return ResponseEntity.ok(eventRepository.findAll());
     }
 
+
     @PostMapping
     public ResponseEntity<Object> createEvent(@RequestBody Event eventData) {
         Event createdEvent = eventRepository.save(eventData);

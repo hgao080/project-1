@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.models.Competition;
 import com.example.demo.models.Question;
 import com.example.demo.repository.CompetitionRepository;
+import com.example.demo.repository.QuestionRepository;
 
 @CrossOrigin
 @RestController
@@ -25,6 +27,9 @@ public class CompetitionController {
 
     @Autowired
     CompetitionRepository competitionRepository;
+
+    @Autowired
+    QuestionRepository questionRepository;
 
     @PostMapping
     public ResponseEntity<Object> createCompetition(@RequestBody Competition competitionDetails) {
@@ -43,5 +48,15 @@ public class CompetitionController {
     @GetMapping
     public ResponseEntity<Object> getCompetitions() {
         return ResponseEntity.ok(competitionRepository.findAll());
+    }
+
+    @GetMapping("/{compTitle}") ResponseEntity<Object> getCompQuestions(@PathVariable("compTitle") String compTitle) {
+        Competition comp = competitionRepository.findByTitle(compTitle);
+        List<Question> questions = questionRepository.findAllById(comp.getQuestionIds());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("questions", questions);
+
+        return ResponseEntity.ok(response);
     }
 }

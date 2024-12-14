@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 
-import Home from './Pages/Home'
-import SignUp from './Pages/SignUp'
-import Admin from './Pages/Admin'
+import Home from './pages/Home'
+import SignUp from './pages/SignUp'
+import Admin from './pages/Admin'
 import Login from './pages/Login'
+import CompetitionTest from './pages/CompetitionTest'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -13,6 +14,7 @@ const router = createBrowserRouter(
       <Route path="signup" element={<SignUp/>}/>
       <Route path="login" element={<Login/>}/>
       <Route path="admin" element={<Admin/>}/>
+      <Route path="competition/:competitionId" element={<CompetitionTest />}/>
     </Route>
   )
 )

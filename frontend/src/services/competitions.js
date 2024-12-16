@@ -16,4 +16,9 @@ const addQuestionToCompetition = (competitionTitle, question) => {
   return req.then((res) => res.data)
 }
 
-export default { getAll, createCompetition, addQuestionToCompetition };
+const getQuestions = (competitionTitle) => {
+  const req = axios.get(`${Url}/${competitionTitle}`)
+  return req.then(res => res.data)
+}
+
+export default { getAll, createCompetition, addQuestionToCompetition, getQuestions };

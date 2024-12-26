@@ -1,7 +1,8 @@
 import { useState, useEffect, createContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import competitionsService from "../services/competitions"
+import attemptsService from "../services/attempts"
 import Question from "../components/Question";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -10,6 +11,7 @@ export const AnswersContext = createContext();
 const CompetitionTest = () => {
     const { competitionId } = useParams()
     const { user } = useAuthContext()
+    const navigate = useNavigate()
 
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState({})
@@ -21,13 +23,15 @@ const CompetitionTest = () => {
     }, []);
 
     const handleSubmit = () => {
-        const AttemptObject = {
+        const attemptObject = {
             userEmail: user.email,
             competitionId,
             attempts: answers
         }
 
-        console.log(AttemptObject)
+        attemptsService.saveAttempt(attemptObject).then(() => {
+            navigate('/')
+        })
     }
 
     return (

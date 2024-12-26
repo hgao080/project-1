@@ -7,4 +7,5 @@ import com.example.demo.models.Question;
 
 @Repository
 public interface QuestionRepository extends MongoRepository<Question, String> {
+    public Question findByTitle(String title);
 }

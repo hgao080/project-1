@@ -19,7 +19,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-screen pb-8 bg-homeBg bg-no-repeat bg-center bg-cover">
+    <div className="w-screen h-screen pb-8 bg-homeBg bg-no-repeat bg-center bg-cover">
       <div className="m-auto max-w-[60rem]">
         <Header user={user} />
         <Welcome user={user} />

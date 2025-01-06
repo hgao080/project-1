@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import userServices from "../services/user";
 import SureCheck from "./SureCheck";
+import { useAuthContext } from "../hooks/useAuthContext";
 
-const Event = ({ event, events, setEvents, user }) => {
+const Event = ({ event, events, setEvents }) => {
   const navigate = useNavigate();
 
-  const [isJoined, setIsJoined] = useState(false);
+  const { user, dispatch } = useAuthContext();
+  const [isJoined, setIsJoined] = useState(user && user.joinedEvents.includes(event.name));
   const [isSure, setIsSure] = useState(false);
   const [isCompLinked, setIsCompLinked] = useState(event.competitionId);
 
@@ -15,16 +17,14 @@ const Event = ({ event, events, setEvents, user }) => {
     if (user && user.joinedEvents.includes(event.name)) {
       setIsJoined(true);
     }
-  }, []);
+  }, [user]);
 
   const handleJoin = (e) => {
     e.preventDefault();
     userServices
       .updateJoinedEvents(user.username, { eventName: event.name })
       .then((returnedUser) => {
-        const storedUser = JSON.parse(localStorage.getItem("user"));
-        storedUser.joinedEvents = returnedUser.joinedEvents;
-        localStorage.setItem("user", JSON.stringify(storedUser));
+        dispatch({type: "LOGIN", payload: returnedUser});
 
         setIsSure(false);
         setIsJoined(true);

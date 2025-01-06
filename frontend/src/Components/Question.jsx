@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AnswersContext } from "../Pages/CompetitionTest";
+import { AnswersContext } from "../pages/CompetitionTest";
 
 const Question = ({ question }) => {
   const {answers, setAnswers} = useContext(AnswersContext)
@@ -12,11 +12,11 @@ const Question = ({ question }) => {
   }
 
   return (
-    <div className="w-full">
-      <h2 className="">{question.title}</h2>
-      <div className="grid grid-cols-2">
+    <div className="w-full border p-4 py-2 border-black bg-beige rounded-lg">
+      <h2 className="font-main text-3xl font-bold text-center">{question.title}</h2>
+      <div className="grid grid-cols-2 mt-1">
         {question.options.map((option, index) => (
-          <div key={index} className="flex gap-2 items-center">
+          <div key={index} className="flex items-center">
             <input
               type="radio"
               value={index}
@@ -25,7 +25,7 @@ const Question = ({ question }) => {
               checked={answers[question.title] === index}
               className=""
             />
-            <label htmlFor={`${question.title}-${index}`} className="">
+            <label htmlFor={`${question.title}-${index}`} className="w-full text-center">
               {option}
             </label>
           </div>

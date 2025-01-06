@@ -87,7 +87,7 @@ const Admin = () => {
         <div className="">
           <button
             onClick={handleSwap}
-            className="text-xl px-4 py-1 border-black rounded-lg font-bold hover:underline"
+            className="text-xl px-4 py-1 border border-black rounded-lg font-bold hover:underline"
           >
             {!isCompetitionsDisplayed ? "Competitions" : "Events"}
           </button>

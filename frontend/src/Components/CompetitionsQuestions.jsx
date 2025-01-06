@@ -2,7 +2,7 @@ import Competitions from "./Competitions";
 
 const CompetitionsQuestions = () => {
     return (
-        <div className="">
+        <div className="m-auto">
             <Competitions />
         </div>
     );

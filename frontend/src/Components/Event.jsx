@@ -55,27 +55,33 @@ const Event = ({ event, events, setEvents, user }) => {
 
       {user ? (
         <div className="flex items-center gap-4">
-          {isCompLinked ? (
-            <button
-              onClick={handleStartComp}
-              className="border border-black px-4 rounded"
-            >
-              Start Competition
-            </button>
-          ) : null}
-
           {!isSure ? (
-            <button
-              onClick={() => {
-                setIsSure(true);
-              }}
-              className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${
-                isJoined ? "" : " hover:translate-y-[-2px] hover:cursor-pointer"
-              }`}
-              disabled={isJoined}
-            >
-              {isJoined ? "Joined" : "Join"}
-            </button>
+            isJoined ? (
+              isCompLinked ? (
+                <button
+                  onClick={handleStartComp}
+                  className="border border-black px-4 rounded"
+                >
+                  Start Competition
+                </button>
+              ) : (
+                <p className="">No associated competition</p>
+              )
+            ) : (
+              <button
+                onClick={() => {
+                  setIsSure(true);
+                }}
+                className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${
+                  isJoined
+                    ? ""
+                    : " hover:translate-y-[-2px] hover:cursor-pointer"
+                }`}
+                disabled={isJoined}
+              >
+                Join
+              </button>
+            )
           ) : (
             <SureCheck
               confirm={handleJoin}

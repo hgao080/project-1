@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import Competition from "./Competition";
 import competitionsService from "../services/competitions";
 
-const Competitions = ({ competitions, setCompetitions }) => {
+import { DataContext } from "../Pages/Admin";
+
+const Competitions = () => {
+  const { competitions, setCompetitions } = useContext(DataContext);
   const [title, setTitle] = useState("");
 
   const createCompetition = (e) => {

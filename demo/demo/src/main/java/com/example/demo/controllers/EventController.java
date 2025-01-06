@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.models.Attempt;
 import com.example.demo.models.Competition;
 import com.example.demo.models.Event;
-import com.example.demo.models.Question;
 import com.example.demo.repository.AttemptRepository;
 import com.example.demo.repository.CompetitionRepository;
 import com.example.demo.repository.EventRepository;
@@ -75,7 +74,6 @@ public class EventController {
 
     @GetMapping("/mark/{id}")
     public ResponseEntity<Object> markEvent(@PathVariable("id") String id) {
-        System.out.println("Got here");
 
         Optional<Event> optionalEvent = eventRepository.findById(id);
         Event event = optionalEvent.get();

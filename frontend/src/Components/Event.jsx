@@ -5,7 +5,7 @@ import userServices from "../services/user";
 import SureCheck from "./SureCheck";
 
 const Event = ({ event, events, setEvents, user }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [isJoined, setIsJoined] = useState(false);
   const [isSure, setIsSure] = useState(false);
@@ -32,8 +32,8 @@ const Event = ({ event, events, setEvents, user }) => {
   };
 
   const handleStartComp = () => {
-    navigate(`/competition/${event.competitionId}`)
-  }
+    navigate(`/competition/${event.competitionId}`);
+  };
 
   const formattedDate = new Date(event.date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -53,30 +53,39 @@ const Event = ({ event, events, setEvents, user }) => {
         <p className="text-xl">{event.description}</p>
       </div>
 
-      <div className="flex items-center gap-4">
-        {isCompLinked ? <button onClick={handleStartComp} className="border border-black px-4 rounded">Start Competition</button> : null}
+      {user ? (
+        <div className="flex items-center gap-4">
+          {isCompLinked ? (
+            <button
+              onClick={handleStartComp}
+              className="border border-black px-4 rounded"
+            >
+              Start Competition
+            </button>
+          ) : null}
 
-        {!isSure ? (
-          <button
-            onClick={() => {
-              setIsSure(true);
-            }}
-            className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${
-              isJoined ? "" : " hover:translate-y-[-2px] hover:cursor-pointer"
-            }`}
-            disabled={isJoined}
-          >
-            {isJoined ? "Joined" : "Join"}
-          </button>
-        ) : (
-          <SureCheck
-            confirm={handleJoin}
-            cancel={() => {
-              setIsSure(false);
-            }}
-          />
-        )}
-      </div>
+          {!isSure ? (
+            <button
+              onClick={() => {
+                setIsSure(true);
+              }}
+              className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${
+                isJoined ? "" : " hover:translate-y-[-2px] hover:cursor-pointer"
+              }`}
+              disabled={isJoined}
+            >
+              {isJoined ? "Joined" : "Join"}
+            </button>
+          ) : (
+            <SureCheck
+              confirm={handleJoin}
+              cancel={() => {
+                setIsSure(false);
+              }}
+            />
+          )}
+        </div>
+      ) : null}
     </div>
   );
 };

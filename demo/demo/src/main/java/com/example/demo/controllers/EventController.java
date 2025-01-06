@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.MarkingResultDTO;
 import com.example.demo.models.Attempt;
 import com.example.demo.models.Competition;
 import com.example.demo.models.Event;
@@ -94,7 +96,7 @@ public class EventController {
 
         List<Attempt> attempts = attemptRepository.findByCompetitionId(competitionId);
 
-        HashMap<Object, Object> res = new HashMap<>();
+        List<MarkingResultDTO> res = new ArrayList<>();
 
         for (Attempt attempt : attempts) {
             Map<String, Integer> answers = attempt.getAttempts();
@@ -107,7 +109,7 @@ public class EventController {
                 }
             }
 
-            res.put(attempt.getUserEmail(), (correct + "/" + total));
+            res.add(new MarkingResultDTO(attempt.getUserEmail(), (correct + "/" + total)));
         }
 
         return ResponseEntity.ok(res);

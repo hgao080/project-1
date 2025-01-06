@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import Competition from "./Competition";
 import competitionsService from "../services/competitions";
 
-import { DataContext } from "../Pages/Admin";
+import { DataContext } from "../pages/Admin";
 
 const Competitions = () => {
   const { competitions, setCompetitions } = useContext(DataContext);

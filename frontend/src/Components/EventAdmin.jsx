@@ -7,11 +7,15 @@ import SureCheck from "./SureCheck";
 import { DataContext } from "../pages/Admin";
 
 const EventAdmin = ({ event, events, setEvents, user }) => {
-  const { competitions } = useContext(DataContext);
+  const { competitions, setMarkingResults, setIsNoResults } = useContext(DataContext);
 
   const [isSure, setIsSure] = useState(false);
-  const [selectedCompetition, setSelectedCompetition] = useState(competitions.length > 0 ? competitions[0].title : "");
-  const [linkedCompetition, setLinkedCompetition] = useState(event.competitionId)
+  const [selectedCompetition, setSelectedCompetition] = useState(
+    competitions.length > 0 ? competitions[0].title : ""
+  );
+  const [linkedCompetition, setLinkedCompetition] = useState(
+    event.competitionId
+  );
 
   useEffect(() => {
     if (user && user.joinedEvents.includes(event.name)) {
@@ -35,12 +39,25 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
     };
 
     eventServices.addCompetition(event.id, data).then((returnedEvent) => {
-        setEvents((events) => {
-            return events.map((event) => event.id === returnedEvent.title ? returnedEvent : event)
-          })
-        setLinkedCompetition(returnedEvent.competitionId)
+      setEvents((events) => {
+        return events.map((event) =>
+          event.id === returnedEvent.title ? returnedEvent : event
+        );
+      });
+      setLinkedCompetition(returnedEvent.competitionId);
     });
   };
+
+  const handleMark = (e) => {
+    eventServices.markEvent(event.id).then((results) => {
+      setIsNoResults(false);
+      setMarkingResults(results);
+
+      if (Object.keys(results).length == 0) {
+        setIsNoResults(true);
+      }
+    })
+  }
 
   const formattedDate = new Date(event.date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -51,11 +68,19 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
   return (
     <div className="flex border border-black w-full px-4 py-2 justify-between items-center rounded-xl bg-pastel-orange shadow-lg font-body">
       <div className="flex flex-col">
-        <h3 className="flex font-bold text-2xl items-end gap-4">
+        <h3 className="flex font-bold text-2xl gap-4 items-center">
           {event.name}{" "}
           <span className="text-xl italic font-normal underline decoration-1 mb-[2px]">
             {formattedDate}
           </span>
+          {!event.competitionId ? null : (
+            <button
+              onClick={handleMark}
+              className="inline font-normal border border-black px-4 rounded-lg text-sm"
+            >
+              Mark Event
+            </button>
+          )}
         </h3>
         <p className="text-xl">{event.description}</p>
       </div>

@@ -26,6 +26,10 @@ const Event = ({ event, events, setEvents }) => {
       .then((returnedUser) => {
         dispatch({type: "LOGIN", payload: returnedUser});
 
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        storedUser.joinedEvents = returnedUser.joinedEvents;
+        localStorage.setItem("user", JSON.stringify(storedUser));
+
         setIsSure(false);
         setIsJoined(true);
       });

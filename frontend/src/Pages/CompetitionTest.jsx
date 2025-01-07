@@ -15,6 +15,7 @@ const CompetitionTest = () => {
 
 	const [questions, setQuestions] = useState([]);
 	const [answers, setAnswers] = useState({});
+	const [isAllAnswered, setIsAllAnswered] = useState(true);
 
 	useEffect(() => {
 		competitionsService.getQuestions(competitionId).then((data) => {
@@ -23,6 +24,14 @@ const CompetitionTest = () => {
 	}, []);
 
 	const handleSubmit = () => {
+		if (Object.keys(answers).length !== questions.length) {
+			setIsAllAnswered(false);
+			setTimeout(() => {
+				setIsAllAnswered(true);
+			}, 2500)
+			return;
+		}
+
 		const attemptObject = {
 			userEmail: user.email,
 			competitionId,
@@ -48,6 +57,9 @@ const CompetitionTest = () => {
 						))}
 					</AnswersContext.Provider>
 				</div>
+				{!isAllAnswered ? (
+					<div className="border border-red-500 text-red-500 text-center m-auto w-fit px-4 py-1 mt-6 rounded-lg">Please answer all questions before submitting</div>
+				) : null}
 				<button className="mt-6 font-main border border-black bg-pastel-green w-fit m-auto font-bold px-4 py-1 rounded-lg" onClick={handleSubmit}>
 					Submit
 				</button>

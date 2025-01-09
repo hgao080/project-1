@@ -126,8 +126,8 @@ const Admin = () => {
 									</h3>
 									{Object.entries(markingResults).map(([key, result]) => (
 										<div key={key} className='grid grid-cols-2 text-xl'>
-											<p className=''>{key}</p>
-											<p className='justify-self-end'>{result}</p>
+											<p className=''>{result.userEmail}</p>
+											<p className='justify-self-end'>{result.result}</p>
 										</div>
 									))}
 								</div>

@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Competition {
     @Id
     private String title;
-    private List<String> questionIds;
+    private List<String> questionIds = new ArrayList<>();
     
     public Competition() {
     }

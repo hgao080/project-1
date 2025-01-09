@@ -12,7 +12,7 @@ const Question = ({ question }) => {
   }
 
   return (
-    <div className="w-full border p-4 py-2 border-black bg-beige rounded-lg">
+    <div className="w-full border p-4 py-8 border-black bg-beige rounded-lg">
       <h2 className="font-main text-3xl font-bold text-center">{question.title}</h2>
       <div className="grid grid-cols-2 mt-1">
         {question.options.map((option, index) => (

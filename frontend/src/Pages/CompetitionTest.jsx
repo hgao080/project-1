@@ -47,7 +47,7 @@ const CompetitionTest = () => {
 		<div className="bg-homeBg min-h-screen bg-no-repeat bg-cover bg-center">
 			<div className="flex flex-col">
 				<h1 className="m-auto mt-12 font-main text-7xl font-bold">{competitionId}</h1>
-				<div className="grid grid-cols-2 mt-6 w-[60rem] m-auto gap-x-4">
+				<div className="grid grid-cols-2 mt-6 w-[60rem] m-auto gap-4">
 					<AnswersContext.Provider value={{ answers, setAnswers }}>
 						{questions.map((question) => (
 							<Question

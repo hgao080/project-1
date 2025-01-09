@@ -38,9 +38,10 @@ public class CompetitionController {
     }
 
     @PutMapping("/{compTitle}")
-    public ResponseEntity<Object> addQuestionToCompetition(@PathVariable("compTitle") String compTitle, @RequestBody Question question) {
+    public ResponseEntity<Object> addQuestionsToCompetition(@PathVariable("compTitle") String compTitle, @RequestBody HashMap<Object, Object> data) {
         Competition comp = competitionRepository.findByTitle(compTitle);
-        comp.addQuestion(question.getTitle());
+        List<String> questionTitles = (List<String>) data.get("questionTitles");
+        comp.addQuestions(questionTitles);
         competitionRepository.save(comp);
         return ResponseEntity.ok(comp);
     }

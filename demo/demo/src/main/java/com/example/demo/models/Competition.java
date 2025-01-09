@@ -25,12 +25,17 @@ public class Competition {
         return "Competition [title=" + title + ", questionIds=" + questionIds + "]";
     }
 
-    public void addQuestion(String questionId) {
+    public void addQuestions(List<String> questionTitles) {
         if (questionIds == null) {
             questionIds = new ArrayList<>();
         }
 
-        this.questionIds.add(questionId);
+        for (String string : questionTitles) {
+            if (questionIds.contains(string)) {
+                continue;
+            }
+            questionIds.add(string);
+        }
     }
 
     public String getTitle() {

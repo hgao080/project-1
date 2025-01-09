@@ -11,8 +11,8 @@ const createCompetition = (competition) => {
   return req.then((res) => res.data);
 }
 
-const addQuestionToCompetition = (competitionTitle, question) => {
-  const req = axios.put(`${Url}/${competitionTitle}`, question)
+const addQuestionsToCompetition = (competitionTitle, data) => {
+  const req = axios.put(`${Url}/${competitionTitle}`, data)
   return req.then((res) => res.data)
 }
 
@@ -21,4 +21,4 @@ const getQuestions = (competitionTitle) => {
   return req.then(res => res.data)
 }
 
-export default { getAll, createCompetition, addQuestionToCompetition, getQuestions };
+export default { getAll, createCompetition, addQuestionsToCompetition, getQuestions };

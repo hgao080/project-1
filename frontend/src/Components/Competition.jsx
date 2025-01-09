@@ -1,11 +1,12 @@
 import { useState } from "react";
 import QuestionModal from "./QuestionModal";
+import AddQuestionModal from "./AddQuestionModal";
 
-const Competition = ({ competitions, competition, setCompetitions }) => {
-    const [isQuestionShowing, setIsQuestionShowing] = useState(false);
+const Competition = ({ competition }) => {
+    const [isModalShowing, setIsModalShowing] = useState(false);
 
-    const toggleQuestion = () => {
-        setIsQuestionShowing(!isQuestionShowing)
+    const toggleModal = () => {
+        setIsModalShowing(!isModalShowing)
     }
 
   return (
@@ -26,8 +27,8 @@ const Competition = ({ competitions, competition, setCompetitions }) => {
         </div>
       </div>
       
-      <button onClick={toggleQuestion} disabled={isQuestionShowing} className="border border-black px-4 rounded text-xl">Add Question</button>
-      {isQuestionShowing ? <QuestionModal handleToggle={toggleQuestion} competitions={competitions} competition={competition} setCompetitions={setCompetitions}/> : null}
+      <button onClick={toggleModal} disabled={isModalShowing} className="border border-black px-4 rounded text-xl">Add Question</button>
+      {isModalShowing ? <AddQuestionModal handleToggle={toggleModal} competition={competition}/> : null}
     </div>
   );
 };

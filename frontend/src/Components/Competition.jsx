@@ -9,7 +9,7 @@ const Competition = ({ competitions, competition, setCompetitions }) => {
     }
 
   return (
-    <div className="flex items-center border border-black w-full px-4 py-2 justify-between items-start rounded-xl bg-pastel-orange shadow-lg font-body">
+    <div className="flex items-center border border-black w-full px-4 py-2 justify-between rounded-xl bg-pastel-orange shadow-lg font-body">
       <div className="flex flex-col">
         <h3 className="flex font-bold text-2xl items-end gap-4">
           {competition.title}

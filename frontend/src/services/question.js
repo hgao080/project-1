@@ -6,5 +6,9 @@ const createQuestion = (question) => {
   return req.then((res) => res.data);
 }
 
+const getAll = () => {
+  const req = axios.get(Url);
+  return req.then((res) => res.data);
+}
 
-export default { createQuestion };
+export default { createQuestion, getAll };

@@ -130,6 +130,7 @@ const Admin = () => {
 											<p className='justify-self-end'>{result.result}</p>
 										</div>
 									))}
+									<button onClick={() => setMarkingResults({})}className="border border-black rounded-lg mt-auto self-start px-4">Close</button>
 								</div>
 							) : isNoResults ? (
 								<div className='flex flex-col border border-black rounded-lg bg-beige p-2 w-[300px]'>

@@ -16,10 +16,11 @@ const AllQuestions = () => {
 
 	return (
 		<div className='shadow-lg'>
-			<div className='flex justify-between items-center mt-4'>
-				<h2 className='text-center text-warm-brown text-5xl underline decoration-2 font-bold'>
-					Questions
-				</h2>
+			<h2 className='text-center text-warm-brown text-5xl underline decoration-2 font-bold mt-4'>
+				Questions
+			</h2>
+			<div className='flex justify-between items-center'>
+				<QuestionFilter setQuestionsToShow={setQuestionsToShow} />
 				<button
 					onClick={toggleQuestion}
 					disabled={isQuestionShowing}
@@ -27,7 +28,7 @@ const AllQuestions = () => {
 					Create Question
 				</button>
 			</div>
-			<QuestionFilter setQuestionsToShow={setQuestionsToShow}/>
+
 			<div className='flex flex-col gap-2 h-[16rem] bg-beige p-4 border border-black rounded-lg mt-2 overflow-auto scrollbar-none'>
 				{questionsToShow.map((question) => (
 					<div

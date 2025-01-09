@@ -46,7 +46,7 @@ const QuestionFilter = ({ setQuestionsToShow }) => {
 	return (
 		<div className='flex gap-8 items-center'>
 			<div className=''>
-				<label>Select difficulty: </label>
+				<label className='font-bold text-2xl'>Select difficulty: </label>
 				<select value={difficultyFilter} onChange={handleDifficultyFilterChange}>
 					{difficultyOptions.map((difficulty) => (
 						<option key={difficulty} value={difficulty}>
@@ -56,13 +56,13 @@ const QuestionFilter = ({ setQuestionsToShow }) => {
 				</select>
 			</div>
 			<div className='flex items-center gap-2'>
-				<label className=''>Select topics: </label>
+				<label className='font-bold text-2xl'>Select topics: </label>
 				<div className='flex gap-2'>
 					{topics.map((topic) => (
 						<button
 							value={topic}
 							onClick={handleTopicsClick}
-							className={`border border-black rounded-lg px-2 py-0 ${topicFilter.includes(topic) ? 'bg-pastel-blue' : 'bg-pastel-orange'}`}>
+							className={`border border-black rounded-lg px-2 py-0 font-bold ${topicFilter.includes(topic) ? 'bg-pastel-blue' : 'bg-pastel-orange'}`}>
 							{topic}
 						</button>
 					))}

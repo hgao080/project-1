@@ -15,10 +15,14 @@ const Events = ({ events, setEvents, user }) => {
     return eventDate >= now;
   })
 
+  const sortedUpcomingEvents = upcomingEvents.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+
   const eventsToShow =
     filter.length === 0
-      ? upcomingEvents
-      : upcomingEvents.filter((event) =>
+      ? sortedUpcomingEvents
+      : sortedUpcomingEvents.filter((event) =>
           event.name.toLowerCase().startsWith(filter.toLowerCase())
         );
 

@@ -97,7 +97,7 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 					</form>
 				) : (
 					<div>
-						<p className=''>Associated Competition</p>
+						<p className='underline decoration-1'>Associated Competition</p>
 						<p className=''>{linkedCompetition}</p>
 					</div>
 				)}

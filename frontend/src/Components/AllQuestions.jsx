@@ -3,9 +3,11 @@ import { useContext, useState } from 'react';
 import QuestionModal from './QuestionModal';
 
 import { DataContext } from '../pages/Admin';
+import QuestionFilter from './QuestionFilter';
 
 const AllQuestions = () => {
 	const { questions } = useContext(DataContext);
+	const [questionsToShow, setQuestionsToShow] = useState(questions);
 	const [isQuestionShowing, setIsQuestionShowing] = useState(false);
 
 	const toggleQuestion = () => {
@@ -25,8 +27,9 @@ const AllQuestions = () => {
 					Create Question
 				</button>
 			</div>
-			<div className='flex flex-col gap-2 h-[18rem] bg-beige p-4 border border-black rounded-lg mt-2 overflow-auto scrollbar-none'>
-				{questions.map((question) => (
+			<QuestionFilter setQuestionsToShow={setQuestionsToShow}/>
+			<div className='flex flex-col gap-2 h-[16rem] bg-beige p-4 border border-black rounded-lg mt-2 overflow-auto scrollbar-none'>
+				{questionsToShow.map((question) => (
 					<div
 						key={question.title}
 						className='bg-pastel-orange border border-black rounded-lg p-4 py-2 shadow-md '>

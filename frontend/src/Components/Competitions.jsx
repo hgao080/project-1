@@ -46,7 +46,7 @@ const Competitions = () => {
           </button>
         </form>
       </div>
-      <div className="flex flex-col gap-3 mt-[0.75rem] border border-black rounded-xl overflow-auto w-[50rem] p-4 scrollbar-none h-[18rem] bg-beige shadow-2xl">
+      <div className="flex flex-col gap-3 mt-[0.75rem] border border-black rounded-xl overflow-auto w-[50rem] p-4 scrollbar-none h-[16rem] bg-beige shadow-2xl">
         {competitions.map((competition) => (
           <Competition
             key={competition.title}

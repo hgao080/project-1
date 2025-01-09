@@ -14,7 +14,8 @@ const QuestionModal = ({ handleToggle }) => {
 	const [choiceFour, setChoiceFour] = useState('');
 	const [correctChoice, setCorrectChoice] = useState(0);
 	const [difficulty, setDifficulty] = useState('');
-  const [error, setError] = useState('');
+	const [topics, setTopic] = useState([]);
+	const [error, setError] = useState('');
 
 	const clearModal = () => {
 		setTitle('');
@@ -23,26 +24,43 @@ const QuestionModal = ({ handleToggle }) => {
 		setChoiceThree('');
 		setChoiceFour('');
 		setCorrectChoice();
-    setDifficulty('');
-    setError('');
+		setDifficulty('');
+		setError('');
 	};
 
 	const handleAddQuestion = (e) => {
 		e.preventDefault();
 
-    if (!difficulty) {
-      setError('Please select a difficulty level');
+    if (!title) {
+      setError('Please enter a question title');
       setTimeout(() => {
         setError('');
       }, 2500);
       return;
     }
 
+    if (!choiceOne || !choiceTwo || !choiceThree || !choiceFour) {
+      setError('Please enter all options');
+      setTimeout(() => {
+        setError('');
+      }, 2500);
+      return;
+    }
+
+		if (!difficulty) {
+			setError('Please select a difficulty level');
+			setTimeout(() => {
+				setError('');
+			}, 2500);
+			return;
+		}
+
 		const question = {
 			title,
 			options: [choiceOne, choiceTwo, choiceThree, choiceFour],
 			correctChoiceIndex: correctChoice,
 			difficulty,
+			topics,
 		};
 
 		questionService.createQuestion(question).then((returnedQuestion) => {
@@ -51,6 +69,14 @@ const QuestionModal = ({ handleToggle }) => {
 			clearModal();
 			handleToggle();
 		});
+	};
+
+	const handleTopicClick = (topic) => {
+		if (topics.includes(topic)) {
+			setTopic(topics.filter((t) => t !== topic));
+		} else {
+			setTopic([...topics, topic]);
+		}
 	};
 
 	return (
@@ -171,10 +197,53 @@ const QuestionModal = ({ handleToggle }) => {
 							</div>
 						</div>
 
-						<div className='flex-1'></div>
+						<div className='flex flex-col flex-1 justify-center items-center'>
+							<label className='text-2xl underline font-bold decoration-2'>
+								Topics
+							</label>
+
+							<div className='flex flex-wrap justify-center gap-4 mt-1 '>
+								<button
+									type='button'
+									onClick={() => handleTopicClick('MECHANICS')}
+									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
+										topics.includes('MECHANICS') ? 'bg-pastel-blue' : ''
+									}`}>
+									Mechanics
+								</button>
+								<button
+									type='button'
+									onClick={() => handleTopicClick('WAVES')}
+									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
+										topics.includes('WAVES') ? 'bg-pastel-blue' : ''
+									}`}>
+									Waves
+								</button>
+								<button
+									type='button'
+									onClick={() => handleTopicClick('ALGEBRA')}
+									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
+										topics.includes('ALGEBRA') ? 'bg-pastel-blue' : ''
+									}`}>
+									Algebra
+								</button>
+                <button
+									type='button'
+									onClick={() => handleTopicClick('GEOMETRY')}
+									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
+										topics.includes('GEOMETRY') ? 'bg-pastel-blue' : ''
+									}`}>
+									Geometry
+								</button>
+							</div>
+						</div>
 					</div>
 
-          {error && <p className='mt-4 px-2 py-1 text-red-500 text-center border border-red-500 rounded-lg font-bold text-xl'>{error}</p>}
+					{error && (
+						<p className='mt-4 px-2 py-1 text-red-500 text-center border border-red-500 rounded-lg font-bold text-xl'>
+							{error}
+						</p>
+					)}
 
 					<button
 						onClick={handleAddQuestion}

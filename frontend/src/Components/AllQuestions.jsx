@@ -35,9 +35,18 @@ const AllQuestions = () => {
 							<p className='border border-black rounded-lg px-2 py-0 font-bold text-xl bg-golden-yellow'>
 								{question.difficulty}
 							</p>
+							{question.topics
+								? question.topics.map((topic) => (
+										<p
+											key={topic}
+											className='border border-black rounded-lg px-2 py-0 font-bold text-xl bg-pastel-blue'>
+											{topic}
+										</p>
+								  ))
+								: null}
 						</div>
 
-						<div className='grid grid-cols-2 gap-2 mt-1'>	
+						<div className='grid grid-cols-2 gap-2 mt-1'>
 							{question.options.map((option, index) => (
 								<div
 									key={index}

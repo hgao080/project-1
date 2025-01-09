@@ -5,12 +5,15 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.example.demo.enums.Difficulty;
+
 @Document("question")
 public class Question {
     @Id
     private String title;
     private List<String> options;
     private int correctChoiceIndex;
+    private Difficulty difficulty;
     
     public Question() {
     }
@@ -48,5 +51,13 @@ public class Question {
 
     public void setCorrectChoiceIndex(int correctChoiceIndex) {
         this.correctChoiceIndex = correctChoiceIndex;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 }

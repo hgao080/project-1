@@ -23,8 +23,7 @@ const Admin = () => {
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [timeout, setTimeoutReached] = useState(false);
-	const [isCompetitionsDisplayed, setisCompetitionsDisplayed] =
-		useState(false);
+	const [isCompetitionsDisplayed, setisCompetitionsDisplayed] = useState(false);
 	const [markingResults, setMarkingResults] = useState({});
 	const [isNoResults, setIsNoResults] = useState(false);
 
@@ -34,19 +33,17 @@ const Admin = () => {
 				setEvents(initialEvents);
 			});
 
-			usersService
-				.getUsers({ Authorization: `Bearer ${user.token}` })
-				.then((users) => {
-					setUsers(users);
-				});
+			usersService.getUsers({ Authorization: `Bearer ${user.token}` }).then((users) => {
+				setUsers(users);
+			});
 
 			competitionsService.getAll().then((initialCompetitions) => {
 				setCompetitions(initialCompetitions);
 			});
 
-      questionsService.getAll().then((initialQuestions) => {
-        setQuestions(initialQuestions);
-      });
+			questionsService.getAll().then((initialQuestions) => {
+				setQuestions(initialQuestions);
+			});
 		}
 	}, [user]);
 
@@ -66,13 +63,13 @@ const Admin = () => {
 
 	if (loading) {
 		if (timeout) {
-			return <Navigate to="/" />;
+			return <Navigate to='/' />;
 		}
 		return <div>Loading...</div>;
 	}
 
 	if (!user || !user.isAdmin) {
-		return <Navigate to="/" />;
+		return <Navigate to='/' />;
 	}
 
 	const handleSwap = () => {
@@ -80,21 +77,20 @@ const Admin = () => {
 	};
 
 	return (
-		<div className="w-screen h-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main pb-8">
-			<div className="max-w-[60rem] flex justify-between items-center px-4 py-4 m-auto">
-				<h1 className="text-5xl italic">Admin Page</h1>
-				<div className="">
+		<div className='w-screen h-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main pb-8'>
+			<div className='max-w-[60rem] flex justify-between items-center px-4 py-4 m-auto'>
+				<h1 className='text-5xl italic'>Admin Page</h1>
+				<div className=''>
 					<button
 						onClick={handleSwap}
-						className="text-xl px-4 py-1 border border-black rounded-lg font-bold hover:underline"
-					>
+						className='text-xl px-4 py-1 border border-black rounded-lg font-bold hover:underline'>
 						{!isCompetitionsDisplayed ? 'Competitions' : 'Events'}
 					</button>
 				</div>
 				<Logout />
 			</div>
 
-			<div className="flex">
+			<div className='flex'>
 				<DataContext.Provider
 					value={{
 						competitions,
@@ -104,57 +100,43 @@ const Admin = () => {
 						setIsNoResults,
 						questions,
 						setQuestions,
-					}}
-				>
+					}}>
 					{!isCompetitionsDisplayed ? (
-						<div className="flex gap-4 m-auto">
-							<div className="flex flex-col">
-								<div className="flex gap-4">
-									<div className="flex w-[50rem] h-[28rem]">
+						<div className='flex gap-4 m-auto'>
+							<div className='flex flex-col'>
+								<div className='flex gap-4'>
+									<div className='flex w-[50rem] h-[28rem]'>
 										<EventsAdmin
 											events={events}
 											setEvents={setEvents}
 											user={user}
 										/>
 									</div>
-									<EventForm
-										events={events}
-										setEvents={setEvents}
-									/>
+									<EventForm events={events} setEvents={setEvents} />
 								</div>
 
-								<div className="">
+								<div className=''>
 									<Users users={users} events={events} />
 								</div>
 							</div>
-							{markingResults &&
-							Object.keys(markingResults).length > 0 ? (
-								<div className="flex flex-col border border-black rounded-lg bg-beige p-2 w-[300px]">
-									<h3 className="underline font-bold text-2xl decoration-1 font-main">
+							{markingResults && Object.keys(markingResults).length > 0 ? (
+								<div className='flex flex-col border border-black rounded-lg bg-beige p-2 w-[300px]'>
+									<h3 className='underline font-bold text-2xl decoration-1 font-main'>
 										Marking Results
 									</h3>
-									{Object.entries(markingResults).map(
-										([key, result]) => (
-											<div
-												key={key}
-												className="grid grid-cols-2 text-xl"
-											>
-												<p className="">{key}</p>
-												<p className="justify-self-end">
-													{result}
-												</p>
-											</div>
-										)
-									)}
+									{Object.entries(markingResults).map(([key, result]) => (
+										<div key={key} className='grid grid-cols-2 text-xl'>
+											<p className=''>{key}</p>
+											<p className='justify-self-end'>{result}</p>
+										</div>
+									))}
 								</div>
 							) : isNoResults ? (
-								<div className="flex flex-col border border-black rounded-lg bg-beige p-2 w-[300px]">
-									<h3 className="underline font-bold text-2xl decoration-1 font-main">
+								<div className='flex flex-col border border-black rounded-lg bg-beige p-2 w-[300px]'>
+									<h3 className='underline font-bold text-2xl decoration-1 font-main'>
 										Marking Results
 									</h3>
-									<div className="text-xl">
-										No results to show
-									</div>
+									<div className='text-xl'>No results to show</div>
 								</div>
 							) : null}
 						</div>

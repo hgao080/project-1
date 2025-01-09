@@ -27,7 +27,7 @@ const Competition = ({ competition }) => {
         </div>
       </div>
       
-      <button onClick={toggleModal} disabled={isModalShowing} className="border border-black px-4 rounded text-xl">Add Question</button>
+      <button onClick={toggleModal} disabled={isModalShowing} className="self-start min-w-fit border border-black px-4 rounded text-xl">Add Question</button>
       {isModalShowing ? <AddQuestionModal handleToggle={toggleModal} competition={competition}/> : null}
     </div>
   );

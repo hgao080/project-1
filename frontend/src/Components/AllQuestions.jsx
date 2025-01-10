@@ -24,7 +24,7 @@ const AllQuestions = () => {
 				<button
 					onClick={toggleQuestion}
 					disabled={isQuestionShowing}
-					className='border border-black rounded-lg bg-pastel-green mr-1 px-4 py-1 font-body font-bold text-xl'>
+					className='border border-black rounded-lg bg-pastel-green mr-1 px-4 py-1 font-body font-bold text-xl transition-all hover:translate-y-[-2px] active:translate-y-[2px]'>
 					Create Question
 				</button>
 			</div>

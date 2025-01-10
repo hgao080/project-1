@@ -11,24 +11,27 @@ const QuestionFilter = ({ setQuestionsToShow }) => {
 	const difficultyOptions = ['ALL', 'EASY', 'MEDIUM', 'HARD'];
 	const topics = ['MECHANICS', 'WAVES', 'ALGEBRA', 'GEOMETRY'];
 
-    const filterQuestions = () => {
-        let filteredQuestions = questions;
+	const filterQuestions = () => {
+		let filteredQuestions = questions;
 
-        if (difficultyFilter !== 'ALL') {
-            filteredQuestions = filteredQuestions.filter((question) => question.difficulty === difficultyFilter);
-        }
+		if (difficultyFilter !== 'ALL') {
+			filteredQuestions = filteredQuestions.filter(
+				(question) => question.difficulty === difficultyFilter
+			);
+		}
 
-        if (topicFilter.length > 0) {
-            filteredQuestions = filteredQuestions.filter((question) => topicFilter.every((topic) => question.topics.includes(topic)));
-        }
+		if (topicFilter.length > 0) {
+			filteredQuestions = filteredQuestions.filter((question) =>
+				topicFilter.every((topic) => question.topics.includes(topic))
+			);
+		}
 
-        setQuestionsToShow(filteredQuestions);
-    }
+		setQuestionsToShow(filteredQuestions);
+	};
 
-    useEffect(() => {
-        filterQuestions();
-    }, [difficultyFilter, topicFilter, questions]);
-
+	useEffect(() => {
+		filterQuestions();
+	}, [difficultyFilter, topicFilter, questions]);
 
 	const handleDifficultyFilterChange = (e) => {
 		setDifficultyFilter(e.target.value);
@@ -37,7 +40,9 @@ const QuestionFilter = ({ setQuestionsToShow }) => {
 	const handleTopicsClick = (e) => {
 		const clickedTopic = e.target.value;
 		if (topicFilter.includes(clickedTopic)) {
-			setTopicFilter(topicFilter.filter((topic) => clickedTopic !== topic));
+			setTopicFilter(
+				topicFilter.filter((topic) => clickedTopic !== topic)
+			);
 		} else {
 			setTopicFilter([...topicFilter, clickedTopic]);
 		}
@@ -46,8 +51,13 @@ const QuestionFilter = ({ setQuestionsToShow }) => {
 	return (
 		<div className='flex gap-8 items-center'>
 			<div className=''>
-				<label className='font-bold text-2xl'>Select difficulty: </label>
-				<select value={difficultyFilter} onChange={handleDifficultyFilterChange}>
+				<label className='font-bold text-2xl'>
+					Select difficulty:{' '}
+				</label>
+				<select
+					value={difficultyFilter}
+					onChange={handleDifficultyFilterChange}
+					className='text-xl'>
 					{difficultyOptions.map((difficulty) => (
 						<option key={difficulty} value={difficulty}>
 							{difficulty}
@@ -62,7 +72,11 @@ const QuestionFilter = ({ setQuestionsToShow }) => {
 						<button
 							value={topic}
 							onClick={handleTopicsClick}
-							className={`border border-black rounded-lg px-2 py-0 font-bold ${topicFilter.includes(topic) ? 'bg-pastel-blue' : 'bg-pastel-orange'}`}>
+							className={`border border-black rounded-lg px-2 py-0 font-bold transition-all hover:translate-y-[-2px] active:translate-y-[2px] ${
+								topicFilter.includes(topic)
+									? 'bg-pastel-blue'
+									: 'bg-pastel-orange'
+							}`}>
 							{topic}
 						</button>
 					))}

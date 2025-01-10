@@ -31,21 +31,21 @@ const QuestionModal = ({ handleToggle }) => {
 	const handleAddQuestion = (e) => {
 		e.preventDefault();
 
-    if (!title) {
-      setError('Please enter a question title');
-      setTimeout(() => {
-        setError('');
-      }, 2500);
-      return;
-    }
+		if (!title) {
+			setError('Please enter a question title');
+			setTimeout(() => {
+				setError('');
+			}, 2500);
+			return;
+		}
 
-    if (!choiceOne || !choiceTwo || !choiceThree || !choiceFour) {
-      setError('Please enter all options');
-      setTimeout(() => {
-        setError('');
-      }, 2500);
-      return;
-    }
+		if (!choiceOne || !choiceTwo || !choiceThree || !choiceFour) {
+			setError('Please enter all options');
+			setTimeout(() => {
+				setError('');
+			}, 2500);
+			return;
+		}
 
 		if (!difficulty) {
 			setError('Please select a difficulty level');
@@ -64,7 +64,10 @@ const QuestionModal = ({ handleToggle }) => {
 		};
 
 		questionService.createQuestion(question).then((returnedQuestion) => {
-			setQuestions((prevQuestions) => [...prevQuestions, returnedQuestion]);
+			setQuestions((prevQuestions) => [
+				...prevQuestions,
+				returnedQuestion,
+			]);
 
 			clearModal();
 			handleToggle();
@@ -93,10 +96,10 @@ const QuestionModal = ({ handleToggle }) => {
 							setTitle(e.target.value);
 						}}
 						type='text'
-						className='px-1 text-xl font-body rounded-lg text-center w-[60%]'
+						className='px-1 text-xl font-body rounded-lg text-center w-[60%] border border-black'
 					/>
 
-					<div className='grid grid-rows-2 grid-cols-2 mt-6 gap-x-12 gap-y-4 text-xl'>
+					<div className='grid grid-rows-2 grid-cols-2 mt-4 gap-x-12 gap-y-4 text-xl'>
 						<div className='flex flex-col'>
 							<label htmlFor='' className='text-center font-bold'>
 								Option 1
@@ -107,7 +110,7 @@ const QuestionModal = ({ handleToggle }) => {
 								}}
 								name=''
 								id=''
-								className='w-[15rem] h-[5rem] text-center rounded-lg scrollbar-none p-1 font-body'></textarea>
+								className='w-[15rem] h-[5rem] text-center rounded-lg scrollbar-none p-1 font-body border border-black'></textarea>
 						</div>
 						<div className='flex flex-col items-center'>
 							<label htmlFor='' className='text-center font-bold'>
@@ -119,7 +122,7 @@ const QuestionModal = ({ handleToggle }) => {
 								}}
 								name=''
 								id=''
-								className='w-[15rem] h-[5rem] text-center rounded-lg scrollbar-none p-1 font-body'></textarea>
+								className='w-[15rem] h-[5rem] text-center rounded-lg scrollbar-none p-1 font-body border border-black'></textarea>
 						</div>
 						<div className='flex flex-col'>
 							<label htmlFor='' className='text-center font-bold'>
@@ -131,7 +134,7 @@ const QuestionModal = ({ handleToggle }) => {
 								}}
 								name=''
 								id=''
-								className='w-[15rem] h-[5rem] text-center rounded-lg scrollbar-none p-1 font-body'></textarea>
+								className='w-[15rem] h-[5rem] text-center rounded-lg scrollbar-none p-1 font-body border border-black'></textarea>
 						</div>
 						<div className='flex flex-col'>
 							<label htmlFor='' className='text-center font-bold'>
@@ -143,7 +146,7 @@ const QuestionModal = ({ handleToggle }) => {
 								}}
 								name=''
 								id=''
-								className='w-[15rem] h-[5rem] text-center rounded-lg scrollbar-none p-1 font-body'></textarea>
+								className='w-[15rem] h-[5rem] text-center rounded-lg scrollbar-none p-1 font-body border border-black'></textarea>
 						</div>
 					</div>
 
@@ -174,7 +177,9 @@ const QuestionModal = ({ handleToggle }) => {
 									onClick={() => setDifficulty('EASY')}
 									disabled={difficulty === 'EASY'}
 									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
-										difficulty === 'EASY' ? 'bg-pastel-blue' : ''
+										difficulty === 'EASY'
+											? 'bg-pastel-blue'
+											: ''
 									}`}>
 									Easy
 								</button>
@@ -182,7 +187,9 @@ const QuestionModal = ({ handleToggle }) => {
 									onClick={() => setDifficulty('MEDIUM')}
 									disabled={difficulty === 'MEDIUM'}
 									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
-										difficulty === 'MEDIUM' ? 'bg-pastel-blue' : ''
+										difficulty === 'MEDIUM'
+											? 'bg-pastel-blue'
+											: ''
 									}`}>
 									Medium
 								</button>
@@ -190,7 +197,9 @@ const QuestionModal = ({ handleToggle }) => {
 									onClick={() => setDifficulty('HARD')}
 									disabled={difficulty === 'HARD'}
 									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
-										difficulty === 'HARD' ? 'bg-pastel-blue' : ''
+										difficulty === 'HARD'
+											? 'bg-pastel-blue'
+											: ''
 									}`}>
 									Hard
 								</button>
@@ -205,9 +214,13 @@ const QuestionModal = ({ handleToggle }) => {
 							<div className='flex flex-wrap justify-center gap-4 mt-1 '>
 								<button
 									type='button'
-									onClick={() => handleTopicClick('MECHANICS')}
+									onClick={() =>
+										handleTopicClick('MECHANICS')
+									}
 									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
-										topics.includes('MECHANICS') ? 'bg-pastel-blue' : ''
+										topics.includes('MECHANICS')
+											? 'bg-pastel-blue'
+											: ''
 									}`}>
 									Mechanics
 								</button>
@@ -215,7 +228,9 @@ const QuestionModal = ({ handleToggle }) => {
 									type='button'
 									onClick={() => handleTopicClick('WAVES')}
 									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
-										topics.includes('WAVES') ? 'bg-pastel-blue' : ''
+										topics.includes('WAVES')
+											? 'bg-pastel-blue'
+											: ''
 									}`}>
 									Waves
 								</button>
@@ -223,15 +238,19 @@ const QuestionModal = ({ handleToggle }) => {
 									type='button'
 									onClick={() => handleTopicClick('ALGEBRA')}
 									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
-										topics.includes('ALGEBRA') ? 'bg-pastel-blue' : ''
+										topics.includes('ALGEBRA')
+											? 'bg-pastel-blue'
+											: ''
 									}`}>
 									Algebra
 								</button>
-                <button
+								<button
 									type='button'
 									onClick={() => handleTopicClick('GEOMETRY')}
 									className={`border border-black rounded-lg px-2 py-1 text-xl tracking-wide font-bold ${
-										topics.includes('GEOMETRY') ? 'bg-pastel-blue' : ''
+										topics.includes('GEOMETRY')
+											? 'bg-pastel-blue'
+											: ''
 									}`}>
 									Geometry
 								</button>
@@ -247,8 +266,8 @@ const QuestionModal = ({ handleToggle }) => {
 
 					<button
 						onClick={handleAddQuestion}
-						className='mt-4 px-4 py-2 border border-black rounded-lg bg-pastel-green font-bold text-2xl'>
-						Add question
+						className='mt-4 px-4 py-2 border border-black rounded-lg bg-pastel-green font-bold text-2xl font-body transition-all hover:translate-y-[-2px] active:translate-y-[2px]'>
+						Create question
 					</button>
 				</form>
 			</div>

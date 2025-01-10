@@ -31,6 +31,10 @@ public class User {
         this.joinedEvents = joinedEvents;
     }
 
+    public void removeEvent(String eventName) {
+        this.joinedEvents.remove(eventName);
+    }
+
     public boolean isSignupFilled() {
         if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             return false;

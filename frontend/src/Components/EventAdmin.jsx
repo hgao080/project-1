@@ -5,9 +5,10 @@ import eventServices from '../services/events';
 import SureCheck from './SureCheck';
 
 import { DataContext } from '../pages/Admin';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const EventAdmin = ({ event, events, setEvents, user }) => {
-	const { competitions, setMarkingResults, setIsNoResults } = useContext(DataContext);
+	const { competitions, setMarkingResults, setIsNoResults, setUsers } = useContext(DataContext);
 
 	const [isSure, setIsSure] = useState(false);
 	const [selectedCompetition, setSelectedCompetition] = useState(
@@ -26,6 +27,14 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 	const handleDelete = () => {
 		eventServices.deleteEvent(event.id).then(() => {
 			setEvents(events.filter((existingEvent) => existingEvent.id !== event.id));
+			setUsers((users) => {
+				return users.map((user) => {
+					return {
+						...user,
+						joinedEvents: user.joinedEvents.filter((joinedEvent) => joinedEvent !== event.name),
+					};
+				});
+			});
 		});
 	};
 
@@ -71,13 +80,13 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 				<div className='flex flex-col'>
 					<h3 className='flex font-bold text-2xl gap-4 items-center'>
 						{event.name}{' '}
-						<span className='text-xl italic font-normal underline decoration-1 mb-[2px]'>
+						<span className='text-xl italic font-normal underline decoration-1 mb-[2px] self-end'>
 							{formattedDate}
 						</span>
 						{!event.competitionId ? null : (
 							<button
 								onClick={handleMark}
-								className='inline font-normal border border-black px-4 rounded-lg text-sm'>
+								className='inline font-normal border border-black px-4 rounded-md text-sm bg-pastel-blue transition-all hover:translate-y-[-1px] active:translate-y-[1px]'>
 								Mark Event
 							</button>
 						)}
@@ -143,7 +152,7 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 						</div>
 					</div>
 
-					<button className='border border-black px-2 font-body rounded self-end'>
+					<button className='bg-pastel-blue border border-black px-2 font-body rounded self-end transition-all hover:translate-y-[-1px] active:translate-y-[1px]'>
 						Add Competition
 					</button>
 				</form>

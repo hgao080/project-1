@@ -26,10 +26,12 @@ import com.example.demo.dto.MarkingResultDTO;
 import com.example.demo.models.Attempt;
 import com.example.demo.models.Competition;
 import com.example.demo.models.Event;
+import com.example.demo.models.User;
 import com.example.demo.repository.AttemptRepository;
 import com.example.demo.repository.CompetitionRepository;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.QuestionRepository;
+import com.example.demo.repository.UserRepository;
 
 @CrossOrigin
 @RestController
@@ -47,6 +49,9 @@ public class EventController {
 
     @Autowired
     AttemptRepository attemptRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<Object> getEvents() {
@@ -72,6 +77,13 @@ public class EventController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteEvent(@PathVariable("id") String id) {
         eventRepository.deleteById(id);
+
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            user.removeEvent(id);
+            userRepository.save(user);
+        }
+
         return ResponseEntity.ok().build();
     }
 

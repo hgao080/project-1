@@ -23,7 +23,8 @@ const Admin = () => {
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [timeout, setTimeoutReached] = useState(false);
-	const [isCompetitionsDisplayed, setisCompetitionsDisplayed] = useState(false);
+	const [isCompetitionsDisplayed, setisCompetitionsDisplayed] =
+		useState(false);
 	const [markingResults, setMarkingResults] = useState({});
 	const [isNoResults, setIsNoResults] = useState(false);
 
@@ -33,9 +34,11 @@ const Admin = () => {
 				setEvents(initialEvents);
 			});
 
-			usersService.getUsers({ Authorization: `Bearer ${user.token}` }).then((users) => {
-				setUsers(users);
-			});
+			usersService
+				.getUsers({ Authorization: `Bearer ${user.token}` })
+				.then((users) => {
+					setUsers(users);
+				});
 
 			competitionsService.getAll().then((initialCompetitions) => {
 				setCompetitions(initialCompetitions);
@@ -76,14 +79,19 @@ const Admin = () => {
 		setisCompetitionsDisplayed(!isCompetitionsDisplayed);
 	};
 
+	const handleClose = () => {
+		setMarkingResults({});
+		setIsNoResults(false);
+	}
+
 	return (
 		<div className='w-screen h-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main pb-8'>
 			<div className='max-w-[60rem] flex justify-between items-center px-4 py-4 m-auto'>
-				<h1 className='text-5xl italic'>Admin Page</h1>
+				<h1 className='text-5xl italic underline decoration-3 font-bold tracking-wide'>Admin Page</h1>
 				<div className=''>
 					<button
 						onClick={handleSwap}
-						className='text-xl px-4 py-1 border border-black rounded-lg font-bold hover:underline'>
+						className='text-xl px-4 py-1 border border-black rounded-lg shadow-lg font-bold bg-pastel-blue transition-all decoration-1 hover:underline hover:translate-y-[-2px] active:translate-y-[2px]'>
 						{!isCompetitionsDisplayed ? 'Competitions' : 'Events'}
 					</button>
 				</div>
@@ -100,6 +108,7 @@ const Admin = () => {
 						setIsNoResults,
 						questions,
 						setQuestions,
+						setUsers,
 					}}>
 					{!isCompetitionsDisplayed ? (
 						<div className='flex gap-4 m-auto'>
@@ -112,32 +121,55 @@ const Admin = () => {
 											user={user}
 										/>
 									</div>
-									<EventForm events={events} setEvents={setEvents} />
+									<EventForm
+										events={events}
+										setEvents={setEvents}
+									/>
 								</div>
 
 								<div className=''>
 									<Users users={users} events={events} />
 								</div>
 							</div>
-							{markingResults && Object.keys(markingResults).length > 0 ? (
-								<div className='flex flex-col border border-black rounded-lg bg-beige p-2 w-[300px]'>
+							{markingResults &&
+							Object.keys(markingResults).length > 0 ? (
+								<div className='flex flex-col border border-black rounded-lg bg-beige p-2 w-[300px] shadow-lg'>
 									<h3 className='underline font-bold text-2xl decoration-1 font-main'>
 										Marking Results
 									</h3>
-									{Object.entries(markingResults).map(([key, result]) => (
-										<div key={key} className='grid grid-cols-2 text-xl'>
-											<p className=''>{result.userEmail}</p>
-											<p className='justify-self-end'>{result.result}</p>
-										</div>
-									))}
-									<button onClick={() => setMarkingResults({})}className="border border-black rounded-lg mt-auto self-start px-4">Close</button>
+									{Object.entries(markingResults).map(
+										([key, result]) => (
+											<div
+												key={key}
+												className='grid grid-cols-2 text-xl'>
+												<p className=''>
+													{result.userEmail}
+												</p>
+												<p className='justify-self-end'>
+													{result.result}
+												</p>
+											</div>
+										)
+									)}
+									<button
+										onClick={handleClose}
+										className='border border-black rounded-lg mt-auto self-start px-4'>
+										Close
+									</button>
 								</div>
 							) : isNoResults ? (
-								<div className='flex flex-col border border-black rounded-lg bg-beige p-2 w-[300px]'>
+								<div className='flex flex-col border border-black rounded-lg bg-beige p-2 w-[300px] shadow-lg'>
 									<h3 className='underline font-bold text-2xl decoration-1 font-main'>
 										Marking Results
 									</h3>
-									<div className='text-xl'>No results to show</div>
+									<div className='text-xl'>
+										No results to show
+									</div>
+									<button
+										onClick={handleClose}
+										className='border border-black rounded-lg mt-auto self-start px-4'>
+										Close
+									</button>
 								</div>
 							) : null}
 						</div>

@@ -22,7 +22,6 @@ const deleteEvent = (eventId) => {
 };
 
 const addCompetition = (eventId, data) => {
-  console.log(data)
   const req = axios.put(`${Url}/${eventId}`, data)
   return req.then((res) => res.data)
 }

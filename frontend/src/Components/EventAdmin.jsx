@@ -109,6 +109,7 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 						<h2 className='font-bold underline'>Competition to assign:</h2>
 						<select
 							onChange={(e) => setSelectedCompetition(e.target.value)}
+							value={selectedCompetition}
 							className='rounded-md border border-black'>
 							{competitions &&
 								competitions.map((competition) => (

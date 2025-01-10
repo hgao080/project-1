@@ -4,7 +4,7 @@ import Filter from "./Filter";
 
 const EventsAdmin = ({ events, setEvents, user }) => {
   const [searchFilter, setFilter] = useState("");
-  const [sortCriteria, setSortCriteria] = useState("name");
+  const [sortCriteria, setSortCriteria] = useState("date");
   const [eventFilter, setEventFilter] = useState("all");
 
   const filteredEvents = events.filter((event) => {

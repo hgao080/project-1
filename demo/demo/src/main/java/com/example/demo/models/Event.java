@@ -1,6 +1,8 @@
 package com.example.demo.models;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +19,7 @@ public class Event {
     private String name;
     private String description;
     private Date date;
-    private String competitionId;
+    private Map<Object, Object> competition = new HashMap<Object, Object>();
     
     public Event() {
     }
@@ -26,6 +28,16 @@ public class Event {
         this.name = name;
         this.description = description;
         this.date = date;
+    }
+
+    public void assignCompetition(String competitionId, Date competitionStart, Date competitionEnd) {
+        competition.put("competitionId", competitionId);
+        competition.put("competitionStart", competitionStart);
+        competition.put("competitionEnd", competitionEnd);
+    }
+
+    public String getCompetitionId() {
+        return (String) competition.get("competitionId");
     }
 
     public String getName() {
@@ -60,11 +72,11 @@ public class Event {
         this.id = id;
     }
 
-    public String getCompetitionId() {
-        return competitionId;
+    public Map<Object, Object> getCompetition() {
+        return competition;
     }
 
-    public void setCompetitionId(String competitionId) {
-        this.competitionId = competitionId;
+    public void setCompetition(Map<Object, Object> competition) {
+        this.competition = competition;
     }
 }

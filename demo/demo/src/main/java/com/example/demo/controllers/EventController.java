@@ -1,6 +1,9 @@
 package com.example.demo.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.EventDTO;
 import com.example.demo.dto.MarkingResultDTO;
 import com.example.demo.models.Attempt;
 import com.example.demo.models.Competition;
@@ -63,12 +67,23 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> addCompetition(@PathVariable("id") String id, @RequestBody Map<String, Object> data) {
+    public ResponseEntity<Object> addCompetition(@PathVariable("id") String id, @RequestBody EventDTO data) {
         Optional<Event> optionalEvent = eventRepository.findById(id);
         Event existingEvent = optionalEvent.get();
 
-        String competitionId = (String) data.get("competitionId");
-        existingEvent.setCompetitionId(competitionId);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+        String competitionId = (String) data.getCompetitionId();
+        Date competitionStart;
+        Date competitionEnd;
+        try {
+            competitionStart = formatter.parse(data.getCompetitionStart());
+            competitionEnd = formatter.parse(data.getCompetitionEnd());
+        } catch (ParseException e) {
+            return ResponseEntity.badRequest().body("Invalid date format");
+        }
+        
+        existingEvent.assignCompetition(competitionId, competitionStart, competitionEnd);
         eventRepository.save(existingEvent);
 
         return ResponseEntity.ok(existingEvent);

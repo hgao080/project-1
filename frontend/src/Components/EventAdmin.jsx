@@ -14,6 +14,8 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 		competitions.length > 0 ? competitions[0].title : ''
 	);
 	const [linkedCompetition, setLinkedCompetition] = useState(event.competitionId);
+	const [competitionStart, setCompetitionStart] = useState('');
+	const [competitionEnd, setCompetitionEnd] = useState('');
 
 	useEffect(() => {
 		if (user && user.joinedEvents.includes(event.name)) {
@@ -32,6 +34,8 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 
 		const data = {
 			competitionId: selectedCompetition,
+			competitionStart,
+			competitionEnd,
 		};
 
 		eventServices.addCompetition(event.id, data).then((returnedEvent) => {
@@ -44,7 +48,7 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 		});
 	};
 
-	const handleMark = (e) => {
+	const handleMark = () => {
 		eventServices.markEvent(event.id).then((results) => {
 			setIsNoResults(false);
 			setMarkingResults(results);
@@ -62,45 +66,25 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 	});
 
 	return (
-		<div className='flex border border-black w-full px-4 py-2 justify-between items-center rounded-xl bg-pastel-orange shadow-lg font-body'>
-			<div className='flex flex-col'>
-				<h3 className='flex font-bold text-2xl gap-4 items-center'>
-					{event.name}{' '}
-					<span className='text-xl italic font-normal underline decoration-1 mb-[2px]'>
-						{formattedDate}
-					</span>
-					{!event.competitionId ? null : (
-						<button
-							onClick={handleMark}
-							className='inline font-normal border border-black px-4 rounded-lg text-sm'>
-							Mark Event
-						</button>
-					)}
-				</h3>
-				<p className='text-xl'>{event.description}</p>
-			</div>
+		<div className='flex flex-col border border-black w-full px-4 py-2 rounded-xl bg-pastel-orange shadow-lg font-body'>
+			<div className='flex justify-between items-center'>
+				<div className='flex flex-col'>
+					<h3 className='flex font-bold text-2xl gap-4 items-center'>
+						{event.name}{' '}
+						<span className='text-xl italic font-normal underline decoration-1 mb-[2px]'>
+							{formattedDate}
+						</span>
+						{!event.competitionId ? null : (
+							<button
+								onClick={handleMark}
+								className='inline font-normal border border-black px-4 rounded-lg text-sm'>
+								Mark Event
+							</button>
+						)}
+					</h3>
+					<p className='text-xl'>{event.description}</p>
+				</div>
 
-			<div className='flex items-center gap-4'>
-				{!linkedCompetition ? (
-					<form onSubmit={addCompetition} className='flex gap-2'>
-						<select onChange={(e) => setSelectedCompetition(e.target.value)}>
-							{competitions &&
-								competitions.map((competition) => (
-									<option key={competition.title} value={competition.title}>
-										{competition.title}
-									</option>
-								))}
-						</select>
-						<button className='border border-black px-2 font-body rounded'>
-							Add Competition
-						</button>
-					</form>
-				) : (
-					<div>
-						<p className='underline decoration-1'>Associated Competition</p>
-						<p className=''>{linkedCompetition}</p>
-					</div>
-				)}
 				{!isSure ? (
 					<button
 						onClick={() => {
@@ -118,6 +102,56 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 					/>
 				)}
 			</div>
+
+			{!linkedCompetition ? (
+				<form onSubmit={addCompetition} className='flex gap-2 justify-between items-center'>
+					<div className='flex flex-col gap-1'>
+						<h2 className='font-bold underline'>Competition to assign:</h2>
+						<select
+							onChange={(e) => setSelectedCompetition(e.target.value)}
+							className='rounded-md border border-black'>
+							{competitions &&
+								competitions.map((competition) => (
+									<option key={competition.title} value={competition.title}>
+										{competition.title}
+									</option>
+								))}
+						</select>
+						<div className='flex gap-2'>
+							<label className='flex flex-col'>
+								Start date & time:
+								<input
+									type='datetime-local'
+									value={competitionStart}
+									onChange={(e) => setCompetitionStart(e.target.value)}
+									className='shrink border border-black px-1 font-body rounded'
+									placeholder='Start DateTime'
+								/>
+							</label>
+
+							<label className='flex flex-col'>
+								End date & time:
+								<input
+									type='datetime-local'
+									value={competitionEnd}
+									onChange={(e) => setCompetitionEnd(e.target.value)}
+									className='shrink border border-black px-1 font-body rounded'
+									placeholder='End DateTime'
+								/>
+							</label>
+						</div>
+					</div>
+
+					<button className='border border-black px-2 font-body rounded self-end'>
+						Add Competition
+					</button>
+				</form>
+			) : (
+				<div>
+					<p className='underline decoration-1 font-bold'>Associated Competition</p>
+					<p className=''>{linkedCompetition}</p>
+				</div>
+			)}
 		</div>
 	);
 };

@@ -54,7 +54,7 @@ const Event = ({ event }) => {
 	};
 
 	const handleStartComp = () => {
-		navigate(`/competition/${event.competition.competitionId}`);
+		navigate(`/competition/${event.id}`);
 	};
 
 	const formattedDate = new Date(event.date).toLocaleDateString('en-US', {

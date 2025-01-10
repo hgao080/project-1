@@ -31,4 +31,9 @@ const markEvent = (eventId) => {
   return req.then((res) => res.data);
 };
 
-export default { getAll, createEvent, joinEvent, deleteEvent, addCompetition, markEvent };
+const getEvent = (eventId) => {
+  const req = axios.get(`${Url}/${eventId}`);
+  return req.then((res) => res.data);
+}
+
+export default { getAll, createEvent, joinEvent, deleteEvent, addCompetition, markEvent, getEvent };

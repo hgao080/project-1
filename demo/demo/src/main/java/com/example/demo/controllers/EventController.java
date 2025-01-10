@@ -53,6 +53,15 @@ public class EventController {
         return ResponseEntity.ok(eventRepository.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getEvent(@PathVariable("id") String id) {
+        Optional<Event> optionalEvent = eventRepository.findById(id);
+        if (!optionalEvent.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(optionalEvent.get());
+    }
+
 
     @PostMapping
     public ResponseEntity<Object> createEvent(@RequestBody Event eventData) {

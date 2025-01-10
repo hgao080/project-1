@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -18,7 +19,7 @@ public class User {
     private String email;
     private String password;
     private Boolean isAdmin;
-    private List<String> joinedEvents;
+    private List<String> joinedEvents = new ArrayList<>();
     
     public User() {
     }

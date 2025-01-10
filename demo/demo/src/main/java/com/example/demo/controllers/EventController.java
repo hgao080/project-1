@@ -76,11 +76,13 @@ public class EventController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteEvent(@PathVariable("id") String id) {
+        Event eventToBeDeleted = eventRepository.findById(id).get();
+
         eventRepository.deleteById(id);
 
         List<User> users = userRepository.findAll();
         for (User user : users) {
-            user.removeEvent(id);
+            user.removeEvent(eventToBeDeleted.getName());
             userRepository.save(user);
         }
 

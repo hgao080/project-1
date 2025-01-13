@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import EventForm from '../components/EventForm';
 import EventsAdmin from '../components/EventsAdmin';
@@ -16,6 +17,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 export const DataContext = createContext();
 
 const Admin = () => {
+	const navigate = useNavigate();
 	const { user } = useAuthContext();
 	const [events, setEvents] = useState([]);
 	const [competitions, setCompetitions] = useState([]);
@@ -27,28 +29,6 @@ const Admin = () => {
 		useState(false);
 	const [markingResults, setMarkingResults] = useState({});
 	const [isNoResults, setIsNoResults] = useState(false);
-
-	useEffect(() => {
-		if (user) {
-			eventsService.getAll().then((initialEvents) => {
-				setEvents(initialEvents);
-			});
-
-			usersService
-				.getUsers({ Authorization: `Bearer ${user.token}` })
-				.then((users) => {
-					setUsers(users);
-				});
-
-			competitionsService.getAll({ Authorization: `Bearer ${user.token}` }).then((initialCompetitions) => {
-				setCompetitions(initialCompetitions);
-			});
-
-			questionsService.getAll({ Authorization: `Bearer ${user.token}` }).then((initialQuestions) => {
-				setQuestions(initialQuestions);
-			});
-		}
-	}, [user]);
 
 	useEffect(() => {
 		if (user) {
@@ -64,15 +44,41 @@ const Admin = () => {
 		return () => clearTimeout(timer);
 	}, []);
 
+	useEffect(() => {
+		if (user) {
+			eventsService.getAll().then((initialEvents) => {
+				setEvents(initialEvents);
+			});
+
+			usersService
+				.getUsers({ Authorization: `Bearer ${user.token}` })
+				.then((users) => {
+					setUsers(users);
+				});
+
+			competitionsService
+				.getAll({ Authorization: `Bearer ${user.token}` })
+				.then((initialCompetitions) => {
+					setCompetitions(initialCompetitions);
+				});
+
+			questionsService
+				.getAll({ Authorization: `Bearer ${user.token}` })
+				.then((initialQuestions) => {
+					setQuestions(initialQuestions);
+				});
+		}
+	}, [user]);
+
 	if (loading) {
 		if (timeout) {
-			return <Navigate to='/' />;
+			navigate('/');
 		}
 		return <div>Loading...</div>;
 	}
 
 	if (!user || !user.isAdmin) {
-		return <Navigate to='/' />;
+		navigate('/');
 	}
 
 	const handleSwap = () => {
@@ -82,12 +88,14 @@ const Admin = () => {
 	const handleClose = () => {
 		setMarkingResults({});
 		setIsNoResults(false);
-	}
+	};
 
 	return (
 		<div className='w-screen h-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main pb-8'>
 			<div className='max-w-[60rem] flex justify-between items-center px-4 py-4 m-auto'>
-				<h1 className='text-5xl italic underline decoration-3 font-bold tracking-wide'>Admin Page</h1>
+				<h1 className='text-5xl italic underline decoration-3 font-bold tracking-wide'>
+					Admin Page
+				</h1>
 				<div className=''>
 					<button
 						onClick={handleSwap}

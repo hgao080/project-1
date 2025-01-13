@@ -1,12 +1,11 @@
-import axios from 'axios'
-const Url = "/api/attempt"
+import axiosInstance from "./axiosInstance";
 
 const saveAttempt = (data) => {
-    return axios.post(Url, data).then((res) => res.data)
+    return axiosInstance.post("/attempt", data).then((res) => res.data)
 }
 
 const getAttemptsForUser = (userEmail) => {
-    return axios.get(`${Url}/${userEmail}`).then((res) => res.data)
+    return axiosInstance.get(`/attempt/${userEmail}`).then((res) => res.data)
 }
 
 export default { saveAttempt, getAttemptsForUser }

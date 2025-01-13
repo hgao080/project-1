@@ -40,11 +40,11 @@ const Admin = () => {
 					setUsers(users);
 				});
 
-			competitionsService.getAll().then((initialCompetitions) => {
+			competitionsService.getAll({ Authorization: `Bearer ${user.token}` }).then((initialCompetitions) => {
 				setCompetitions(initialCompetitions);
 			});
 
-			questionsService.getAll().then((initialQuestions) => {
+			questionsService.getAll({ Authorization: `Bearer ${user.token}` }).then((initialQuestions) => {
 				setQuestions(initialQuestions);
 			});
 		}

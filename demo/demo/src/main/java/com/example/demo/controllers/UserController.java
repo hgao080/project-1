@@ -56,7 +56,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(error);
         }
 
-        User usernameTaken = userRepository.findByUsername(userDetails.getUsername());
+        User usernameTaken = userRepository.findByUsername(userDetails.getUsername()).get();
         if (usernameTaken != null) {
             Map<String, String> error = new HashMap<>();
             error.put("error", "Username already taken");
@@ -116,7 +116,7 @@ public class UserController {
         String token = auth.substring(7);
         String username = jwtUtil.getUsernameFromToken(token);
 
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).get();
 
         if (user != null && user.getIsAdmin()) {
             return ResponseEntity.ok(userRepository.findAll());
@@ -130,10 +130,10 @@ public class UserController {
     @PutMapping("/{username}")
     public ResponseEntity<Object> updateUser(@PathVariable("username") String username,
             @RequestBody Map<String, String> data) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).get();
 
         if (data.containsKey("username")) {
-            User existingUser = userRepository.findByUsername(data.get("username"));
+            User existingUser = userRepository.findByUsername(data.get("username")).get();
             if (existingUser != null) {
                 Map<String, String> error = new HashMap<>();
                 error.put("error", "Username already taken");

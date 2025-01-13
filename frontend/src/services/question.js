@@ -1,13 +1,12 @@
-import axios from "axios";
-const Url = "/api/question";
+import axiosInstance from "./axiosInstance";
 
 const createQuestion = (question) => {
-  const req = axios.post(Url, question);
+  const req = axiosInstance.post("question", question);
   return req.then((res) => res.data);
 }
 
 const getAll = () => {
-  const req = axios.get(Url);
+  const req = axiosInstance.get("question");
   return req.then((res) => res.data);
 }
 

@@ -1,23 +1,22 @@
-import axios from "axios";
-const Url = "/api/competition";
+import axiosInstance from "./axiosInstance";
 
 const getAll = () => {
-  const req = axios.get(Url);
+  const req = axiosInstance.get("/competition");
   return req.then((res) => res.data);
 };
 
 const createCompetition = (competition) => {
-  const req = axios.post(Url, competition);
+  const req = axiosInstance.post("/competition", competition);
   return req.then((res) => res.data);
 }
 
 const addQuestionsToCompetition = (competitionTitle, data) => {
-  const req = axios.put(`${Url}/${competitionTitle}`, data)
+  const req = axiosInstance.put(`/competition/${competitionTitle}`, data)
   return req.then((res) => res.data)
 }
 
 const getQuestions = (competitionTitle) => {
-  const req = axios.get(`${Url}/${competitionTitle}`)
+  const req = axiosInstance.get(`/competition/${competitionTitle}`)
   return req.then(res => res.data)
 }
 

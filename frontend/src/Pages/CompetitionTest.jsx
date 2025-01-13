@@ -26,30 +26,56 @@ const CompetitionTest = () => {
 
 	useEffect(() => {
 		eventsService.getEvent(eventId).then((returnedEvent) => {
+			if (returnedEvent === null) {
+				return navigate('/');
+			}
+
 			setEvent(returnedEvent);
 
-			competitionsService
-				.getQuestions(returnedEvent.competition.competitionId)
-				.then((data) => {
-					setQuestions(data.questions);
-					setAnswers(
-						data.questions.reduce((acc, question) => {
-							acc[question.title] = -1;
-							return acc;
-						}, {}),
-					);
-				});
-
-			const competitionEnd = new Date(returnedEvent.competition.competitionEnd);
+			const competitionStart = new Date(
+				returnedEvent.competition.competitionStart
+			);
+			const competitionEnd = new Date(
+				returnedEvent.competition.competitionEnd
+			);
 			const now = new Date();
-			const timeRemaining = competitionEnd - now;
 
-			if (timeRemaining > 0 && !timeoutSetRef.current) {
-				timeoutSetRef.current = true;
-				setTimeout(handleAutoSubmit, timeRemaining);
+			if (!(now >= competitionStart && now <= competitionEnd)) {
+				return navigate('/');
 			}
+
+			attemptsService.getAttemptsForUser(user.email).then((attempts) => {
+				if (
+					attempts.some(
+						(attempt) =>
+							attempt.competitionId ===
+							returnedEvent.competition.competitionId
+					)
+				) {
+					return navigate('/');
+				}
+
+				const timeRemaining = competitionEnd - now;
+
+				if (timeRemaining > 0 && !timeoutSetRef.current) {
+					timeoutSetRef.current = true;
+					setTimeout(handleAutoSubmit, timeRemaining);
+				}
+
+				competitionsService
+					.getQuestions(returnedEvent.competition.competitionId)
+					.then((data) => {
+						setQuestions(data.questions);
+						setAnswers(
+							data.questions.reduce((acc, question) => {
+								acc[question.title] = -1;
+								return acc;
+							}, {})
+						);
+					});
+			});
 		});
-	}, [eventId]);
+	}, [eventId, user]);
 
 	useEffect(() => {
 		eventRef.current = event;
@@ -105,7 +131,10 @@ const CompetitionTest = () => {
 				<div className='grid grid-cols-2 mt-6 w-[60rem] m-auto gap-4'>
 					<AnswersContext.Provider value={{ answers, setAnswers }}>
 						{questions.map((question) => (
-							<Question key={question.title} question={question} />
+							<Question
+								key={question.title}
+								question={question}
+							/>
 						))}
 					</AnswersContext.Provider>
 				</div>

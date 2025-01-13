@@ -32,7 +32,10 @@ const markEvent = (eventId) => {
 
 const getEvent = (eventId) => {
   const req = axiosInstance.get(`/events/${eventId}`);
-  return req.then((res) => res.data);
+  return req.then((res) => res.data).catch((err) => {
+    console.log(err);
+    return null;
+  });
 }
 
 export default { getAll, createEvent, joinEvent, deleteEvent, addCompetition, markEvent, getEvent };

@@ -1,10 +1,13 @@
 package com.example.demo.controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +25,23 @@ public class AttemptController {
     @Autowired
     AttemptRepository attemptRepository;
 
+    @GetMapping("/{userEmail}")
+    public ResponseEntity<Object> getAttemptsForUser(@PathVariable String userEmail) {
+        List<Attempt> attempts = attemptRepository.findByUserEmail(userEmail);
+
+        return ResponseEntity.ok(attempts);
+    }
+
     @PostMapping
     public ResponseEntity<Object> saveAttempt(@RequestBody AttemptDTO attemptDto) {
+        Attempt attemptToSave = attemptDto.getAttempt();
+
+        List<Attempt> competitionAttempts = attemptRepository.findByCompetitionId(attemptDto.getAttempt().getCompetitionId());
+        for (Attempt attempt : competitionAttempts) {
+            if (attempt.getUserEmail().equals(attemptToSave.getUserEmail())) {
+                return ResponseEntity.badRequest().body("Attempt not accepted. User has already attempted this competition");
+            }
+        }
 
         Date now = new Date();
         Date competitionEnd = attemptDto.getCompetitionEnd();
@@ -33,8 +51,8 @@ public class AttemptController {
             return ResponseEntity.badRequest().body("Attempt not accepted. Competition has ended");
         }
 
-        Attempt savedAttempt = attemptRepository.save(attemptDto.getAttempt());
+        attemptRepository.save(attemptToSave);
 
-        return ResponseEntity.ok(savedAttempt);
+        return ResponseEntity.ok(attemptToSave);
     }
 }

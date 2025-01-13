@@ -1,41 +1,63 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import userServices from '../services/user';
 import SureCheck from './SureCheck';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { HomeContext } from '../pages/Home';
 
 const Event = ({ event }) => {
 	const navigate = useNavigate();
 
+	const { attempts } = useContext(HomeContext);
 	const { user, dispatch } = useAuthContext();
-	const [isJoined, setIsJoined] = useState(user && user.joinedEvents.includes(event.name));
+	const [isJoined, setIsJoined] = useState(
+		user && user.joinedEvents.includes(event.name)
+	);
 	const [isSure, setIsSure] = useState(false);
+	const [isCompetitionActive, setIsCompetitionActive] = useState(false);
+	const [isAttempted, setIsAttempted] = useState(false);
+	const intervalSetRef = useRef(false);
+
 	const linkedComp = event.competition.competitionId;
 	const competitionStart = event.competition.competitionStart;
 	const competitionEnd = event.competition.competitionEnd;
-	const [isCompetitionActive, setIsCompetitionActive] = useState(false);
 
 	useEffect(() => {
 		const checkCompetitionActive = () => {
 			const now = new Date();
 			setIsCompetitionActive(
-				now >= new Date(competitionStart) && now <= new Date(competitionEnd)
+				now >= new Date(competitionStart) &&
+					now <= new Date(competitionEnd)
 			);
 		};
 
-    checkCompetitionActive();
+		checkCompetitionActive();
 
-    const now = new Date();
-    const millisecondsUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+		if (!intervalSetRef.current) {
+			const now = new Date();
+			const millisecondsUntilNextMinute =
+				(60 - now.getSeconds()) * 1000 - now.getMilliseconds();
 
-    setTimeout(() => {
-      checkCompetitionActive();
-      const intervalId = setInterval(checkCompetitionActive, 60000);
+			setTimeout(() => {
+				checkCompetitionActive();
+				const intervalId = setInterval(checkCompetitionActive, 60000);
+				intervalSetRef.current = true;
 
-      return () => clearInterval(intervalId);
-    }, millisecondsUntilNextMinute);
+				return () => clearInterval(intervalId);
+			}, millisecondsUntilNextMinute);
+		}
 	}, []);
+
+	useEffect(() => {
+		const checkIsAttempted = () => {
+			setIsAttempted(
+				attempts.some((attempt) => attempt.competitionId === linkedComp)
+			);
+		};
+
+		checkIsAttempted();
+	}, [attempts]);
 
 	const handleJoin = (e) => {
 		e.preventDefault();
@@ -80,19 +102,27 @@ const Event = ({ event }) => {
 					{!isSure ? (
 						isJoined ? (
 							linkedComp ? (
-								<div className=''>
-									<button
-										onClick={handleStartComp}
-										disabled={!isCompetitionActive}
-										className='border border-black px-4 rounded bg-pastel-blue disabled:opacity-50'>
-										Start Competition
-									</button>
-									{isCompetitionActive ? (
-										''
-									) : (
-										<p className='text-red-500 mt-1'>Competition is inactive</p>
-									)}
-								</div>
+								!isAttempted ? (
+									<div className=''>
+										<button
+											onClick={handleStartComp}
+											disabled={!isCompetitionActive}
+											className='border border-black px-4 rounded bg-pastel-blue disabled:opacity-50'>
+											Start Competition
+										</button>
+										{isCompetitionActive ? (
+											''
+										) : (
+											<p className='text-red-500 mt-1'>
+												Competition inactive
+											</p>
+										)}
+									</div>
+								) : (
+									<p className='text-red-500 mt-1'>
+										Already attempted
+									</p>
+								)
 							) : (
 								<p className=''>No associated competition</p>
 							)
@@ -102,7 +132,9 @@ const Event = ({ event }) => {
 									setIsSure(true);
 								}}
 								className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${
-									isJoined ? '' : ' hover:translate-y-[-2px] hover:cursor-pointer'
+									isJoined
+										? ''
+										: ' hover:translate-y-[-2px] hover:cursor-pointer'
 								}`}
 								disabled={isJoined}>
 								Join

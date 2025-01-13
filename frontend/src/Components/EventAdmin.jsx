@@ -11,9 +11,7 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 	const { competitions, setMarkingResults, setIsNoResults, setUsers } = useContext(DataContext);
 
 	const [isSure, setIsSure] = useState(false);
-	const [selectedCompetition, setSelectedCompetition] = useState(
-		competitions.length > 0 ? competitions[0].title : ''
-	);
+	const [selectedCompetition, setSelectedCompetition] = useState('');
 	const [linkedCompetition, setLinkedCompetition] = useState(event.competitionId);
 	const [competitionStart, setCompetitionStart] = useState('');
 	const [competitionEnd, setCompetitionEnd] = useState('');
@@ -23,6 +21,12 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 			setIsJoined(true);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (competitions.length > 0) {
+			setSelectedCompetition(competitions[0].title);
+		}
+	}, [competitions])
 
 	const handleDelete = () => {
 		eventServices.deleteEvent(event.id).then(() => {

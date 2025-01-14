@@ -39,7 +39,7 @@ const Competitions = () => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border border-black rounded font-body pl-1 text-2xl"
+            className="border border-black rounded font-body pl-1 text-2xl font-light"
           />
           <button className="font-body text-xl border border-black rounded bg-pastel-green px-4 transition-all hover:translate-y-[-2px] active:translate-y-[2px]">
             Create

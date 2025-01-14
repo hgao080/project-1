@@ -70,6 +70,7 @@ const QuestionFilter = ({ setQuestionsToShow }) => {
 				<div className='flex gap-2'>
 					{topics.map((topic) => (
 						<button
+							key={topic}
 							value={topic}
 							onClick={handleTopicsClick}
 							className={`border border-black rounded-lg px-2 py-0 font-bold transition-all hover:translate-y-[-2px] active:translate-y-[2px] ${

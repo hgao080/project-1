@@ -12,19 +12,17 @@ const Competition = ({ competition }) => {
   return (
     <div className="flex items-center border border-black w-full px-4 py-2 justify-between rounded-xl bg-pastel-orange shadow-lg font-body">
       <div className="flex flex-col">
-        <h3 className="flex font-bold text-2xl items-end gap-4">
+        <h3 className="flex font-normal text-2xl items-end gap-4">
           {competition.title}
         </h3>
 
-        <div className="grid grid-flow-col grid-rows-2  grid-cols-4 gap-x-4">
+        <ul className="list-disc pl-4">
           {competition.questionIds
             ? competition.questionIds.map((questionTitle) => (
-                <div key={questionTitle} className="">
-                  {questionTitle}
-                </div>
+              <li key={questionTitle} className="">{questionTitle}</li>
               ))
             : null}
-        </div>
+        </ul>
       </div>
       
       <button onClick={toggleModal} disabled={isModalShowing} className="self-start min-w-fit border border-black px-4 rounded text-xl bg-pastel-blue transition-all hover:translate-y-[-2px] active:translate-y-[2px]">Add Question</button>

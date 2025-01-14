@@ -15,7 +15,7 @@ const AllQuestions = () => {
 	};
 
 	return (
-		<div className='shadow-lg'>
+		<div className='shadow-lg max-w-[50rem]'>
 			<h2 className='text-center text-warm-brown text-5xl underline decoration-2 font-bold mt-4'>
 				Questions
 			</h2>
@@ -29,13 +29,13 @@ const AllQuestions = () => {
 				</button>
 			</div>
 
-			<div className='flex flex-col gap-2 h-[16rem] bg-beige p-4 border border-black rounded-lg mt-2 overflow-auto scrollbar-none'>
+			<div className='flex flex-col gap-2 h-[16rem] max-w-full bg-beige p-4 border border-black rounded-lg mt-2 overflow-auto scrollbar-none'>
 				{questionsToShow.map((question) => (
 					<div
 						key={question.title}
 						className='bg-pastel-orange border border-black rounded-lg p-4 py-2 shadow-md '>
 						<div className='flex items-center gap-2 '>
-							<h3 className='font-bold font-body text-2xl'>{question.title}</h3>
+							<h3 className='font-body text-xl font-normal'>{question.title}</h3>
 							<p className='border border-black rounded-lg px-2 py-0 font-bold text-xl bg-golden-yellow'>
 								{question.difficulty}
 							</p>

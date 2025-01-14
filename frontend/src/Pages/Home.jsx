@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 import Header from '../components/Header';
@@ -15,6 +16,13 @@ const Home = () => {
 	const [events, setEvents] = useState([]);
 	const [attempts, setAttempts] = useState([]);
 	const { user } = useAuthContext();
+	const navigate = useNavigate();
+
+	if (user) {
+		if (user.isAdmin) {
+			navigate('/admin');
+		}
+	}
 
 	useEffect(() => {
 		eventsService.getAll().then((events) => {

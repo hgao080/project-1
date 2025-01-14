@@ -133,14 +133,24 @@ public class UserController {
         User user = userRepository.findByUsername(username).get();
 
         if (data.containsKey("username")) {
-            User existingUser = userRepository.findByUsername(data.get("username")).get();
-            if (existingUser != null) {
+            Optional<User> existingUser = userRepository.findByUsername(data.get("username"));
+
+            if (existingUser.isPresent()) {
                 Map<String, String> error = new HashMap<>();
                 error.put("error", "Username already taken");
                 return ResponseEntity.badRequest().body(error);
             }
 
             user.setUsername(data.get("username"));
+            String token = jwtUtil.generateToken(data.get("username"));
+            Map<String, Object> response = new HashMap<>();
+            response.put("username", user.getUsername());
+            response.put("email", user.getEmail());
+            response.put("isAdmin", user.getIsAdmin());
+            response.put("joinedEvents", user.getJoinedEvents());
+            response.put("token", token);
+            userRepository.save(user);
+            return ResponseEntity.ok(response);
         } else {
             user.addJoinedEvents(data.get("eventName"));
         }

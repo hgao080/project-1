@@ -29,6 +29,10 @@ public class AttemptController {
     public ResponseEntity<Object> getAttemptsForUser(@PathVariable String userEmail) {
         List<Attempt> attempts = attemptRepository.findByUserEmail(userEmail);
 
+        if (attempts.isEmpty()) {
+            return ResponseEntity.badRequest().body("No attempts found for user");
+        }
+
         return ResponseEntity.ok(attempts);
     }
 

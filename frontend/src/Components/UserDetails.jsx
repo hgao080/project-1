@@ -23,11 +23,12 @@ const UserDetails = ({ user }) => {
         } else {
           dispatch({
             type: "LOGIN",
-            payload: { ...user, username: returnedUser.username },
+            payload: { ...user, username: returnedUser.username, token: returnedUser.token },
           });
 
           const storedUser = JSON.parse(localStorage.getItem("user"));
           storedUser.username = returnedUser.username;
+          storedUser.token = returnedUser.token;
           localStorage.setItem("user", JSON.stringify(storedUser));
 
           setOldName(returnedUser.username);

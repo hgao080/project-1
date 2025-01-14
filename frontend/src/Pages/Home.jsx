@@ -17,12 +17,10 @@ const Home = () => {
 	const { user } = useAuthContext();
 
 	useEffect(() => {
-		eventsService.getAll().then((initialEvents) => {
-			setEvents(initialEvents);
+		eventsService.getAll().then((events) => {
+			setEvents(events);
 		});
-	}, []);
 
-	useEffect(() => {
 		if (user) {
 			attemptsService.getAttemptsForUser(user.email).then((attempts) => {
 				setAttempts(attempts);

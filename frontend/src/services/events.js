@@ -2,7 +2,10 @@ import axiosInstance from "./axiosInstance";
 
 const getAll = () => {
   const req = axiosInstance.get("/events");
-  return req.then((res) => res.data);
+  return req.then((res) => res.data).catch((err) => {
+    console.log(err);
+    return null;
+  });
 };
 
 const createEvent = (newEvent) => {

@@ -86,7 +86,7 @@ const Event = ({ event }) => {
 	});
 
 	return (
-		<div className='flex border border-black w-full px-4 py-2 justify-between items-center rounded-xl bg-pastel-orange shadow-lg font-body'>
+		<div className='flex border border-black w-full px-4 py-2 justify-between items-center rounded-xl bg-pastel-orange shadow-lg font-body gap-6'>
 			<div className='flex flex-col'>
 				<h3 className='flex font-bold text-2xl items-end gap-4'>
 					{event.name}{' '}
@@ -98,57 +98,55 @@ const Event = ({ event }) => {
 			</div>
 
 			{user ? (
-				<div className='flex items-center gap-4'>
-					{!isSure ? (
-						isJoined ? (
-							linkedComp ? (
-								!isAttempted ? (
-									<div className=''>
-										<button
-											onClick={handleStartComp}
-											disabled={!isCompetitionActive}
-											className='border border-black px-4 rounded bg-pastel-blue disabled:opacity-50'>
-											Start Competition
-										</button>
-										{isCompetitionActive ? (
-											''
-										) : (
-											<p className='text-red-500 mt-1'>
-												Competition inactive
-											</p>
-										)}
-									</div>
-								) : (
-									<p className='text-red-500 mt-1'>
-										Already attempted
-									</p>
-								)
+				!isSure ? (
+					isJoined ? (
+						linkedComp ? (
+							!isAttempted ? (
+								<div className=''>
+									<button
+										onClick={handleStartComp}
+										disabled={!isCompetitionActive}
+										className='border border-black px-4 rounded bg-pastel-blue disabled:opacity-50'>
+										Start Competition
+									</button>
+									{isCompetitionActive ? (
+										''
+									) : (
+										<p className='text-red-500 mt-1'>
+											Competition inactive
+										</p>
+									)}
+								</div>
 							) : (
-								<p className=''>No associated competition</p>
+								<p className='text-red-500 mt-1'>
+									Already attempted
+								</p>
 							)
 						) : (
-							<button
-								onClick={() => {
-									setIsSure(true);
-								}}
-								className={`border border-black py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${
-									isJoined
-										? ''
-										: ' hover:translate-y-[-2px] hover:cursor-pointer'
-								}`}
-								disabled={isJoined}>
-								Join
-							</button>
+							<p className='max-w-[6rem] text-right'>No associated competition</p>
 						)
 					) : (
-						<SureCheck
-							confirm={handleJoin}
-							cancel={() => {
-								setIsSure(false);
+						<button
+							onClick={() => {
+								setIsSure(true);
 							}}
-						/>
-					)}
-				</div>
+							className={`border border-black px-4 py-1 rounded bg-pastel-blue font-bold disabled:opacity-50 disabled:border-gray-800 w-[3.5rem] transition-all active:translate-y-[2px] shadow-lg ${
+								isJoined
+									? ''
+									: ' hover:translate-y-[-2px] hover:cursor-pointer'
+							}`}
+							disabled={isJoined}>
+							Join
+						</button>
+					)
+				) : (
+					<SureCheck
+						confirm={handleJoin}
+						cancel={() => {
+							setIsSure(false);
+						}}
+					/>
+				)
 			) : null}
 		</div>
 	);

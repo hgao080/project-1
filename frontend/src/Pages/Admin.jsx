@@ -161,7 +161,7 @@ const Admin = () => {
 									)}
 									<button
 										onClick={handleClose}
-										className='border border-black rounded-lg mt-auto self-start px-4'>
+										className='border border-black rounded-lg mt-auto self-start px-4 bg-pastel-blue transition-all hover:translate-y-[-2px] active:translate-y-[2px] shadow-md'>
 										Close
 									</button>
 								</div>
@@ -175,7 +175,7 @@ const Admin = () => {
 									</div>
 									<button
 										onClick={handleClose}
-										className='border border-black rounded-lg mt-auto self-start px-4'>
+										className='border border-black rounded-lg mt-auto self-start px-4 bg-pastel-blue transition-all hover:translate-y-[-2px] active:translate-y-[2px] shadow-md'>
 										Close
 									</button>
 								</div>

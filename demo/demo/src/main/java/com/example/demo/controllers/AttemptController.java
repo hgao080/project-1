@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class AttemptController {
         List<Attempt> attempts = attemptRepository.findByUserEmail(userEmail);
 
         if (attempts.isEmpty()) {
-            return ResponseEntity.badRequest().body("No attempts found for user");
+            return ResponseEntity.ok(new ArrayList<>());
         }
 
         return ResponseEntity.ok(attempts);

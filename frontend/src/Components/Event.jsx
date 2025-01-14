@@ -56,7 +56,9 @@ const Event = ({ event }) => {
 			);
 		};
 
-		checkIsAttempted();
+		if (attempts) {
+			checkIsAttempted();
+		}
 	}, [attempts]);
 
 	const handleJoin = (e) => {
@@ -106,7 +108,7 @@ const Event = ({ event }) => {
 									<button
 										onClick={handleStartComp}
 										disabled={!isCompetitionActive}
-										className='border border-black px-4 rounded bg-pastel-blue disabled:opacity-50'>
+										className='border border-black px-4 rounded bg-pastel-blue transition-all hover:translate-y-[-2px] active:translate-y-[2px] disabled:opacity-50 shadow-md disabled:hover:cursor-not-allowed disabled:hover:translate-y-0'>
 										Start Competition
 									</button>
 									{isCompetitionActive ? (
@@ -123,7 +125,9 @@ const Event = ({ event }) => {
 								</p>
 							)
 						) : (
-							<p className='max-w-[6rem] text-right'>No associated competition</p>
+							<p className='max-w-[6rem] text-right'>
+								No associated competition
+							</p>
 						)
 					) : (
 						<button

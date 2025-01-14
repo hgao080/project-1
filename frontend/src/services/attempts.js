@@ -5,7 +5,9 @@ const saveAttempt = (data) => {
 }
 
 const getAttemptsForUser = (userEmail) => {
-    return axiosInstance.get(`/attempt/${userEmail}`).then((res) => res.data)
+    return axiosInstance.get(`/attempt/${userEmail}`).then((res) => res.data).catch((err) => {
+        console.log(err)
+    })
 }
 
 export default { saveAttempt, getAttemptsForUser }

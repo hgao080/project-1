@@ -87,7 +87,7 @@ const EventAdmin = ({ event, events, setEvents, user }) => {
 						<span className='text-xl italic font-normal underline decoration-1 mb-[2px] self-end'>
 							{formattedDate}
 						</span>
-						{!event.competitionId ? null : (
+						{!linkedCompetition ? null : (
 							<button
 								onClick={handleMark}
 								className='inline font-normal border border-black px-4 rounded-md text-sm bg-pastel-blue transition-all hover:translate-y-[-1px] active:translate-y-[1px]'>

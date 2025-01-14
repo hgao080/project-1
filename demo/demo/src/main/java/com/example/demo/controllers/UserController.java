@@ -56,8 +56,8 @@ public class UserController {
             return ResponseEntity.badRequest().body(error);
         }
 
-        User usernameTaken = userRepository.findByUsername(userDetails.getUsername()).get();
-        if (usernameTaken != null) {
+        Optional<User> usernameTaken = userRepository.findByUsername(userDetails.getUsername());
+        if (usernameTaken.isPresent()) {
             Map<String, String> error = new HashMap<>();
             error.put("error", "Username already taken");
             return ResponseEntity.badRequest().body(error);

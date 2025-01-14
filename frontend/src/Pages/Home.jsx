@@ -19,7 +19,7 @@ const Home = () => {
 	const navigate = useNavigate();
 
 	if (user) {
-		if (user.isAdmin) {
+		if (user.role.name === 'ADMIN') {
 			navigate('/admin');
 		}
 	}

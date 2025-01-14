@@ -1,8 +1,10 @@
 package com.example.demo.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.models.User;
@@ -11,4 +13,7 @@ import com.example.demo.models.User;
 public interface UserRepository extends MongoRepository<User, String> {
     public User findByEmail(String email);
     public Optional<User> findByUsername(String username);
+    
+    @Query("{ 'role.name': { $ne: 'ADMIN' } }")
+    List<User> findAllNonAdminUsers();
 }

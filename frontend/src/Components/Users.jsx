@@ -6,7 +6,6 @@ const Users = ({ users, events }) => {
       <h2 className="text-center text-5xl underline font-bold decoration-2 text-warm-brown tracking-wider underline-offset-2">Users</h2>
       <div className="flex flex-col gap-2 border border-black p-4 rounded-lg mt-4 overflow-auto scrollbar-none shadow-2xl bg-beige font-body max-h-72">
         {users
-          .filter((user) => !user.isAdmin)
           .map((user) => (
             <User key={user.username} user={user} events={events}/>
           ))}

@@ -7,7 +7,7 @@ const SignUp = () => {
   const { user, dispatch } = useAuthContext();
 
   if (user) {
-    if (user.isAdmin) {
+    if (user.role.name === 'ADMIN') {
       return <Navigate to="/admin" />;
     }
 
@@ -26,8 +26,6 @@ const SignUp = () => {
       email,
       password,
       username,
-      isAdmin: false,
-      joinedEvents: []
     }
 
     userServices.signupUser(newUser).then(createdUser => {

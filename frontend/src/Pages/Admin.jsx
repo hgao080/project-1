@@ -77,7 +77,7 @@ const Admin = () => {
 		return <div>Loading...</div>;
 	}
 
-	if (!user || !user.isAdmin) {
+	if (!user || !(user.role.name === 'ADMIN')) {
 		navigate('/');
 	}
 

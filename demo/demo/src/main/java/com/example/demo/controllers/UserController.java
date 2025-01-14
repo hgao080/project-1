@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.RegisterUserDTO;
+import com.example.demo.enums.RoleEnum;
+import com.example.demo.models.Role;
 import com.example.demo.models.User;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.util.JwtUtil;
 
@@ -30,13 +35,16 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private JwtUtil jwtUtil;
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> signupUser(@RequestBody User userDetails) {
+    public ResponseEntity<Object> signupUser(@RequestBody RegisterUserDTO userDetails) {
         if (!userDetails.isSignupFilled()) {
             Map<String, String> error = new HashMap<>();
             error.put("error", "All fields must be filled");
@@ -64,15 +72,21 @@ public class UserController {
         }
 
         String hashedPassword = passwordEncoder.encode(userDetails.getPassword());
-        userDetails.setPassword(hashedPassword);
+        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.USER);
 
-        User user = userRepository.save(userDetails);
+        if (optionalRole.isEmpty()) {
+            return null;
+        }
+        
+        var user = new User(userDetails.getUsername(), userDetails.getEmail(), hashedPassword, optionalRole.get());
+
+        userRepository.save(user);
 
         String token = jwtUtil.generateToken(user.getUsername());
         Map<String, Object> response = new HashMap<>();
         response.put("username", user.getUsername());
         response.put("email", user.getEmail());
-        response.put("isAdmin", user.getIsAdmin());
+        response.put("role", user.getRole());
         response.put("joinedEvents", user.getJoinedEvents());
         response.put("token", token);
 
@@ -99,7 +113,7 @@ public class UserController {
             Map<String, Object> response = new HashMap<>();
             response.put("username", user.getUsername());
             response.put("email", user.getEmail());
-            response.put("isAdmin", user.getIsAdmin());
+            response.put("role", user.getRole());
             response.put("joinedEvents", user.getJoinedEvents());
             response.put("token", token);
 
@@ -112,22 +126,13 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Object> getUsers(@RequestHeader("Authorization") String auth) {
-        String token = auth.substring(7);
-        String username = jwtUtil.getUsernameFromToken(token);
-
-        User user = userRepository.findByUsername(username).get();
-
-        if (user != null && user.getIsAdmin()) {
-            return ResponseEntity.ok(userRepository.findAll());
-        }
-
-        Map<String, String> error = new HashMap<>();
-        error.put("error", "Admin Access Required");
-        return ResponseEntity.badRequest().body(error);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> getUsers() {
+        return ResponseEntity.ok(userRepository.findAllNonAdminUsers());
     }
 
     @PutMapping("/{username}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> updateUser(@PathVariable("username") String username,
             @RequestBody Map<String, String> data) {
         User user = userRepository.findByUsername(username).get();
@@ -146,7 +151,7 @@ public class UserController {
             Map<String, Object> response = new HashMap<>();
             response.put("username", user.getUsername());
             response.put("email", user.getEmail());
-            response.put("isAdmin", user.getIsAdmin());
+            response.put("role", user.getRole());
             response.put("joinedEvents", user.getJoinedEvents());
             response.put("token", token);
             userRepository.save(user);

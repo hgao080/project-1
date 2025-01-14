@@ -7,12 +7,13 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document("user")
-public class User implements UserDetails{
+public class User implements UserDetails {
 
     @Id
     @JsonProperty("id")
@@ -21,51 +22,28 @@ public class User implements UserDetails{
     private String username;
     private String email;
     private String password;
-    private Boolean isAdmin;
+    private Role role;
     private List<String> joinedEvents = new ArrayList<>();
-    
+
     public User() {
     }
 
-    public User(String username, String email, String password, Boolean isAdmin, List<String> joinedEvents) {
+    public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.isAdmin = isAdmin;
-        this.joinedEvents = joinedEvents;
+        this.role = role;
     }
 
     public void removeEvent(String eventName) {
         this.joinedEvents.remove(eventName);
     }
 
-    public boolean isSignupFilled() {
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean isPasswordStrong() {
-        
-        boolean hasUppercase = false;
-        boolean hasLowercase = false;
-        boolean hasDigit = false;
-        for (char c : password.toCharArray()) {
-            if (Character.isUpperCase(c)) {
-                hasUppercase = true;
-            } else if (Character.isLowerCase(c)) {
-                hasLowercase = true;
-            } else if (Character.isDigit(c)) {
-                hasDigit = true;
-            }
-        }
-        return hasUppercase && hasLowercase && hasDigit;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString());
+
+        return List.of(authority);
     }
 
     public String getPassword() {
@@ -113,14 +91,6 @@ public class User implements UserDetails{
         this.password = password;
     }
 
-    public Boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
     public List<String> getJoinedEvents() {
         return joinedEvents;
     }
@@ -132,4 +102,15 @@ public class User implements UserDetails{
     public void addJoinedEvents(String eventName) {
         this.joinedEvents.add(eventName);
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
+
+        return this;
+    }
+
 }

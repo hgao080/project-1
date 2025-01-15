@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ public class AttemptController {
     AttemptRepository attemptRepository;
 
     @GetMapping("/{userEmail}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> getAttemptsForUser(@PathVariable String userEmail) {
         List<Attempt> attempts = attemptRepository.findByUserEmail(userEmail);
 
@@ -38,6 +40,7 @@ public class AttemptController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> saveAttempt(@RequestBody AttemptDTO attemptDto) {
         Attempt attemptToSave = attemptDto.getAttempt();
 

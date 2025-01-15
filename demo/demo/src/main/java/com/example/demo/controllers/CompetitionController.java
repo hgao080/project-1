@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,27 +32,15 @@ public class CompetitionController {
     @Autowired
     QuestionRepository questionRepository;
 
-    @PostMapping
-    public ResponseEntity<Object> createCompetition(@RequestBody Competition competitionDetails) {
-        Competition savedCompetition = competitionRepository.save(competitionDetails);
-        return ResponseEntity.ok(savedCompetition);
-    }
-
-    @PutMapping("/{compTitle}")
-    public ResponseEntity<Object> addQuestionsToCompetition(@PathVariable("compTitle") String compTitle, @RequestBody HashMap<Object, Object> data) {
-        Competition comp = competitionRepository.findByTitle(compTitle);
-        List<String> questionTitles = (List<String>) data.get("questionTitles");
-        comp.addQuestions(questionTitles);
-        competitionRepository.save(comp);
-        return ResponseEntity.ok(comp);
-    }
-
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> getCompetitions() {
         return ResponseEntity.ok(competitionRepository.findAll());
     }
 
-    @GetMapping("/{compTitle}") ResponseEntity<Object> getCompQuestions(@PathVariable("compTitle") String compTitle) {
+    @GetMapping("/{compTitle}")
+    @PreAuthorize("isAuthenticated()")
+    ResponseEntity<Object> getCompQuestions(@PathVariable("compTitle") String compTitle) {
         Competition comp = competitionRepository.findByTitle(compTitle);
         List<Question> questions = questionRepository.findAllById(comp.getQuestionIds());
 
@@ -59,5 +48,23 @@ public class CompetitionController {
         response.put("questions", questions);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> createCompetition(@RequestBody Competition competitionDetails) {
+        Competition savedCompetition = competitionRepository.save(competitionDetails);
+        return ResponseEntity.ok(savedCompetition);
+    }
+
+    @PutMapping("/{compTitle}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> addQuestionsToCompetition(@PathVariable("compTitle") String compTitle,
+            @RequestBody HashMap<Object, Object> data) {
+        Competition comp = competitionRepository.findByTitle(compTitle);
+        List<String> questionTitles = (List<String>) data.get("questionTitles");
+        comp.addQuestions(questionTitles);
+        competitionRepository.save(comp);
+        return ResponseEntity.ok(comp);
     }
 }

@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +60,7 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> getEvent(@PathVariable("id") String id) {
         Optional<Event> optionalEvent = eventRepository.findById(id);
         if (!optionalEvent.isPresent()) {
@@ -67,57 +69,13 @@ public class EventController {
         return ResponseEntity.ok(optionalEvent.get());
     }
 
-
-    @PostMapping
-    public ResponseEntity<Object> createEvent(@RequestBody Event eventData) {
-        Event createdEvent = eventRepository.save(eventData);
-        return ResponseEntity.ok(createdEvent);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteEvent(@PathVariable("id") String id) {
-        Event eventToBeDeleted = eventRepository.findById(id).get();
-
-        eventRepository.deleteById(id);
-
-        List<User> users = userRepository.findAll();
-        for (User user : users) {
-            user.removeEvent(eventToBeDeleted.getName());
-            userRepository.save(user);
-        }
-
-        return ResponseEntity.ok().build();
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> addCompetition(@PathVariable("id") String id, @RequestBody EventDTO data) {
-        Optional<Event> optionalEvent = eventRepository.findById(id);
-        Event existingEvent = optionalEvent.get();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-
-        String competitionId = (String) data.getCompetitionId();
-        Date competitionStart;
-        Date competitionEnd;
-        try {
-            competitionStart = formatter.parse(data.getCompetitionStart());
-            competitionEnd = formatter.parse(data.getCompetitionEnd());
-        } catch (ParseException e) {
-            return ResponseEntity.badRequest().body("Invalid date format");
-        }
-        
-        existingEvent.assignCompetition(competitionId, competitionStart, competitionEnd);
-        eventRepository.save(existingEvent);
-
-        return ResponseEntity.ok(existingEvent);
-    }
-
     @GetMapping("/mark/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> markEvent(@PathVariable("id") String id) {
 
         Optional<Event> optionalEvent = eventRepository.findById(id);
         Event event = optionalEvent.get();
-        
+
         if (event.getCompetitionId().isEmpty()) {
             Map<String, Object> err = new HashMap<>();
             err.put("error", "No associated competition");
@@ -152,4 +110,52 @@ public class EventController {
 
         return ResponseEntity.ok(res);
     }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> createEvent(@RequestBody Event eventData) {
+        Event createdEvent = eventRepository.save(eventData);
+        return ResponseEntity.ok(createdEvent);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> deleteEvent(@PathVariable("id") String id) {
+        Event eventToBeDeleted = eventRepository.findById(id).get();
+
+        eventRepository.deleteById(id);
+
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            user.removeEvent(eventToBeDeleted.getName());
+            userRepository.save(user);
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> addCompetition(@PathVariable("id") String id, @RequestBody EventDTO data) {
+        Optional<Event> optionalEvent = eventRepository.findById(id);
+        Event existingEvent = optionalEvent.get();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+        String competitionId = (String) data.getCompetitionId();
+        Date competitionStart;
+        Date competitionEnd;
+        try {
+            competitionStart = formatter.parse(data.getCompetitionStart());
+            competitionEnd = formatter.parse(data.getCompetitionEnd());
+        } catch (ParseException e) {
+            return ResponseEntity.badRequest().body("Invalid date format");
+        }
+
+        existingEvent.assignCompetition(competitionId, competitionStart, competitionEnd);
+        eventRepository.save(existingEvent);
+
+        return ResponseEntity.ok(existingEvent);
+    }
+
 }

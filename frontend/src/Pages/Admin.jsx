@@ -146,18 +146,29 @@ const Admin = () => {
 										Marking Results
 									</h3>
 									{Object.entries(markingResults).map(
-										([key, result]) => (
-											<div
-												key={key}
-												className='grid grid-cols-2 text-xl'>
-												<p className=''>
-													{result.userEmail}
-												</p>
-												<p className='justify-self-end'>
-													{result.result}
-												</p>
-											</div>
-										)
+										([key, result]) => {
+											const [correct, total] =
+												result.result
+													.split('/')
+													.map(Number);
+											const percentage = (
+												(correct / total) *
+												100
+											).toFixed(0);
+
+											return (
+												<div
+													key={key}
+													className='grid grid-cols-2 text-xl'>
+													<p className=''>
+														{result.userEmail}
+													</p>
+													<p className='justify-self-end'>
+														{result.result} {percentage}%
+													</p>
+												</div>
+											);
+										}
 									)}
 									<button
 										onClick={handleClose}

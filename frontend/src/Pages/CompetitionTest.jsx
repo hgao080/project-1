@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 import { useAuthContext } from '../hooks/useAuthContext';
 
@@ -98,6 +99,7 @@ const CompetitionTest = () => {
 
 		attemptsService.saveAttempt(attemptObject).then(() => {
 			navigate('/');
+			
 		});
 	};
 
@@ -119,6 +121,7 @@ const CompetitionTest = () => {
 
 		attemptsService.saveAttempt(attemptObject).then(() => {
 			navigate('/');
+			toast.success('Attempt submitted successfully');
 		});
 	};
 

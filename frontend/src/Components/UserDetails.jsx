@@ -58,7 +58,7 @@ const UserDetails = ({ user }) => {
         ) : (
           <div>
             <p className="underline decoration-1 text-2xl">Username</p>
-            <p className="text-2xl">{oldName}</p>
+            <p className="text-2xl break-all">{oldName}</p>
           </div>
         )}
 

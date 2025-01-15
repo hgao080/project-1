@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
 import CompetitionTest from './pages/CompetitionTest'
+import NotFound from './pages/NotFound'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +16,8 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login/>}/>
       <Route path="admin" element={<Admin/>}/>
       <Route path="competition/:eventId" element={<CompetitionTest />}/>
+
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 )

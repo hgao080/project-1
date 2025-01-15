@@ -99,7 +99,7 @@ const CompetitionTest = () => {
 
 		attemptsService.saveAttempt(attemptObject).then(() => {
 			navigate('/');
-			
+			toast.success('Attempt auto-submitted successfully');
 		});
 	};
 

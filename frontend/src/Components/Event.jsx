@@ -114,7 +114,7 @@ const Event = ({ event }) => {
 									{isCompetitionActive ? (
 										''
 									) : (
-										<p className='text-red-500 mt-1 text-right'>
+										<p className='text-red-500 mt-1 text-right truncate'>
 											Competition inactive
 										</p>
 									)}

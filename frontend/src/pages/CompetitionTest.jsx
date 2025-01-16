@@ -49,8 +49,8 @@ const CompetitionTest = () => {
 				if (
 					attempts.some(
 						(attempt) =>
-							attempt.competitionId ===
-							returnedEvent.competition.competitionId
+							attempt.eventId ===
+							returnedEvent.id
 					)
 				) {
 					return navigate('/');

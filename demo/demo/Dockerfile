@@ -1,4 +1,4 @@
-FROM openjdk:17
-ADD build/libs/*.jar dockerapp.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "dockerapp.jar"]
+FROM azul/zulu-openjdk:17-latest
+VOLUME /tmp
+COPY build/libs/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]

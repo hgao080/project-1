@@ -24,58 +24,89 @@ const CompetitionTest = () => {
 	const answersRef = useRef(answers);
 	const [isAllAnswered, setIsAllAnswered] = useState(true);
 	const timeoutSetRef = useRef(false);
+	const [competitionEnd, setCompetitionEnd] = useState('');
 
 	useEffect(() => {
-		eventsService.getEvent(eventId).then((returnedEvent) => {
-			if (returnedEvent === null) {
-				return navigate('/');
-			}
-
-			setEvent(returnedEvent);
-
-			const competitionStart = new Date(
-				returnedEvent.competition.competitionStart
-			);
-			const competitionEnd = new Date(
-				returnedEvent.competition.competitionEnd
-			);
-			const now = new Date();
-
-			if (!(now >= competitionStart && now <= competitionEnd)) {
-				return navigate('/');
-			}
-
-			attemptsService.getAttemptsForUser(user.email).then((attempts) => {
-				if (
-					attempts.some(
-						(attempt) =>
-							attempt.eventId ===
-							returnedEvent.id
-					)
-				) {
+		if (user) {
+			eventsService.getEvent(eventId).then((returnedEvent) => {
+				if (returnedEvent === null) {
 					return navigate('/');
 				}
 
-				const timeRemaining = competitionEnd - now;
+				setEvent(returnedEvent);
 
-				if (timeRemaining > 0 && !timeoutSetRef.current) {
-					timeoutSetRef.current = true;
-					setTimeout(handleAutoSubmit, timeRemaining);
+				const competitionStart = new Date(
+					returnedEvent.competition.competitionStart
+				);
+				const competitionEnd = new Date(
+					returnedEvent.competition.competitionEnd
+				);
+				const options = {
+					hour: '2-digit',
+					minute: '2-digit',
+					hour12: true,
+				};
+				setCompetitionEnd(
+					competitionEnd.toLocaleTimeString('en-US', options)
+				);
+				const now = new Date();
+
+				if (!(now >= competitionStart && now <= competitionEnd)) {
+					return navigate('/');
 				}
 
-				competitionsService
-					.getQuestions(returnedEvent.competition.competitionId)
-					.then((data) => {
-						setQuestions(data.questions);
-						setAnswers(
-							data.questions.reduce((acc, question) => {
-								acc[question.title] = -1;
-								return acc;
-							}, {})
-						);
+				attemptsService
+					.getAttemptsForUser(user.email)
+					.then((attempts) => {
+						if (
+							attempts.some(
+								(attempt) =>
+									attempt.eventId === returnedEvent.id
+							)
+						) {
+							return navigate('/');
+						}
+
+						const timeRemaining = competitionEnd - now;
+						console.log(timeRemaining);
+
+						if (timeRemaining > 0 && !timeoutSetRef.current) {
+							timeoutSetRef.current = true;
+
+							if (timeRemaining > 5 * 60 * 1000) {
+								setTimeout(() => {
+									toast('5 Minutes Remaining', {
+										icon: '🕒',
+									});
+								}, timeRemaining - 5 * 60 * 1000);
+							}
+							if (timeRemaining > 1 * 60 * 1000) {
+								setTimeout(() => {
+									toast('1 Minute Remaining', {
+										icon: '🕒',
+									});
+								}, timeRemaining - 1 * 60 * 1000);
+							}
+
+							setTimeout(handleAutoSubmit, timeRemaining);
+						}
+
+						competitionsService
+							.getQuestions(
+								returnedEvent.competition.competitionId
+							)
+							.then((data) => {
+								setQuestions(data.questions);
+								setAnswers(
+									data.questions.reduce((acc, question) => {
+										acc[question.title] = -1;
+										return acc;
+									}, {})
+								);
+							});
 					});
 			});
-		});
+		}
 	}, [eventId, user]);
 
 	useEffect(() => {
@@ -131,6 +162,9 @@ const CompetitionTest = () => {
 				<h1 className='m-auto mt-12 font-main text-7xl font-bold'>
 					{event.competition?.competitionId}
 				</h1>
+				<p className='flex m-auto mt-4 bg-golden-yellow px-4 py-2 border border-black rounded-lg font-main text-3xl font-bold'>
+					This competition ends at {competitionEnd}
+				</p>
 				<div className='flex gap-4 mt-6 min-w-[40rem] m-auto'>
 					<AnswersContext.Provider value={{ answers, setAnswers }}>
 						{questions.map((question) => (

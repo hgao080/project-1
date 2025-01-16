@@ -90,7 +90,7 @@ public class EventController {
             return ResponseEntity.badRequest().body(err);
         }
 
-        List<Attempt> attempts = attemptRepository.findByCompetitionId(competitionId);
+        List<Attempt> attempts = attemptRepository.findByEventId(event.getId());
 
         List<MarkingResultDTO> res = new ArrayList<>();
 

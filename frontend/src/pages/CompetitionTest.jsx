@@ -92,7 +92,7 @@ const CompetitionTest = () => {
 
 		const attemptObject = {
 			userEmail: user.email,
-			competitionId: currentEvent.competition.competitionId,
+			eventId: currentEvent.id,
 			attempts: currentAnswers,
 			competitionEnd: currentEvent.competition.competitionEnd,
 		};
@@ -114,7 +114,7 @@ const CompetitionTest = () => {
 
 		const attemptObject = {
 			userEmail: user.email,
-			competitionId: event.competition.competitionId,
+			eventId: event.id,
 			attempts: answers,
 			competitionEnd: event.competition.competitionEnd,
 		};

@@ -7,19 +7,19 @@ import com.example.demo.models.Attempt;
 
 public class AttemptDTO {
     private String userEmail;
-    private String competitionId;
+    private String eventId;
     private Map<String, Integer> attempts;
     private Date competitionEnd;
     
-    public AttemptDTO(String userEmail, String competitionId, Map<String, Integer> attempts, Date competitionEnd) {
+    public AttemptDTO(String userEmail, String eventId, Map<String, Integer> attempts, Date competitionEnd) {
         this.userEmail = userEmail;
-        this.competitionId = competitionId;
+        this.eventId = eventId;
         this.attempts = attempts;
         this.competitionEnd = competitionEnd;
     }
 
     public Attempt getAttempt() {
-        return new Attempt(userEmail, competitionId, attempts);
+        return new Attempt(userEmail, eventId, attempts);
     }
 
     public String getUserEmail() {
@@ -30,12 +30,12 @@ public class AttemptDTO {
         this.userEmail = userEmail;
     }
 
-    public String getCompetitionId() {
-        return competitionId;
+    public String getEventId() {
+        return eventId;
     }
 
-    public void setCompetitionId(String competitionId) {
-        this.competitionId = competitionId;
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public Map<String, Integer> getAttempts() {

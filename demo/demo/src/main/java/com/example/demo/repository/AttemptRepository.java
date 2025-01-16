@@ -9,6 +9,6 @@ import com.example.demo.models.Attempt;
 
 @Repository
 public interface AttemptRepository extends MongoRepository<Attempt, String> {
-    public List<Attempt> findByCompetitionId(String compId);
+    public List<Attempt> findByEventId(String eventId);
     public List<Attempt> findByUserEmail(String userEmail);
 }

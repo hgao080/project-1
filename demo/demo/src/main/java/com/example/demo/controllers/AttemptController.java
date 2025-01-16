@@ -44,7 +44,7 @@ public class AttemptController {
     public ResponseEntity<Object> saveAttempt(@RequestBody AttemptDTO attemptDto) {
         Attempt attemptToSave = attemptDto.getAttempt();
 
-        List<Attempt> competitionAttempts = attemptRepository.findByCompetitionId(attemptDto.getAttempt().getCompetitionId());
+        List<Attempt> competitionAttempts = attemptRepository.findByEventId(attemptDto.getAttempt().getEventId());
         for (Attempt attempt : competitionAttempts) {
             if (attempt.getUserEmail().equals(attemptToSave.getUserEmail())) {
                 return ResponseEntity.badRequest().body("Attempt not accepted. User has already attempted this competition");

@@ -52,7 +52,7 @@ const Event = ({ event }) => {
 	useEffect(() => {
 		const checkIsAttempted = () => {
 			setIsAttempted(
-				attempts.some((attempt) => attempt.competitionId === linkedComp)
+				attempts.some((attempt) => attempt.eventId === event.id)
 			);
 		};
 

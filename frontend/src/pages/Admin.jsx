@@ -91,7 +91,7 @@ const Admin = () => {
 	};
 
 	return (
-		<div className='w-screen h-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main pb-8'>
+		<div className='w-screen min-h-screen bg-homeBg bg-no-repeat bg-center bg-cover font-main pb-12'>
 			<div className='max-w-[60rem] flex justify-between items-center px-4 py-4 m-auto'>
 				<h1 className='text-5xl italic underline decoration-3 font-bold tracking-wide'>
 					Admin Page

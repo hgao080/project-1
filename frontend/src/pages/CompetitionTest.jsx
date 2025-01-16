@@ -157,7 +157,7 @@ const CompetitionTest = () => {
 	};
 
 	return (
-		<div className='bg-homeBg min-h-screen bg-no-repeat bg-cover bg-center'>
+		<div className='bg-homeBg min-h-screen pb-12 bg-no-repeat bg-cover bg-center'>
 			<div className='flex flex-col'>
 				<h1 className='m-auto mt-12 font-main text-7xl font-bold'>
 					{event.competition?.competitionId}
